@@ -3,3 +3,5 @@
 *.flaskenv
 *.png
 /.idea
+/whooshee
+/uploads/avatars
