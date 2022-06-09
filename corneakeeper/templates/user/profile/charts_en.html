@@ -1,0 +1,120 @@
+{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+{% from 'macros.html' import user_card with context %}
+
+{% block title %}{{ user.name }}'s charts{% endblock %}
+
+{% block content %}
+    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    {% if current_user == user or user.public_charts %}
+        {% if cornea %}
+            <div class="row">
+                <div class="col-md-6" id="VisualAcuity-Chart"
+                     style="height: 300px"></div>
+                <div class="col-md-6" id="Thickness-Chart"
+                     style="height: 300px;"></div>
+                <div class="col-md-6" id="K-Chart" style="height: 300px;"></div>
+                <div class="col-md-6" id="I-S-Chart"
+                     style="height: 300px"></div>
+                <div class="col-md-6" id="Myopia-Chart" style="height: 300px"></div>
+                <div class="col-md-6" id="Astigmatism-Chart" style="height: 300px"></div>
+            </div>
+        {% else %}
+            <div class="tip">
+                <h3>无数据</h3>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="tip">
+            <h3>This user's charts were private.</h3>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bootstrap/js/jquery.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bootstrap/js/echarts.min.js') }}"></script>
+    <script>
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('K-Chart'), 'light', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url_for('user.generate_K_chart',username=user.username) }}",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                    }
+                });
+            }
+        )
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('Thickness-Chart'), 'light', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url_for('user.generate_thickness_chart',username=user.username) }}",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                    }
+                });
+            }
+        )
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('VisualAcuity-Chart'), 'light', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url_for('user.generate_visualAcuity_chart',username=user.username) }}",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                    }
+                });
+            }
+        )
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('I-S-Chart'), 'light', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url_for('user.generate_IS_chart',username=user.username) }}",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                    }
+                });
+            }
+        )
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('Myopia-Chart'), 'light', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url_for('user.generate_myopia_chart',username=user.username) }}",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                    }
+                });
+            }
+        )
+        $(
+            function () {
+                var chart = echarts.init(document.getElementById('Astigmatism-Chart'), 'light', {renderer: 'canvas'});
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url_for('user.generate_astigmatism_chart',username=user.username) }}",
+                    dataType: 'json',
+                    success: function (result) {
+                        chart.setOption(result);
+                    }
+                });
+            }
+        )
+    </script>
+{% endblock %}

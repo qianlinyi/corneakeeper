@@ -1,0 +1,30 @@
+{% extends 'auth/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="container h-100">
+        <div class="row h-100 page-header justify-content-center align-items-center">
+            <h1>Log in</h1>
+        </div>
+        <div class="row h-100 justify-content-center align-items-center">
+            {{ render_form(form, extra_classes='col-6') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <p class="float-left">
+            <small>
+                <a href="{{ url_for('auth.register') }}">Register new account</a>
+            </small>
+        </p>
+        <p class="float-right">
+            <small>
+                <a href="{{ url_for('auth.forget_password') }}">Forget password</a>
+            </small>
+        </p>
+    </footer>
+{% endblock %}

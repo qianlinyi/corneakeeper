@@ -1,0 +1,4 @@
+*.env
+*.flake8
+*.flaskenv
+/.idea

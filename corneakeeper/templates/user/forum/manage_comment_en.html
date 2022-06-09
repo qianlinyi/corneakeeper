@@ -1,0 +1,99 @@
+{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+
+{% block title %}Manage Comments{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Comments
+            <small class="text-muted">{{ pagination.total }}</small>
+        </h1>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link {% if request.args.get('filter', 'all') == 'all' %}active{% endif %}"
+                   href="{{ url_for('user.manage_comment', filter='all',username=user.username) }}">From others-All</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.args.get('filter') == 'unread' %}active{% endif %}"
+                   href="{{ url_for('user.manage_comment', filter='unread',username=user.username) }}">From
+                    others-Unread
+                    {% if unread_comments %}<span
+                            class="badge badge-pill badge-success">{{ unread_comments }}</span>{% endif %}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {% if request.args.get('filter') == 'myself' %}active{% endif %}"
+                   href="{{ url_for('user.manage_comment', filter='myself',username=user.username) }}">From myself</a>
+            </li>
+        </ul>
+    </div>
+
+    {% if comments %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Author</th>
+                <th>Body</th>
+                <th>Title</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            {% for comment in comments %}
+                {% if comment.post %}
+                    <tr {% if not comment.reviewed %}class="table-light" {% endif %}>
+                        <td>{{ loop.index + ((pagination.page - 1) * config['BLOG_COMMENT_PER_PAGE']) }}</td>
+                        <td>
+                            {% if comment.from_admin %}{{ admin.name }}{% else %}{{ comment.author }}{% endif %}<br>
+                            {% if comment.site %}
+                                <a href="{{ comment.site }}" target="_blank">
+                                    {{ comment.site }}
+                                </a><br>
+                            {% endif %}
+                            <a href="mailto:{{ comment.email }}">{{ comment.email }}</a>
+                        </td>
+                        <td>{{ comment.body }}<br>{{ moment(comment.timestamp).format('LL') }}</td>
+                        <td>
+                            <a href="{{ url_for('blog.show_post', post_id=comment.post.id) }}">
+                                {% if comment.post.title|length > 25 %}
+                                    {{ comment.post.title[:25]+'...' }}
+                                {% else %}
+                                    {{ comment.post.title }}
+                                {% endif %}
+                            </a>
+                        </td>
+                        <td>
+                            {% if request.args.get('filter') != 'myself' %}
+                                {% if not comment.reviewed %}
+                                    <form class="inline" method="post"
+                                          action="{{ url_for('user.approve_comment',username=user.username, comment_id=comment.id, next=request.full_path) }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                    </form>
+                                {% endif %}
+                                <form class="inline" method="post"
+                                      action="{{ url_for('user.delete_comment', username=user.username,comment_id=comment.id, next=request.full_path) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure?');">Delete
+                                    </button>
+                                </form>
+                            {% else %}
+                                <form class="inline" method="post"
+                                      action="{{ url_for('user.delete_comment', username=user.username, comment_id=comment.id, next=request.full_path) }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('确定删除？');">删除
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <div class="page-footer">{{ render_pagination(pagination,align='center') }}</div>
+    {% else %}
+        <div class="tip"><h5>No comments.</h5></div>
+    {% endif %}
+{% endblock %}

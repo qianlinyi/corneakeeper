@@ -1,0 +1,45 @@
+{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+{% from 'macros.html' import photo_card %}
+
+
+{% block title %}{{ user.name }} 的诊断{% endblock %}
+{% block content %}
+    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if current_user == user or user.public_diagnosis %}
+                {% if condition %}
+                    <div class="tip pt-4 pb-0">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h3>分期定级</h3>
+                            <b>{{ condition.stage }}</b>
+                        </div>
+                        <div class="col-md-4">
+                            <h3>医疗手段</h3>
+                            {{ condition.treatment }}
+                        </div>
+                        <div class="col-md-4">
+                            <h3>疾病进展</h3>
+                            <b>{% if condition.progress %}是{% else %}否{% endif %}</b>
+                        </div>
+                    </div>
+                    <br>
+                    <small>
+                        <p class="text-muted mb-2">提示：结果仅供参考，具体以医生的诊断为准！</p>
+                    </small>
+                {% else %}
+                    <div class="tip">
+                        <h3>无数据</h3>
+                    </div>
+                {% endif %}
+            </div>
+            {% else %}
+                <div class="tip">
+                    <h3>该用户的诊断设置为不可见</h3>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

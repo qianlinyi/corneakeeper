@@ -1,0 +1,33 @@
+{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+{% from 'macros.html' import photo_card %}
+
+{% block title %}{{ user.name }} 的收藏{% endblock %}
+
+{% block content %}
+    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if user.public_collections or current_user == user %}
+                {% if collects %}
+                    {% for collect in collects %}
+                        {{ photo_card(collect.collected) }}
+                    {% endfor %}
+                {% else %}
+                    <div class="tip">
+                        <h3>无收藏</h3>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="tip">
+                    <h3>该用户收藏设置为不可见</h3>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if collects %}
+        <div class="page-footer">
+            {{ render_pagination(pagination, align='center') }}
+        </div>
+    {% endif %}
+{% endblock %}

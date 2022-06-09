@@ -1,0 +1,109 @@
+{% from 'macros.html' import follow_area with context %}
+{% from 'bootstrap4/nav.html' import render_nav_item %}
+
+<div class="row">
+    <div class="col-md-2">
+        <a href="{% if current_user == user %}{{ url_for('.change_avatar') }}{% else %}#{% endif %}"
+           title="Change avatar">
+            <img class="img-fluid rounded" src="{{ url_for('main.get_avatar', filename=user.avatar_m) }}">
+        </a>
+    </div>
+    <div class="col-md-10">
+        <h3>{{ user.name }}
+            <small class="text-muted">{{ user.username }}</small>
+        </h3>
+        <p>
+            个性签名：<a href="{{ url_for('user.edit_profile') }}"
+                    style="font-family: 'Microsoft JhengHei'">{{ user.bio }}</a>
+            <br>
+            {% if user.website %}
+                <span class="d-inline-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;width:14px; height:14px"
+                     fill="currentColor"
+                     class="bi bi-link-45deg" viewBox="0 0 16 16">
+                    <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                    <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                </svg>
+                <a href="{{ user.website }}" target="_blank">{{ user.website|truncate(30) }}</a>
+                </span>&nbsp;&nbsp;&nbsp;
+            {% endif %}
+            <span class="d-inline-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;width:14px; height:14px"
+                 fill="currentColor" class="bi bi-envelope"
+                 viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+            </svg>
+            <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+            </span><br>
+            <span class="d-inline-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;width:14px; height:14px"
+                 fill="currentColor" class="bi bi-calendar"
+                 viewBox="0 0 16 16">
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+            </svg>
+            加入时间：{{ user.member_since.strftime('%Y-%m-%d') }}
+            </span>&nbsp;&nbsp;&nbsp;
+            {% if user.location %}
+                <span class="d-inline-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;width:14px; height:14px"
+                     fill="currentColor"
+                     class="bi bi-geo-alt"
+                     viewBox="0 0 16 16">
+                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                </svg>
+                <a href="https://map.baidu.com/search?q={{ user.location }}"
+                      target="_blank">{{ user.location|truncate(30) }}</a>
+                </span>
+            {% endif %}
+        </p>
+        <div>
+{#            {% if current_user != user %}#}
+{#                {% if current_user.can('MODERATE') %}#}
+{#                    {% if user.locked %}#}
+{#                        <form class="inline" action="{{ url_for('admin.unlock_user', user_id=user.id) }}" method="post">#}
+{#                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">#}
+{#                            <input type="submit" class="btn btn-secondary btn-sm" value="Unlock">#}
+{#                        </form>#}
+{#                    {% else %}#}
+{#                        <form class="inline" action="{{ url_for('admin.lock_user', user_id=user.id) }}" method="post">#}
+{#                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">#}
+{#                            <input type="submit" class="btn btn-warning btn-sm" value="Lock">#}
+{#                        </form>#}
+{#                    {% endif %}#}
+{#                    {% if user.active %}#}
+{#                        <form class="inline" action="{{ url_for('admin.block_user', user_id=user.id) }}" method="post">#}
+{#                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">#}
+{#                            <input type="submit" class="btn btn-warning btn-sm" value="Block">#}
+{#                        </form>#}
+{#                    {% else %}#}
+{#                        <form class="inline" action="{{ url_for('admin.unblock_user', user_id=user.id) }}"#}
+{#                              method="post">#}
+{#                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">#}
+{#                            <input type="submit" class="btn btn-secondary btn-sm" value="Unblock">#}
+{#                        </form>#}
+{#                    {% endif %}#}
+{#                    <a class="btn btn-light" href="mailto:{{ user.email }}">邮件</a>#}
+{#                {% endif %}#}
+{#            {% endif %}#}
+            <div class="float-right">
+                {{ follow_area(user) }}
+                {% if current_user.is_authenticated %}
+                    {% if user == current_user %}
+                        <a class="btn btn-light btn-sm" href="{{ url_for('.edit_profile') }}">修改信息</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="user-nav mt-0">
+    <ul class="nav nav-tabs">
+        {{ render_nav_item('user.index', '变化',username=user.username) }}
+        {{ render_nav_item('user.diagnosis', '诊断', username=user.username) }}
+        {{ render_nav_item('user.show_photos', '图片', user.photos|length, username=user.username) }}
+        {{ render_nav_item('user.show_collections', '收藏', user.photo_collections|length, username=user.username) }}
+        {{ render_nav_item('user.show_following', '关注', user.following.count(), username=user.username) }}
+        {{ render_nav_item('user.show_followers', '粉丝', user.followers.count(), username=user.username) }}
+    </ul>
+</div>

@@ -1,0 +1,17 @@
+{% extends 'user/settings/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block title %}Delete Account{% endblock %}
+
+{% block setting_content %}
+    <div class="card w-100 bg-light border-danger">
+        <h3 class="card-header">Delete Account</h3>
+        <div class="card-body">
+            {{ render_form(form) }}
+        </div>
+    </div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

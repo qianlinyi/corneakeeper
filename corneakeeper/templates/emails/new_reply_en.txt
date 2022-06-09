@@ -1,0 +1,5 @@
+New reply for the comment you left in post {{ post.title }}, click the link below to check:
+
+{{ post_url }}
+
+Do not reply this email.

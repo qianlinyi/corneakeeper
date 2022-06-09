@@ -1,0 +1,96 @@
+{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+{% from 'bootstrap4/form.html' import render_form, render_field %}
+
+{% block title %}{{ photo.user.name }} 的图片{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="photo">
+                <a href="{{ url_for('.get_image', filename=photo.filename) }}" target="_blank">
+                    <img class="img-fluid" src="{{ url_for('.get_image', filename=photo.filename_m) }}">
+                </a>
+            </div>
+            <a class="btn btn-success btn-sm text-white"
+               href="{{ url_for('user.recognition',photo_id=photo.id) }}">识别</a>
+            {% if current_user.is_collecting_photo(photo) %}
+                <form class="inline" method="post"
+                      action="{{ url_for('main.uncollect', photo_id=photo.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-info btn-sm text-white">
+                        取消收藏
+                    </button>
+                </form>
+            {% else %}
+                <form class="inline" method="post"
+                      action="{{ url_for('main.collect', photo_id=photo.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-info btn-sm text-white">
+                        收藏
+                    </button>
+                </form>
+            {% endif %}
+            <a class="btn btn-primary btn-sm text-white" data-toggle="modal" data-target="#share-modal">分享</a>
+            {% if current_user == photo.user or current_user.can('MODERATE') %}
+                <a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target="#confirm-delete"
+                   data-href="{{ url_for('.delete_photo', photo_id=photo.id) }}">删除</a>
+            {% endif %}
+            {% if current_user.is_authenticated and current_user != photo.user %}
+                <form class="inline" method="post" action="{{ url_for('.report_photo', photo_id=photo.id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-link btn-sm">Report</button>
+                </form>
+            {% endif %}
+{#            <p class="text-muted float-right small">#}
+{#                <span class="oi oi-clock"></span> Upload at {{ moment(photo.timestamp).format('LL') }}#}
+{#            </p>#}
+            {% include 'main/_comment_{}.html'.format(request.cookies.get('language','cn')) %}
+        </div>
+{#        <div class="col-md-4">#}
+{#            {% include 'main/_photo_sidebar_{}.html'.format(request.cookies.get('language','cn')) %}#}
+{#        </div>#}
+    </div>
+    <!-- share modal -->
+    <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shareModalLabel">Permalink</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body w-100">
+                    <input class="form-control" value="{{ url_for('.show_photo', photo_id=photo.id, _external=True) }}"
+                           readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- delete confirm modal -->
+    {% if current_user.is_authenticated %}
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">刪除确认</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>是否确认删除？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form class="delete-form" action="" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button class="btn btn-danger btn-confirm" type="submit">删除</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

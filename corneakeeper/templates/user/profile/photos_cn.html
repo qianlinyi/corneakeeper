@@ -1,0 +1,29 @@
+{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+{% from 'macros.html' import photo_card %}
+
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block content %}
+    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if current_user == user or user.public_photos %}
+                {% if photos %}
+                    {% for photo in photos %}
+                        {{ photo_card(photo) }}
+                    {% endfor %}
+                {% else %}
+                    <div class="tip text-center">
+                        <h3>无图片</h3>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="tip">
+                    <h3>该用户图片设置为不可见</h3>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

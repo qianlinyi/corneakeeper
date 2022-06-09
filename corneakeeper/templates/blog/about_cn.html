@@ -1,0 +1,17 @@
+{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+
+{% block title %}关于{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>About</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            {{ admin.about|safe }}
+        </div>
+        <div class="col-sm-4 sidebar">
+            {% include 'blog/_sidebar_{}.html'.format(request.cookies.get('language','cn')) %}
+        </div>
+    </div>
+{% endblock %}

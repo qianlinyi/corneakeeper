@@ -1,0 +1,204 @@
+from flask import render_template, flash, redirect, url_for, Blueprint, request
+from flask_login import login_user, logout_user, login_required, current_user, login_fresh, confirm_login
+from corneakeeper.utils import redirect_back, generate_token, validate_token, Operations
+from corneakeeper.extensions import db
+from corneakeeper.forms.auth import LoginForm, RegisterForm, ForgetPasswordForm, ResetPasswordForm
+from corneakeeper.models import User
+from corneakeeper.emails import send_confirm_email
+from corneakeeper.emails import send_reset_password_email
+
+auth_bp = Blueprint('auth', __name__)
+
+
+@auth_bp.route('/test')
+def test():
+    return render_template('auth/test.html')
+
+
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('blog.index'))
+    form = LoginForm()
+    language = request.cookies.get('language', 'cn')
+    if language == 'cn':
+        form.username.label.text = '用户名'
+        form.password.label.text = '密码'
+        form.remember.label.text = '记住我'
+        form.submit.label.text = '提交'
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        remember = form.remember.data
+        user = User.query.filter_by(username=username).first()
+        if user:
+            if username == user.username and user.validate_password(password):
+                login_user(user, remember)
+                if language == 'cn':
+                    flash('欢迎回来', 'info')
+                else:
+                    flash('Welcome back.', 'info')
+                return redirect_back()
+            if language == 'cn':
+                flash('无效用户名或密码', 'warning')
+            else:
+                flash('Invalid username or password.', 'warning')
+        else:
+            flash('No account.', 'warning')
+    return render_template('auth/login_{}.html'.format(language), form=form)
+
+
+@auth_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    if request.cookies.get('language', 'cn') == 'cn':
+        flash('登出成功', 'info')
+    else:
+        flash('Logout success.', 'info')
+    return redirect(url_for('blog.index'))  # 修改，原为 redirect_back()
+
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('blog.index'))
+    form = RegisterForm()
+    language = request.cookies.get('language', 'cn')
+    if language == 'cn':
+        form.name.label.text = '昵称'
+        form.email.label.text = '邮箱'
+        form.username.label.text = '用户名'
+        form.password.label.text = '密码'
+        form.password2.label.text = '验证密码'
+        form.submit.label.text = '提交'
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data.lower()
+        username = form.username.data
+        password = form.password.data
+        user = User(name=name, email=email, username=username)
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+        token = generate_token(user=user, operation='confirm')
+        send_confirm_email(template='emails/confirm_{}'.format(language), user=user, token=token)
+        if language == 'cn':
+            flash('验证邮件已发送，请检查您的邮箱', 'info')
+        else:
+            flash('Confirm email sent, check your inbox.', 'info')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/register_{}.html'.format(language), form=form)
+
+
+@auth_bp.route('/confirm/<token>')
+@login_required
+def confirm(token):
+    language = request.cookies.get('language', 'cn')
+    if current_user.confirmed:
+        return redirect(url_for('blog.index'))
+    if validate_token(user=current_user, token=token, operation=Operations.CONFIRM):
+        if language == 'cn':
+            flash('用户验证成功', 'success')
+        else:
+            flash('Account confirmed.', 'success')
+        return redirect(url_for('blog.index'))
+    else:
+        if language == 'cn':
+            flash('token 无效或已过期', 'danger')
+        else:
+            flash('Invalid or expired token.', 'danger')
+        return redirect(url_for('.resend_confirm_email'))
+
+
+@auth_bp.route('/resend-confirm-email')
+@login_required
+def resend_confirm_email():
+    if current_user.confirmed:
+        return redirect(url_for('blog.index'))
+    language = request.cookies.get('language')
+    token = generate_token(user=current_user, operation=Operations.CONFIRM)
+    send_confirm_email(template='emails/confirm_{}'.format(language), user=current_user, token=token)
+    if request.cookies.get('language', 'cn') == 'cn':
+        flash('新邮件已发出，检查您的邮箱', 'info')
+    else:
+        flash('New email sent, check your inbox.', 'info')
+    return redirect(url_for('blog.index'))
+
+
+@auth_bp.route('/forget-password', methods=['GET', 'POST'])
+def forget_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+    form = ForgetPasswordForm()
+    language = request.cookies.get('language', 'cn')
+    if language == 'cn':
+        form.email.label.text = '邮箱'
+        form.submit.label.text = '提交'
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data.lower()).first()
+        if user:
+            token = generate_token(user=user, operation=Operations.RESET_PASSWORD)
+            send_reset_password_email(user=user, token=token)
+            if language == 'cn':
+                flash('密码重置邮件已发送，请查看您的邮箱', 'info')
+            else:
+                flash('Password reset email sent, check your inbox.', 'info')
+            return redirect(url_for('.login'))
+        if language == 'cn':
+            flash('无效的邮箱地址', 'warning')
+        else:
+            flash('Invalid email.', 'warning')
+        return redirect(url_for('.forget_password'))
+    return render_template('auth/reset_password_{}.html'.format(language), form=form)
+
+
+@auth_bp.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('blog.index'))
+
+    form = ResetPasswordForm()
+    language = request.cookies.get('language', 'cn')
+    if language == 'cn':
+        form.email.label.text = '邮箱'
+        form.password.label.text = '密码'
+        form.password2.label.text = '确认密码'
+        form.submit.label.text = '提交'
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data.lower()).first()
+        if user is None:
+            return redirect(url_for('blog.index'))
+        if validate_token(user=user, token=token, operation=Operations.RESET_PASSWORD,
+                          new_password=form.password.data):
+            if language == 'cn':
+                flash('密码重置成功', 'success')
+            else:
+                flash('Password updated.', 'success')
+            return redirect(url_for('.login'))
+        else:
+            if language == 'cn':
+                flash('链接无效或已过期', 'danger')
+            else:
+                flash('Invalid or expired link.', 'danger')
+            return redirect(url_for('.forget_password'))
+    return render_template('auth/reset_password_{}.html'.format(language), form=form)
+
+
+@auth_bp.route('/re-authenticate', methods=['GET', 'POST'])
+@login_required
+def re_authenticate():
+    if login_fresh():
+        return redirect(url_for('main.index'))
+    form = LoginForm()
+    language = request.cookies.get('language', 'cn')
+    if language == 'cn':
+        form.username.label.text = '用户名'
+        # form.email.label.text = '邮箱'
+        form.password.label.text = '密码'
+        form.submit.label.text = '提交'
+        form.remember.label.text = '记住我'
+    if form.validate_on_submit() and current_user.validate_password(form.password.data):
+        confirm_login()
+        return redirect_back()
+    return render_template('auth/login_{}.html'.format(language), form=form)

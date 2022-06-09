@@ -1,0 +1,49 @@
+{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+{% from 'macros.html' import photo_card %}
+
+
+{% block title %}{{ user.name }}'s diagnosis{% endblock %}
+{% block content %}
+    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if current_user == user or user.public_diagnosis %}
+                {% if condition %}
+                    <div class="tip pt-4 pb-0">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h3>Staging and Grading</h3>
+                                <b>{{ condition.stage }}</b>
+                            </div>
+                            <div class="col-md-4">
+                                <h3>Medical Treatment</h3>
+                                {{ condition.treatment }}
+                            </div>
+                            <div class="col-md-4">
+                                <h3>Disease Progression</h3>
+                                <b>{% if condition.progress %}Yes{% else %}No{% endif %}</b>
+                            </div>
+                        </div>
+                    <br>
+                    <small>
+                        <p class="text-muted mb-2">Tip: the results are for reference only, and the specific diagnosis
+                            of the doctor shall prevail!</p>
+                    </small>
+                {% else %}
+                    <div class="tip">
+                        <h3>No data.</h3>
+                        <br>
+                        <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('user.upload') }}">上传</a>
+                    </div>
+                {% endif %}
+            </div>
+            {% else %}
+                <div class="tip">
+                    <h3>This user's diagnosis was private.</h3>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+

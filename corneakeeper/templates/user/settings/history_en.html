@@ -1,0 +1,42 @@
+{% extends 'user/settings/base_{}.html'.format(request.cookies.get('language','cn')) %}
+
+{% block title %}Upload History{% endblock %}
+
+{% block setting_content %}
+        <div class="card-body">
+            {% if cornea %}
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>DateTime</th>
+                        <th>UpdateTime</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    {% for fuck in cornea %}
+                    <tr>
+                        <td>
+                            {{ fuck.datetime }}
+                        </td>
+                        <td>
+                            {{ fuck.updatetime }}
+                        </td>
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{{ url_for('user.change_data',datetime=fuck.datetime) }}">Edit</a>
+                            <form class="inline" method="post"
+                                  action="{{ url_for('user.delete_corneadata', datetime=fuck.datetime, next=request.full_path) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure?');">Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <div class="tip"><h5>No history.</h5></div>
+            {% endif %}
+<!--        </div>-->
+    </div>
+{% endblock %}
