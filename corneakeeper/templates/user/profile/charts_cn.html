@@ -37,7 +37,7 @@
     <script>
         $(
             function () {
-                var chart = echarts.init(document.getElementById('K-Chart'), 'light', {renderer: 'canvas'});
+                var chart = echarts.init(document.getElementById('K-Chart'), 'light', {renderer: 'svg'});
                 $.ajax({
                     type: "GET",
                     url: "{{ url_for('user.generate_K_chart',username=user.username) }}",
@@ -50,7 +50,7 @@
         )
         $(
             function () {
-                var chart = echarts.init(document.getElementById('Thickness-Chart'), 'light', {renderer: 'canvas'});
+                var chart = echarts.init(document.getElementById('Thickness-Chart'), 'light', {renderer: 'svg'});
                 $.ajax({
                     type: "GET",
                     url: "{{ url_for('user.generate_thickness_chart',username=user.username) }}",
@@ -63,7 +63,7 @@
         )
         $(
             function () {
-                var chart = echarts.init(document.getElementById('VisualAcuity-Chart'), 'light', {renderer: 'canvas'});
+                var chart = echarts.init(document.getElementById('VisualAcuity-Chart'), 'light', {renderer: 'svg'});
                 $.ajax({
                     type: "GET",
                     url: "{{ url_for('user.generate_visualAcuity_chart',username=user.username) }}",
@@ -76,7 +76,7 @@
         )
         $(
             function () {
-                var chart = echarts.init(document.getElementById('I-S-Chart'), 'light', {renderer: 'canvas'});
+                var chart = echarts.init(document.getElementById('I-S-Chart'), 'light', {renderer: 'svg'});
                 $.ajax({
                     type: "GET",
                     url: "{{ url_for('user.generate_IS_chart',username=user.username) }}",
@@ -89,7 +89,7 @@
         )
         $(
             function () {
-                var chart = echarts.init(document.getElementById('Myopia-Chart'), 'light', {renderer: 'canvas'});
+                var chart = echarts.init(document.getElementById('Myopia-Chart'), 'light', {renderer: 'svg'});
                 $.ajax({
                     type: "GET",
                     url: "{{ url_for('user.generate_myopia_chart',username=user.username) }}",
@@ -102,7 +102,7 @@
         )
         $(
             function () {
-                var chart = echarts.init(document.getElementById('Astigmatism-Chart'), 'light', {renderer: 'canvas'});
+                var chart = echarts.init(document.getElementById('Astigmatism-Chart'), 'light', {renderer: 'svg'});
                 $.ajax({
                     type: "GET",
                     url: "{{ url_for('user.generate_astigmatism_chart',username=user.username) }}",

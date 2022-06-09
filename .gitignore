@@ -1,4 +1,5 @@
 *.env
 *.flake8
 *.flaskenv
+*.png
 /.idea
