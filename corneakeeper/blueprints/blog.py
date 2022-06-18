@@ -4,7 +4,7 @@
     :license: MIT, see LICENSE for more details.
 """
 from flask import render_template, flash, redirect, url_for, request, \
-    current_app, Blueprint, abort, make_response
+    current_app, Blueprint, abort, make_response, jsonify
 from flask_login import current_user, login_required
 
 from corneakeeper.emails import send_new_comment_email, send_new_reply_email
@@ -209,6 +209,20 @@ def change_language(language):
         abort(404)
     response = make_response(redirect_back())
     response.set_cookie('language', language, max_age=30 * 24 * 60 * 60)
+    return response
+
+
+@blog_bp.route('/set-locale/<locale>')
+def set_locale(locale):
+    if locale not in current_app.config['CK_LOCALES']:
+        abort(404)
+
+    response = make_response(redirect_back())
+    if current_user.is_authenticated:
+        current_user.locale = locale
+        db.session.commit()
+    else:
+        response.set_cookie('locale', locale, max_age=60 * 60 * 24 * 30)
     return response
 
 

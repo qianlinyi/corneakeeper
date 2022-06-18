@@ -6,7 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from corneakeeper.extensions import db
 from corneakeeper.models import User, Category, Post, Comment, Link, Cornea
 
-fake = Faker()
+fake = Faker('zh-CN')
 
 
 # 生成虚拟管理员信息

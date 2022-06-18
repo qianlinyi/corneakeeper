@@ -5,7 +5,8 @@ from flask import Flask, render_template, current_app
 from flask_login import current_user
 from flask_wtf.csrf import CSRFError
 
-from corneakeeper.extensions import login_manager, bootstrap, db, moment, mail, ckeditor, csrf, dropzone, avatars, whooshee
+from corneakeeper.extensions import login_manager, bootstrap, db, moment, mail, ckeditor, csrf, dropzone, avatars, \
+    whooshee, babel
 from corneakeeper.blueprints.auth import auth_bp
 from corneakeeper.blueprints.blog import blog_bp
 from corneakeeper.blueprints.admin import admin_bp
@@ -43,6 +44,7 @@ def register_extensions(app):
     dropzone.init_app(app)
     avatars.init_app(app)
     whooshee.init_app(app)
+    babel.init_app(app)
 
 
 def register_blueprints(app):
@@ -95,7 +97,8 @@ def register_commands(app):
     @click.option('--cornea', default=10, help='Quantity of corneas, default is 10.')
     def forge(user, category, post, comment, cornea):
         """Generate fake data."""
-        from corneakeeper.fakes import fake_admin, fake_categories, fake_posts, fake_comments, fake_links, fake_user, fake_corneas
+        from corneakeeper.fakes import fake_admin, fake_categories, fake_posts, fake_comments, fake_links, fake_user, \
+            fake_corneas
 
         click.echo('Delete all tha avatars...')
         del_files(os.path.join(current_app.config['CK_UPLOAD_PATH'], 'avatars'))
@@ -128,6 +131,37 @@ def register_commands(app):
         fake_links()
 
         click.echo('Done.')
+
+    @app.cli.group()
+    def translate():
+        """Translation and localization commands."""
+        pass
+
+    @translate.command()
+    @click.argument('locale')
+    def init(locale):
+        """Initialize a new language."""
+        if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
+            raise RuntimeError('extract command failed')
+        if os.system(
+                'pybabel init -i messages.pot -d corneakeeper/translations -l ' + locale):
+            raise RuntimeError('init command failed')
+        os.remove('messages.pot')
+
+    @translate.command()
+    def update():
+        """Update all languages."""
+        if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
+            raise RuntimeError('extract command failed')
+        if os.system('pybabel update -i messages.pot -d corneakeeper/translations'):
+            raise RuntimeError('update command failed')
+        os.remove('messages.pot')
+
+    @translate.command()
+    def compile():
+        """Compile all languages."""
+        if os.system('pybabel compile -d corneakeeper/translations'):
+            raise RuntimeError('compile command failed')
 
 
 def register_errorhandlers(app):

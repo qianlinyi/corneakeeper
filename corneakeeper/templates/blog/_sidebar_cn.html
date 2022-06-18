@@ -42,16 +42,28 @@
 {#</div>#}
 
 
+<!--<div class="dropdown">-->
+<!--    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"-->
+<!--            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--        修改语言-->
+<!--    </button>-->
+<!--    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--        {% for language, name in config.MW_LANGUAGE.items() %}-->
+<!--            <a class="dropdown-item"-->
+<!--               href="{{ url_for('blog.change_language', language = language, next=request.full_path) }}">-->
+<!--                {{ name }}</a>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--</div>-->
+
 <div class="dropdown">
     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         修改语言
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        {% for language, name in config.MW_LANGUAGE.items() %}
-            <a class="dropdown-item"
-               href="{{ url_for('blog.change_language', language = language, next=request.full_path) }}">
-                {{ name }}</a>
-        {% endfor %}
+        <a class="dropdown-item" href="{{ url_for('blog.set_locale', locale='zh') }}">简体中文</a>
+        <a class="dropdown-item" href="{{ url_for('blog.set_locale', locale='en') }}">English</a>
     </div>
 </div>
+

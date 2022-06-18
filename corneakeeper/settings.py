@@ -74,6 +74,10 @@ class BaseConfig(object):
     # 富文本编辑器
     CKEDITOR_HEIGHT = 800
 
+    # 区域代码
+    CK_LOCALES = ['zh', 'en']
+    BABEL_DEFAULT_LOCALE = CK_LOCALES[0]  # 默认区域
+
 
 class DevelopmentConfig(BaseConfig):
     USERNAME = os.getenv('MYSQL_USERNAME')

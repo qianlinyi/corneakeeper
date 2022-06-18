@@ -1,5 +1,6 @@
+from flask import request, current_app
 from flask_bootstrap import Bootstrap4
-from flask_login import LoginManager, AnonymousUserMixin
+from flask_login import LoginManager, AnonymousUserMixin, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_moment import Moment
 from flask_mail import Mail
@@ -8,6 +9,7 @@ from flask_wtf import CSRFProtect
 from flask_dropzone import Dropzone
 from flask_avatars import Avatars
 from flask_whooshee import Whooshee
+from flask_babel import Babel
 
 login_manager = LoginManager()
 db = SQLAlchemy()
@@ -19,6 +21,7 @@ csrf = CSRFProtect()
 dropzone = Dropzone()
 avatars = Avatars()
 whooshee = Whooshee()
+babel = Babel()
 
 
 #  用户加载函数
@@ -36,6 +39,17 @@ class Guest(AnonymousUserMixin):
 
     def can(self, permission_name):
         return False
+
+
+@babel.localeselector
+def get_locale():
+    if current_user.is_authenticated and current_user.locale is not None:
+        return current_user.locale
+
+    locale = request.cookies.get('locale')
+    if locale is not None:
+        return locale
+    return request.accept_languages.best_match(current_app.config['CK_LOCALES'])
 
 
 login_manager.anonymous_user = Guest

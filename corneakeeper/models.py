@@ -82,6 +82,7 @@ class User(UserMixin, db.Model):
     bio = db.Column(db.String(120))
     location = db.Column(db.String(50))
     member_since = db.Column(db.DateTime, default=datetime.utcnow)
+    locale = db.Column(db.String(20))  # 区域
 
     # 隐私设置
     public_charts = db.Column(db.Boolean, default=False)  # 变化隐私
