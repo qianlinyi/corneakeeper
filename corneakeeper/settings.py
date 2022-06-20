@@ -80,12 +80,13 @@ class BaseConfig(object):
 
 
 class DevelopmentConfig(BaseConfig):
-    USERNAME = os.getenv('MYSQL_USERNAME')
-    PASSWORD = os.getenv('MYSQL_PASSWORD')
-    IP = os.getenv('MYSQL_IP')
-    HOST = os.getenv('MYSQL_HOST')
-    DATABASE = os.getenv('DATABASE')
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASSWORD, IP, HOST, DATABASE)
+    pass
+    # USERNAME = os.getenv('MYSQL_USERNAME')
+    # PASSWORD = os.getenv('MYSQL_PASSWORD')
+    # IP = os.getenv('MYSQL_IP')
+    # HOST = os.getenv('MYSQL_HOST')
+    # DATABASE = os.getenv('DATABASE')
+    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASSWORD, IP, HOST, DATABASE)
 
 
 class TestingConfig(DevelopmentConfig):
@@ -93,7 +94,12 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    pass
+    USERNAME = os.getenv('MYSQL_USERNAME')
+    PASSWORD = os.getenv('MYSQL_PASSWORD')
+    IP = os.getenv('MYSQL_IP')
+    HOST = os.getenv('MYSQL_HOST')
+    DATABASE = os.getenv('DATABASE')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASSWORD, IP, HOST, DATABASE)
 
 
 config = {
