@@ -19,6 +19,8 @@ class Operations:
 
 class BaseConfig(object):
     SECRET_KEY = os.getenv('SECRET_KEY', 'secret_string')
+
+    # 邮件设置
     MAIL_SERVER = os.getenv('MAIL_SERVER')
     MAIL_PORT = 465
     MAIL_USE_SSL = True
@@ -27,6 +29,7 @@ class BaseConfig(object):
     MAIL_DEFAULT_SENDER = ('wangzai', MAIL_USERNAME)
     CK_ADMIN_EMAIL = 'qianlinyi@hhu.edu.cn'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     # BLOG_EMAIL = os.getenv('BLUELOG_EMAIL')
     BLOG_POST_PER_PAGE = 10
     BLOG_MANAGE_POST_PER_PAGE = 15
@@ -78,15 +81,16 @@ class BaseConfig(object):
     CK_LOCALES = ['zh', 'en']
     BABEL_DEFAULT_LOCALE = CK_LOCALES[0]  # 默认区域
 
+    # 数据库设置
+    USERNAME = os.getenv('MYSQL_USERNAME')
+    PASSWORD = os.getenv('MYSQL_PASSWORD')
+    IP = os.getenv('MYSQL_IP')
+    HOST = os.getenv('MYSQL_HOST')
+    DATABASE = os.getenv('DATABASE')
+
 
 class DevelopmentConfig(BaseConfig):
-    pass
-    # USERNAME = os.getenv('MYSQL_USERNAME')
-    # PASSWORD = os.getenv('MYSQL_PASSWORD')
-    # IP = os.getenv('MYSQL_IP')
-    # HOST = os.getenv('MYSQL_HOST')
-    # DATABASE = os.getenv('DATABASE')
-    # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASSWORD, IP, HOST, DATABASE)
+    SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD, BaseConfig.IP, BaseConfig.HOST, BaseConfig.DATABASE)
 
 
 class TestingConfig(DevelopmentConfig):
@@ -94,12 +98,7 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    USERNAME = os.getenv('MYSQL_USERNAME')
-    PASSWORD = os.getenv('MYSQL_PASSWORD')
-    IP = os.getenv('MYSQL_IP')
-    HOST = os.getenv('MYSQL_HOST')
-    DATABASE = os.getenv('DATABASE')
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(USERNAME, PASSWORD, IP, HOST, DATABASE)
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD, BaseConfig.IP, BaseConfig.HOST, BaseConfig.DATABASE)
 
 
 config = {
