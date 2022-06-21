@@ -4,7 +4,7 @@
     :license: MIT, see LICENSE for more details.
 """
 from flask import render_template, flash, redirect, url_for, request, \
-    current_app, Blueprint, abort, make_response, jsonify
+    current_app, Blueprint, abort, make_response
 from flask_login import current_user, login_required
 
 from corneakeeper.emails import send_new_comment_email, send_new_reply_email
