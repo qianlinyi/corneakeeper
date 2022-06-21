@@ -90,7 +90,8 @@ class BaseConfig(object):
 
 
 class DevelopmentConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD, BaseConfig.IP, BaseConfig.HOST, BaseConfig.DATABASE)
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD, BaseConfig.IP,
+                                                              BaseConfig.HOST, BaseConfig.DATABASE)
 
 
 class TestingConfig(DevelopmentConfig):
@@ -98,7 +99,9 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD, BaseConfig.IP, BaseConfig.HOST, BaseConfig.DATABASE)
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD,
+                                                                      BaseConfig.IP, BaseConfig.HOST,
+                                                                      BaseConfig.DATABASE)
 
 
 config = {
