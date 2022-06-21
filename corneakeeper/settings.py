@@ -28,7 +28,7 @@ class BaseConfig(object):
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = ('wangzai', MAIL_USERNAME)
     CK_ADMIN_EMAIL = 'qianlinyi@hhu.edu.cn'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # BLOG_EMAIL = os.getenv('BLUELOG_EMAIL')
     BLOG_POST_PER_PAGE = 10
