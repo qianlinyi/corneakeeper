@@ -81,18 +81,9 @@ class BaseConfig(object):
     CK_LOCALES = ['zh', 'en']
     BABEL_DEFAULT_LOCALE = CK_LOCALES[0]  # 默认区域
 
-    # 数据库设置
-    USERNAME = os.getenv('MYSQL_USERNAME')
-    PASSWORD = os.getenv('MYSQL_PASSWORD')
-    IP = os.getenv('MYSQL_IP')
-    HOST = os.getenv('MYSQL_HOST')
-    DATABASE = os.getenv('DATABASE')
-
 
 class DevelopmentConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD,
-                                                                      BaseConfig.IP,
-                                                                      BaseConfig.HOST, BaseConfig.DATABASE)
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
 
 
 class TestingConfig(DevelopmentConfig):
@@ -100,9 +91,7 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(BaseConfig.USERNAME, BaseConfig.PASSWORD,
-                                                                      BaseConfig.IP, BaseConfig.HOST,
-                                                                      BaseConfig.DATABASE)
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
 
 
 config = {
