@@ -83,7 +83,9 @@ class BaseConfig(object):
 
 
 class DevelopmentConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'mysql://' + os.path.join(basedir, 'qianlinyi.db'))
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@rm-bp1o019zha4dfz18h2o.mysql.rds.aliyuncs.com:3306/{}'.format(
+        os.getenv('DATABASE_USERNAME'), os.getenv('DATABASE_PASSWORD'), os.getenv('DATABASE_NAME')
+    )
 
 
 class TestingConfig(DevelopmentConfig):
