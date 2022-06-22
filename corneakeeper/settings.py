@@ -83,7 +83,7 @@ class BaseConfig(object):
 
 
 class DevelopmentConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'mysql://' + os.path.join(basedir, 'qianlinyi.db'))
 
 
 class TestingConfig(DevelopmentConfig):
@@ -91,7 +91,7 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'mysql://' + os.path.join(basedir, 'qianlinyi.db'))
 
 
 config = {
