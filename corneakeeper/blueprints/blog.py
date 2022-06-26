@@ -203,15 +203,6 @@ def change_theme(theme_name):
     return response
 
 
-@blog_bp.route('/change-language/<language>')
-def change_language(language):
-    if language not in current_app.config['MW_LANGUAGE'].keys():
-        abort(404)
-    response = make_response(redirect_back())
-    response.set_cookie('language', language, max_age=30 * 24 * 60 * 60)
-    return response
-
-
 @blog_bp.route('/set-locale/<locale>')
 def set_locale(locale):
     if locale not in current_app.config['CK_LOCALES']:

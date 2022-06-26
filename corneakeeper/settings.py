@@ -81,10 +81,17 @@ class BaseConfig(object):
     CK_LOCALES = ['zh', 'en']
     BABEL_DEFAULT_LOCALE = CK_LOCALES[0]  # 默认区域
 
+    # 数据库
+    USERNAME = os.getenv('DATABASE_USERNAME')
+    PASSWORD = os.getenv('DATABASE_PASSWORD')
+    HOST = os.getenv('DATABASE_HOST')
+    PORT = os.getenv('DATABASE_PORT')
+    NAME = os.getenv('DATABASE_NAME')
+
 
 class DevelopmentConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@rm-bp1o019zha4dfz18h2o.mysql.rds.aliyuncs.com:3306/{}'.format(
-        os.getenv('DATABASE_USERNAME'), os.getenv('DATABASE_PASSWORD'), os.getenv('DATABASE_NAME')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(
+        BaseConfig.USERNAME, BaseConfig.PASSWORD, BaseConfig.HOST, BaseConfig.PORT, BaseConfig.NAME
     )
 
 
@@ -93,7 +100,9 @@ class TestingConfig(DevelopmentConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI', 'mysql://' + os.path.join(basedir, 'qianlinyi.db'))
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(
+        BaseConfig.USERNAME, BaseConfig.PASSWORD, BaseConfig.HOST, BaseConfig.PORT, BaseConfig.NAME
+    )
 
 
 config = {
