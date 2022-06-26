@@ -7,4 +7,4 @@ if os.path.exists(dotenv_path):
 
 from corneakeeper import create_app # noqa
 
-app = create_app(os.getenv('FLASK_ENV'))
+app = create_app()
