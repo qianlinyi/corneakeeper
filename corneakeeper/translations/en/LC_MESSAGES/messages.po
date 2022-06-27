@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-27 11:01+0800\n"
+"POT-Creation-Date: 2022-06-27 19:49+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,15 +18,87 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
+#: corneakeeper/blueprints/auth.py:32
+msgid "欢迎回来"
+msgstr "Welcome back."
+
+#: corneakeeper/blueprints/auth.py:35
+msgid "无效用户名或密码"
+msgstr "Invalid username or password."
+
+#: corneakeeper/blueprints/auth.py:37
+msgid "账户不存在"
+msgstr "No account."
+
+#: corneakeeper/blueprints/auth.py:68
+msgid "验证邮件已发送，请检查您的邮箱"
+msgstr "Confirm email sent, check your inbox."
+
+#: corneakeeper/blueprints/auth.py:79
+msgid "用户验证成功"
+msgstr "Account confirmed."
+
+#: corneakeeper/blueprints/auth.py:82
+msgid "token 无效或已过期"
+msgstr "Invalid or expired token."
+
+#: corneakeeper/blueprints/auth.py:93
+msgid "新邮件已发出，检查您的邮箱"
+msgstr "New email sent, check your inbox."
+
+#: corneakeeper/blueprints/auth.py:107
+msgid "密码重置邮件已发送，请查看您的邮箱"
+msgstr "Password reset email sent, check your inbox."
+
+#: corneakeeper/blueprints/auth.py:109
+msgid "无效的邮箱地址"
+msgstr "Invalid email."
+
+#: corneakeeper/blueprints/auth.py:126
+msgid "密码重置成功"
+msgstr "Password updated."
+
+#: corneakeeper/blueprints/auth.py:129
+msgid "链接无效或已过期"
+msgstr "Invalid or expired link."
+
+#: corneakeeper/forms/auth.py:11 corneakeeper/forms/auth.py:20
+msgid "用户名"
+msgstr "Username"
+
+#: corneakeeper/forms/auth.py:12 corneakeeper/forms/auth.py:24
+msgid "密码"
+msgstr "Password"
+
+#: corneakeeper/forms/auth.py:13
+msgid "记住我"
+msgstr "Remember me"
+
+#: corneakeeper/forms/auth.py:14 corneakeeper/forms/auth.py:27
+msgid "提交"
+msgstr "Submit"
+
+#: corneakeeper/forms/auth.py:18
+msgid "昵称"
+msgstr "Nickname"
+
+#: corneakeeper/forms/auth.py:19
+msgid "邮箱"
+msgstr "Email"
+
+#: corneakeeper/forms/auth.py:26
+msgid "确认密码"
+msgstr "Confirm password"
+
 #: corneakeeper/templates/base.html:45 corneakeeper/templates/base_cn.html:45
-#: corneakeeper/templates/blog/index_cn.html:4
+#: corneakeeper/templates/blog/index.html:4
 #: corneakeeper/templates/user/profile/base_cn.html:28
 msgid "主页"
 msgstr "Home"
 
 #: corneakeeper/templates/base.html:54 corneakeeper/templates/base_cn.html:54
-#: corneakeeper/templates/blog/about_cn.html:3
-#: corneakeeper/templates/blog/about_cn.html:7
+#: corneakeeper/templates/blog/about.html:3
+#: corneakeeper/templates/blog/about.html:7
 #: corneakeeper/templates/user/profile/base_cn.html:37
 msgid "关于"
 msgstr "About"
@@ -44,7 +116,7 @@ msgstr "Create"
 #: corneakeeper/templates/base.html:104 corneakeeper/templates/base.html:132
 #: corneakeeper/templates/base_cn.html:104
 #: corneakeeper/templates/base_cn.html:132
-#: corneakeeper/templates/blog/search_cn.html:16
+#: corneakeeper/templates/blog/search.html:16
 #: corneakeeper/templates/user/profile/base_cn.html:100
 msgid "文章"
 msgstr "Post"
@@ -52,7 +124,7 @@ msgstr "Post"
 #: corneakeeper/templates/base.html:107 corneakeeper/templates/base.html:143
 #: corneakeeper/templates/base_cn.html:107
 #: corneakeeper/templates/base_cn.html:143
-#: corneakeeper/templates/blog/_sidebar_cn.html:16
+#: corneakeeper/templates/blog/_sidebar.html:16
 #: corneakeeper/templates/user/profile/base_cn.html:75
 #: corneakeeper/templates/user/profile/base_cn.html:111
 msgid "分类"
@@ -61,8 +133,8 @@ msgstr "Category"
 #: corneakeeper/templates/base.html:109 corneakeeper/templates/base.html:145
 #: corneakeeper/templates/base_cn.html:109
 #: corneakeeper/templates/base_cn.html:145
-#: corneakeeper/templates/blog/_sidebar_cn.html:3
-#: corneakeeper/templates/blog/post_cn.html:71
+#: corneakeeper/templates/blog/_sidebar.html:3
+#: corneakeeper/templates/blog/post.html:71
 #: corneakeeper/templates/user/profile/base_cn.html:77
 #: corneakeeper/templates/user/profile/base_cn.html:113
 msgid "链接"
@@ -79,14 +151,14 @@ msgid "新"
 msgstr "New"
 
 #: corneakeeper/templates/base.html:134 corneakeeper/templates/base_cn.html:134
-#: corneakeeper/templates/blog/post_cn.html:97
+#: corneakeeper/templates/blog/post.html:97
 #: corneakeeper/templates/user/profile/base_cn.html:102
 msgid "评论"
 msgstr "Comment"
 
 #: corneakeeper/templates/base.html:140 corneakeeper/templates/base_cn.html:140
-#: corneakeeper/templates/blog/post_cn.html:53
-#: corneakeeper/templates/blog/post_cn.html:61
+#: corneakeeper/templates/blog/post.html:53
+#: corneakeeper/templates/blog/post.html:61
 #: corneakeeper/templates/user/profile/base_cn.html:108
 msgid "收藏"
 msgstr "Collection"
@@ -99,103 +171,166 @@ msgstr "Profile"
 msgid "登出"
 msgstr "Logout"
 
+#: corneakeeper/templates/auth/login.html:9
 #: corneakeeper/templates/base.html:191 corneakeeper/templates/base_cn.html:191
 msgid "登录"
 msgstr "Login"
 
-#: corneakeeper/templates/blog/_posts_cn.html:6
+#: corneakeeper/templates/auth/login.html:21
+msgid "注册新用户"
+msgstr "Register new account"
+
+#: corneakeeper/templates/auth/login.html:26
+msgid "忘记密码"
+msgstr "Forget password"
+
+#: corneakeeper/templates/auth/register.html:4
+msgid "注册"
+msgstr "Register"
+
+#: corneakeeper/templates/auth/register.html:9
+#: corneakeeper/templates/emails/confirm.html:2
+#: corneakeeper/templates/emails/confirm.txt:3
+msgid "欢迎来到 Cornea Keeper ！"
+msgstr "Welcome to Cornea Keeper !"
+
+#: corneakeeper/templates/auth/reset_password.html:4
+#: corneakeeper/templates/auth/reset_password.html:8
+msgid "密码重置"
+msgstr "Password Reset"
+
+#: corneakeeper/templates/blog/_posts.html:6
 msgid "更多"
 msgstr "More"
 
-#: corneakeeper/templates/blog/_posts_cn.html:9
+#: corneakeeper/templates/blog/_posts.html:9
 msgid "评论："
 msgstr "Comment: "
 
-#: corneakeeper/templates/blog/_posts_cn.html:10
-#: corneakeeper/templates/blog/category_cn.html:8
-#: corneakeeper/templates/blog/post_cn.html:27
+#: corneakeeper/templates/blog/_posts.html:10
+#: corneakeeper/templates/blog/category.html:8
+#: corneakeeper/templates/blog/post.html:27
 msgid "分类："
 msgstr "Category: "
 
-#: corneakeeper/templates/blog/_posts_cn.html:20
+#: corneakeeper/templates/blog/_posts.html:20
 msgid "无文章"
 msgstr "No posts yet."
 
-#: corneakeeper/templates/blog/_posts_cn.html:22
+#: corneakeeper/templates/blog/_posts.html:22
 msgid "现在发布"
 msgstr "Write now"
 
-#: corneakeeper/templates/blog/post_cn.html:14
+#: corneakeeper/templates/blog/post.html:14
 msgid "修改"
 msgstr "Edit"
 
-#: corneakeeper/templates/blog/post_cn.html:18
-#: corneakeeper/templates/blog/post_cn.html:139
+#: corneakeeper/templates/blog/post.html:18
+#: corneakeeper/templates/blog/post.html:139
 msgid "删除"
 msgstr "Delete"
 
-#: corneakeeper/templates/blog/post_cn.html:26
+#: corneakeeper/templates/blog/post.html:26
 msgid "作者："
 msgstr "Author: "
 
-#: corneakeeper/templates/blog/post_cn.html:29
+#: corneakeeper/templates/blog/post.html:29
 msgid "日期："
 msgstr "Date: "
 
-#: corneakeeper/templates/blog/post_cn.html:45
+#: corneakeeper/templates/blog/post.html:45
 msgid "取消收藏"
 msgstr "Uncollect"
 
-#: corneakeeper/templates/blog/post_cn.html:97
+#: corneakeeper/templates/blog/post.html:97
 msgid "禁止"
 msgstr "Disable"
 
-#: corneakeeper/templates/blog/post_cn.html:97
+#: corneakeeper/templates/blog/post.html:97
 msgid "允许"
 msgstr "Enable"
 
-#: corneakeeper/templates/blog/post_cn.html:114
+#: corneakeeper/templates/blog/post.html:114
 msgid "作者"
 msgstr "Author"
 
-#: corneakeeper/templates/blog/post_cn.html:116
-#: corneakeeper/templates/blog/post_cn.html:131
+#: corneakeeper/templates/blog/post.html:116
+#: corneakeeper/templates/blog/post.html:131
 msgid "回复"
 msgstr "Reply"
 
-#: corneakeeper/templates/blog/post_cn.html:134
+#: corneakeeper/templates/blog/post.html:134
 msgid "邮件"
 msgstr "Email"
 
-#: corneakeeper/templates/blog/post_cn.html:166
+#: corneakeeper/templates/blog/post.html:166
 msgid "评论已禁止"
 msgstr "Comment disabled."
 
-#: corneakeeper/templates/blog/search_cn.html:5
-#: corneakeeper/templates/blog/search_cn.html:9
+#: corneakeeper/templates/blog/search.html:5
+#: corneakeeper/templates/blog/search.html:9
 msgid "搜索："
 msgstr "Search: "
 
-#: corneakeeper/templates/blog/search_cn.html:18
-#, fuzzy
+#: corneakeeper/templates/blog/search.html:18
 msgid "图片"
-msgstr "Photo Upload"
+msgstr "Photo"
 
-#: corneakeeper/templates/blog/search_cn.html:20
+#: corneakeeper/templates/blog/search.html:20
 msgid "用户"
 msgstr "User"
 
-#: corneakeeper/templates/blog/search_cn.html:22
+#: corneakeeper/templates/blog/search.html:22
 msgid "标签"
 msgstr "Tag"
 
-#: corneakeeper/templates/blog/search_cn.html:27
+#: corneakeeper/templates/blog/search.html:27
 msgid "结果"
 msgstr "Result"
 
-#: corneakeeper/templates/blog/search_cn.html:43
+#: corneakeeper/templates/blog/search.html:43
 msgid "无结果"
 msgstr "No results"
+
+#: corneakeeper/templates/emails/confirm.html:1
+#: corneakeeper/templates/emails/confirm.txt:1
+msgid "您好"
+msgstr ""
+
+#: corneakeeper/templates/emails/confirm.html:3
+#: corneakeeper/templates/emails/confirm.txt:5
+msgid "请访问如下链接来验证您的邮箱地址："
+msgstr "Please visit the link below to verify your email address:"
+
+#: corneakeeper/templates/emails/confirm.html:6
+#: corneakeeper/templates/emails/confirm.txt:9
+msgid "请勿回复此邮件！"
+msgstr "Please do not reply to this notification, this inbox is not monitored."
+
+#: corneakeeper/templates/errors/400.html:4
+#: corneakeeper/templates/errors/400.html:10
+msgid "400错误"
+msgstr "400 Error"
+
+#: corneakeeper/templates/errors/401.html:4
+#: corneakeeper/templates/errors/401.html:10
+msgid "401错误"
+msgstr "401 Error"
+
+#: corneakeeper/templates/errors/403.html:4
+#: corneakeeper/templates/errors/403.html:10
+msgid "403 错误"
+msgstr "403 Error"
+
+#: corneakeeper/templates/errors/405.html:4
+#: corneakeeper/templates/errors/405.html:10
+msgid "405 错误"
+msgstr "405 Error"
+
+#: corneakeeper/templates/errors/500.html:4
+#: corneakeeper/templates/errors/500.html:10
+msgid "500 错误"
+msgstr "500 Error"
 
 #: corneakeeper/templates/user/profile/base_cn.html:127
 msgid "数据上传"

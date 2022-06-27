@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_babel import lazy_gettext as _l
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms import ValidationError
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Regexp
@@ -7,23 +8,23 @@ from corneakeeper.models import User
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(0, 20)])
-    password = PasswordField('Password', validators=[DataRequired(), Length(1, 128)])
-    remember = BooleanField('Remember me')
-    submit = SubmitField('Log in')
+    username = StringField(_l('用户名'), validators=[DataRequired(), Length(0, 20)])
+    password = PasswordField(_l('密码'), validators=[DataRequired(), Length(1, 128)])
+    remember = BooleanField(_l('记住我'))
+    submit = SubmitField(_l('提交'))
 
 
 class RegisterForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    email = StringField('Email', validators=[DataRequired(), Length(1, 254), Email()])
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
+    name = StringField(_l('昵称'), validators=[DataRequired(), Length(1, 30)])
+    email = StringField(_l('邮箱'), validators=[DataRequired(), Length(1, 254), Email()])
+    username = StringField(_l('用户名'), validators=[DataRequired(), Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
                                                                                          message='The username should '
                                                                                                  'contain only a-z, '
                                                                                                  'A-Z and 0-9.')])
-    password = PasswordField('Password', validators=[
+    password = PasswordField(_l('密码'), validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
-    password2 = PasswordField('Confirm password', validators=[DataRequired()])
-    submit = SubmitField()
+    password2 = PasswordField(_l('确认密码'), validators=[DataRequired()])
+    submit = SubmitField(_l('提交'))
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():

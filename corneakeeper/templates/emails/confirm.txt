@@ -1,0 +1,9 @@
+{{ _('您好') }} {{ user.username }},
+
+{{ _('欢迎来到 Cornea Keeper ！') }}
+
+{{ _('请访问如下链接来验证您的邮箱地址：') }}
+
+    {{ url_for('auth.confirm', token=token, _external=True) }}
+
+{{ _('请勿回复此邮件！') }}

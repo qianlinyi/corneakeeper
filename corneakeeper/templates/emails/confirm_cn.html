@@ -1,6 +1,0 @@
-<p>您好 {{ user.username }}，</p>
-<p>欢迎来到 <b>Cornea Keeper</b>！</p>
-<p>请访问如下链接来验证您的邮箱地址：<br>
-    <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">{{ url_for('auth.confirm', token=token, _external=True) }}</a>
-</p>
-<small>请勿回复此邮件！</small>
