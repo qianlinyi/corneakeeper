@@ -1,6 +1,6 @@
 {% if links %}
     <div class="card bg-light mb-3">
-        <div class="card-header">链接</div>
+        <div class="card-header">{{ _('链接') }}</div>
         <ul class="list-group list-group-flush">
             {% for link in links %}
                 <li class="list-group-item  list-group-item-action d-flex justify-content-between align-items-center">
@@ -13,7 +13,7 @@
 
 {% if categories %}
     <div class="card bg-light mb-3">
-        <div class="card-header">分类</div>
+        <div class="card-header">{{ _('分类') }}</div>
         <ul class="list-group list-group-flush">
             {% for category in categories %}
                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">

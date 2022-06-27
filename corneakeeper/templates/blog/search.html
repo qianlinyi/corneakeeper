@@ -2,29 +2,29 @@
 {% from 'bootstrap4/pagination.html' import render_pagination %}
 {% from 'macros.html' import post_card, photo_card, user_card with context %}
 
-{% block title %}搜索：{{ q }}{% endblock %}
+{% block title %}{{ _('搜索：') }}{{ q }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>搜索：{{ keywords }}</h1>
+        <h1>{{ _('搜索：') }}{{ keywords }}</h1>
     </div>
     <div class="row">
         <div class="col-md-3">
             <div class="nav nav-pills flex-column" role="tablist"
                  aria-orientation="vertical">
                 <a class="nav-item nav-link {% if category == 'post' %}active{% endif %}"
-                   href="{{ url_for('.search', keywords=keywords, category='post') }}">文章</a>
+                   href="{{ url_for('.search', keywords=keywords, category='post') }}">{{ _('文章') }}</a>
                 <a class="nav-item nav-link {% if category == 'photo' %}active{% endif %}"
-                   href="{{ url_for('.search', keywords=keywords, category='photo') }}">图片</a>
+                   href="{{ url_for('.search', keywords=keywords, category='photo') }}">{{ _('图片') }}</a>
                 <a class="nav-item nav-link {% if category == 'user' %}active{% endif %}"
-                   href="{{ url_for('.search', keywords=keywords, category='user') }}">用户</a>
+                   href="{{ url_for('.search', keywords=keywords, category='user') }}">{{ _('用户') }}</a>
                 <a class="nav-item nav-link {% if category == 'tag' %}active{% endif %}"
-                   href="{{ url_for('.search', keywords=keywords, category='tag') }}">标签</a>
+                   href="{{ url_for('.search', keywords=keywords, category='tag') }}">{{ _('标签') }}</a>
             </div>
         </div>
         <div class="col-md-9">
             {% if results %}
-                <h5>{{ results|length }} results</h5>
+                <h5>{{ results|length }} {{ _('结果') }}</h5>
                 {% for item in results %}
                     {% if category == 'post' %}
                         {{ post_card(item) }}
@@ -40,7 +40,7 @@
                     {% endif %}
                 {% endfor %}
             {% else %}
-                <h5 class="tip">无结果</h5>
+                <h5 class="tip">{{ _('无结果') }}</h5>
             {% endif %}
         </div>
         <div class="col-md-3"></div>

@@ -25,16 +25,12 @@ def index():
     pagination = Post.query.order_by(Post.timestamp.desc()).paginate(page,
                                                                      per_page=per_page)
     posts = pagination.items
-    return render_template(
-        'blog/index_{}.html'.format(request.cookies.get('language', 'cn')),
-        pagination=pagination,
-        posts=posts)
+    return render_template('blog/index.html', pagination=pagination, posts=posts)
 
 
 @blog_bp.route('/about')
 def about():
-    return render_template(
-        'blog/about_{}.html'.format(request.cookies.get('language', 'cn')))
+    return render_template('blog/about.html')
 
 
 @blog_bp.route('/category/<int:category_id>')
@@ -45,10 +41,7 @@ def show_category(category_id):
     pagination = Post.query.with_parent(category).order_by(
         Post.timestamp.desc()).paginate(page, per_page)
     posts = pagination.items
-    return render_template(
-        'blog/category_{}.html'.format(request.cookies.get('language', 'cn')),
-        category=category,
-        pagination=pagination, posts=posts)
+    return render_template('blog/category.html', category=category, pagination=pagination, posts=posts)
 
 
 @blog_bp.route('/post/<int:post_id>', methods=['GET', 'POST'])
@@ -133,9 +126,7 @@ def show_post(post_id):
                 template='emails/new_comment_{}'.format(language),
                 post=post)  # send notification email to admin
         return redirect(url_for('.show_post', post_id=post_id))
-    return render_template('blog/post_{}.html'.format(language), post=post,
-                           pagination=pagination, form=form,
-                           comments=comments)
+    return render_template('blog/post.html', post=post, pagination=pagination, form=form, comments=comments)
 
 
 @blog_bp.route('/collect/<int:post_id>', methods=['POST'])
@@ -245,6 +236,5 @@ def search():
         pagination = Photo.query.whooshee_search(keywords).paginate(page,
                                                                     per_page)
     results = pagination.items
-    return render_template('blog/search_{}.html'.format(language),
-                           keywords=keywords, results=results,
+    return render_template('blog/search.html', keywords=keywords, results=results,
                            pagination=pagination, category=category)
