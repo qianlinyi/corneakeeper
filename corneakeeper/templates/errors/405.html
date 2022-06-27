@@ -1,21 +1,13 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 
 {% block title %}
-    {% if request.cookies.get('language','cn')=='cn' %}
-        405 错误
-    {% else %}
-        405 Error
-    {% endif %}
+    {{ _('405 错误') }}
 {% endblock %}
 
 {% block content %}
     <div class="page-header">
         <h1>
-            {% if request.cookies.get('language','cn')=='cn' %}
-                405 错误
-            {% else %}
-                405 Error
-            {% endif %}
+            {{ _('405 错误') }}
         </h1>
     </div>
     <div class="row">
@@ -23,7 +15,7 @@
             <p>{{ description }}</p>
         </div>
         <div class="col-sm-4 sidebar">
-            {% include 'blog/_sidebar_{}.html'.format(request.cookies.get('language','cn')) %}
+            {% include 'blog/_sidebar.html' %}
         </div>
     </div>
 {% endblock %}
