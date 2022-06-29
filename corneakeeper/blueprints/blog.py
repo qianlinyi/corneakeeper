@@ -1,12 +1,7 @@
-"""
-    :author: Linyi Qian (钱霖奕)
-    :copyright: © 2022 Linyi Qian <qianlinyi@hhu.edu.cn>
-    :license: MIT, see LICENSE for more details.
-"""
 from flask import render_template, flash, redirect, url_for, request, \
     current_app, Blueprint, abort, make_response
 from flask_login import current_user, login_required
-
+from flask_babel import _
 from corneakeeper.emails import send_new_comment_email, send_new_reply_email
 from corneakeeper.extensions import db
 from corneakeeper.forms.blog import CommentForm, UserCommentForm
@@ -53,13 +48,9 @@ def show_post(post_id):
         reviewed=True).order_by(Comment.timestamp.asc()).paginate(
         page, per_page)
     comments = pagination.items
-    language = request.cookies.get('language', 'cn')
     if current_user.is_authenticated:
         form = UserCommentForm()
         user = User.query.filter_by(username=post.user.username).first_or_404()
-        if language == 'cn':
-            form.body.label.text = '内容'
-            form.submit.label.text = '提交'
         form.author.data = current_user.name
         form.email.data = current_user.email
         form.site.data = current_user.website
@@ -67,12 +58,6 @@ def show_post(post_id):
         reviewed = True if user.id == current_user.id else False  # 判断是否为作者本人
     else:
         form = CommentForm()
-        if language == 'cn':
-            form.author.label.text = '昵称'
-            form.email.label.text = '邮箱'
-            form.site.label.text = '网址'
-            form.body.label.text = '内容'
-            form.submit.label.text = '提交'
         from_admin = False
         reviewed = False
 
@@ -95,36 +80,18 @@ def show_post(post_id):
         if replied_id:
             replied_comment = Comment.query.get_or_404(replied_id)
             comment.replied = replied_comment
-            send_new_reply_email(
-                template='emails/new_reply_{}'.format(language),
-                comment=replied_comment)
+            send_new_reply_email(template='emails/new_reply', comment=replied_comment)
         db.session.add(comment)
         db.session.commit()
         if current_user.is_authenticated:  # send message based on authentication status
             if current_user.id == post.user_id:
-                if language == 'cn':
-                    flash('评论发布成功', 'success')
-                else:
-                    flash('Comment published.', 'success')
+                flash(_('评论发布成功'), 'success')
             else:
-                if language == 'cn':
-                    flash('您的评论将会在审核后公布', 'info')
-                else:
-                    flash(
-                        'Thanks, your comment will be published after reviewed.',
-                        'info')
-                send_new_comment_email(
-                    template='emails/new_comment_{}'.format(language),
-                    post=post)  # send notification email to admin
+                flash(_('您的评论将会在审核后公布'), 'info')
+                send_new_comment_email(template='emails/new_comment', post=post)
         else:
-            if language == 'cn':
-                flash('您的评论将会在审核后公布', 'info')
-            else:
-                flash('Thanks, your comment will be published after reviewed.',
-                      'info')
-            send_new_comment_email(
-                template='emails/new_comment_{}'.format(language),
-                post=post)  # send notification email to admin
+            flash(_('您的评论将会在审核后公布'), 'info')
+            send_new_comment_email(template='emails/new_comment', post=post)
         return redirect(url_for('.show_post', post_id=post_id))
     return render_template('blog/post.html', post=post, pagination=pagination, form=form, comments=comments)
 
@@ -135,19 +102,12 @@ def show_post(post_id):
 @permission_required('COLLECT')
 def collect(post_id):
     post = Post.query.get_or_404(post_id)
-    language = request.cookies.get('language', 'cn')
     if current_user.is_collecting_post(post):
-        if language == 'cn':
-            flash('已经添加过收藏', 'info')
-        else:
-            flash('Already collected.', 'info')
+        flash(_('已经添加过收藏'), 'info')
         return redirect(url_for('blog.show_post', post_id=post_id))
 
     current_user.collect_post(post)
-    if language == 'cn':
-        flash('文章已收藏', 'success')
-    else:
-        flash('Photo collected.', 'success')
+    flash(_('文章已收藏'), 'success')
     if current_user != post.user and post.user.receive_collect_notification:
         push_collect_post_notification(collector=current_user, post_id=post_id,
                                        receiver=post.user)
@@ -158,19 +118,12 @@ def collect(post_id):
 @login_required
 def uncollect(post_id):
     post = Post.query.get_or_404(post_id)
-    language = request.cookies.get('language', 'cn')
     if not current_user.is_collecting_post(post):
-        if language == 'cn':
-            flash('文章尚未收藏', 'info')
-        else:
-            flash('Not collect yet.', 'info')
+        flash(_('文章尚未收藏'), 'info')
         return redirect(url_for('blog.show_post', post_id=post_id))
 
     current_user.uncollect_post(post)
-    if language == 'cn':
-        flash('文章已取消收藏', 'info')
-    else:
-        flash('Photo uncollected.', 'info')
+    flash(_('文章已取消收藏'), 'info')
     return redirect(url_for('blog.show_post', post_id=post_id))
 
 
@@ -212,12 +165,8 @@ def set_locale(locale):
 @blog_bp.route('/search')
 def search():
     keywords = request.args.get('keywords', '').strip()
-    language = request.cookies.get('language', 'cn')
     if keywords == '':
-        if language == 'cn':
-            flash('请输入关键字', 'warning')
-        else:
-            flash('Enter keyword about photo, user or tag.', 'warning')
+        flash(_('请输入关键字'), 'warning')
         return redirect_back()
 
     category = request.args.get('category', 'post')

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-27 19:49+0800\n"
+"POT-Creation-Date: 2022-06-29 16:33+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -30,37 +30,69 @@ msgstr "Invalid username or password."
 msgid "账户不存在"
 msgstr "No account."
 
-#: corneakeeper/blueprints/auth.py:68
+#: corneakeeper/blueprints/auth.py:45
+msgid "登出成功"
+msgstr "Logout success."
+
+#: corneakeeper/blueprints/auth.py:66
 msgid "验证邮件已发送，请检查您的邮箱"
 msgstr "Confirm email sent, check your inbox."
 
-#: corneakeeper/blueprints/auth.py:79
+#: corneakeeper/blueprints/auth.py:77
 msgid "用户验证成功"
 msgstr "Account confirmed."
 
-#: corneakeeper/blueprints/auth.py:82
+#: corneakeeper/blueprints/auth.py:80
 msgid "token 无效或已过期"
 msgstr "Invalid or expired token."
 
-#: corneakeeper/blueprints/auth.py:93
+#: corneakeeper/blueprints/auth.py:91
 msgid "新邮件已发出，检查您的邮箱"
 msgstr "New email sent, check your inbox."
 
-#: corneakeeper/blueprints/auth.py:107
+#: corneakeeper/blueprints/auth.py:105
 msgid "密码重置邮件已发送，请查看您的邮箱"
 msgstr "Password reset email sent, check your inbox."
 
-#: corneakeeper/blueprints/auth.py:109
+#: corneakeeper/blueprints/auth.py:107
 msgid "无效的邮箱地址"
 msgstr "Invalid email."
 
-#: corneakeeper/blueprints/auth.py:126
+#: corneakeeper/blueprints/auth.py:124
 msgid "密码重置成功"
 msgstr "Password updated."
 
-#: corneakeeper/blueprints/auth.py:129
+#: corneakeeper/blueprints/auth.py:127
 msgid "链接无效或已过期"
 msgstr "Invalid or expired link."
+
+#: corneakeeper/blueprints/blog.py:88
+msgid "评论发布成功"
+msgstr "Comment published."
+
+#: corneakeeper/blueprints/blog.py:90 corneakeeper/blueprints/blog.py:93
+msgid "您的评论将会在审核后公布"
+msgstr "Thanks, your comment will be published after reviewed."
+
+#: corneakeeper/blueprints/blog.py:106
+msgid "已经添加过收藏"
+msgstr "Already collected."
+
+#: corneakeeper/blueprints/blog.py:110
+msgid "文章已收藏"
+msgstr "Post collected."
+
+#: corneakeeper/blueprints/blog.py:122
+msgid "文章尚未收藏"
+msgstr "Not collect yet."
+
+#: corneakeeper/blueprints/blog.py:126
+msgid "文章已取消收藏"
+msgstr "Post uncollected."
+
+#: corneakeeper/blueprints/blog.py:169
+msgid "请输入关键字"
+msgstr "Enter keyword about photo, user or tag."
 
 #: corneakeeper/forms/auth.py:11 corneakeeper/forms/auth.py:20
 msgid "用户名"
@@ -117,6 +149,8 @@ msgstr "Create"
 #: corneakeeper/templates/base_cn.html:104
 #: corneakeeper/templates/base_cn.html:132
 #: corneakeeper/templates/blog/search.html:16
+#: corneakeeper/templates/emails/new_comment.html:1
+#: corneakeeper/templates/emails/new_comment.txt:1
 #: corneakeeper/templates/user/profile/base_cn.html:100
 msgid "文章"
 msgstr "Post"
@@ -294,8 +328,10 @@ msgstr "No results"
 
 #: corneakeeper/templates/emails/confirm.html:1
 #: corneakeeper/templates/emails/confirm.txt:1
+#: corneakeeper/templates/emails/reset_password.html:1
+#: corneakeeper/templates/emails/reset_password.txt:1
 msgid "您好"
-msgstr ""
+msgstr "Hello"
 
 #: corneakeeper/templates/emails/confirm.html:3
 #: corneakeeper/templates/emails/confirm.txt:5
@@ -306,6 +342,35 @@ msgstr "Please visit the link below to verify your email address:"
 #: corneakeeper/templates/emails/confirm.txt:9
 msgid "请勿回复此邮件！"
 msgstr "Please do not reply to this notification, this inbox is not monitored."
+
+#: corneakeeper/templates/emails/new_comment.html:1
+#: corneakeeper/templates/emails/new_comment.txt:1
+msgid "有新评论，点击下方链接查看："
+msgstr "has new comment, click the link below to check:"
+
+#: corneakeeper/templates/emails/new_comment.html:3
+#: corneakeeper/templates/emails/new_comment.txt:5
+#: corneakeeper/templates/emails/new_reply.html:3
+#: corneakeeper/templates/emails/new_reply.txt:5
+#: corneakeeper/templates/emails/reset_password.html:5
+#: corneakeeper/templates/emails/reset_password.txt:7
+msgid "请勿回复此邮件"
+msgstr "Please do not reply to this notification, this inbox is not monitored."
+
+#: corneakeeper/templates/emails/new_reply.html:1
+#: corneakeeper/templates/emails/new_reply.txt:1
+msgid "你在文章"
+msgstr "New reply for the comment you left in post"
+
+#: corneakeeper/templates/emails/new_reply.html:1
+#: corneakeeper/templates/emails/new_reply.txt:1
+msgid "下的评论有新回复，点击以下链接查看"
+msgstr ", click the link below to check:"
+
+#: corneakeeper/templates/emails/reset_password.html:2
+#: corneakeeper/templates/emails/reset_password.txt:3
+msgid "下面是您的密码重置链接："
+msgstr "Here is your password reset link:"
 
 #: corneakeeper/templates/errors/400.html:4
 #: corneakeeper/templates/errors/400.html:10
@@ -338,9 +403,9 @@ msgstr "Upload"
 
 #: corneakeeper/templates/user/profile/base_cn.html:132
 msgid "手动上传"
-msgstr "Manual Upload"
+msgstr "Manual upload"
 
 #: corneakeeper/templates/user/profile/base_cn.html:134
 msgid "图片上传"
-msgstr "Photo Upload"
+msgstr "Photo upload"
 

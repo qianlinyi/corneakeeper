@@ -42,11 +42,8 @@ def login():
 @login_required
 def logout():
     logout_user()
-    if request.cookies.get('language', 'cn') == 'cn':
-        flash('登出成功', 'info')
-    else:
-        flash('Logout success.', 'info')
-    return redirect(url_for('blog.index'))  # 修改，原为 redirect_back()
+    flash(_('登出成功'), 'info')
+    return redirect(url_for('blog.index'))
 
 
 @auth_bp.route('/register', methods=['GET', 'POST'])

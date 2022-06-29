@@ -6,11 +6,11 @@ from corneakeeper.models import Category
 
 
 class CommentForm(FlaskForm):
-    author = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 254)])
-    site = StringField('Site', validators=[Optional(), URL(), Length(0, 255)])
-    body = TextAreaField('Comment', validators=[DataRequired()])
-    submit = SubmitField()
+    author = StringField('姓名', validators=[DataRequired(), Length(1, 30)])
+    email = StringField('邮箱', validators=[DataRequired(), Email(), Length(1, 254)])
+    site = StringField('网址', validators=[Optional(), URL(), Length(0, 255)])
+    body = TextAreaField('评论', validators=[DataRequired()])
+    submit = SubmitField('提交')
 
 
 class UserCommentForm(CommentForm):
@@ -39,13 +39,6 @@ class CategoryForm(FlaskForm):
         if Category.query.filter_by(name=field.data).first():
             raise ValidationError('Name already in use.')
 
-
-# class CommentForm(FlaskForm):
-#     author = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-#     email = StringField('Email', validators=[DataRequired(), Email(), Length(1, 254)])
-#     site = StringField('Site', validators=[Optional(), URL(), Length(0, 255)])
-#     body = TextAreaField('Comment', validators=[DataRequired()])
-#     submit = SubmitField()
 
 
 class LinkForm(FlaskForm):
