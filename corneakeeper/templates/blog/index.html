@@ -12,7 +12,7 @@
         <div class="col-sm-8">
             {% include 'blog/_posts.html' %}
             {% if posts %}
-                <div class="page-footer">{{ render_pagination(pagination,align='center',prev='上一页',next='下一页') }}</div>
+                <div class="page-footer">{{ render_pagination(pagination,align='center',prev=_('上一页'),next=_('下一页')) }}</div>
             {% endif %}
         </div>
         <div class="col-sm-4 sidebar">

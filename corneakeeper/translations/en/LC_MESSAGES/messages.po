@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-29 19:03+0800\n"
+"POT-Creation-Date: 2022-06-29 19:46+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -260,6 +260,14 @@ msgstr "No posts yet."
 #: corneakeeper/templates/blog/_posts.html:22
 msgid "现在发布"
 msgstr "Write now"
+
+#: corneakeeper/templates/blog/index.html:15
+msgid "上一页"
+msgstr "Previous"
+
+#: corneakeeper/templates/blog/index.html:15
+msgid "下一页"
+msgstr "Next"
 
 #: corneakeeper/templates/blog/post.html:14
 msgid "修改"
