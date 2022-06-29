@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-29 16:33+0800\n"
+"POT-Creation-Date: 2022-06-29 16:44+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -34,35 +34,35 @@ msgstr "No account."
 msgid "登出成功"
 msgstr "Logout success."
 
-#: corneakeeper/blueprints/auth.py:66
+#: corneakeeper/blueprints/auth.py:65
 msgid "验证邮件已发送，请检查您的邮箱"
 msgstr "Confirm email sent, check your inbox."
 
-#: corneakeeper/blueprints/auth.py:77
+#: corneakeeper/blueprints/auth.py:76
 msgid "用户验证成功"
 msgstr "Account confirmed."
 
-#: corneakeeper/blueprints/auth.py:80
+#: corneakeeper/blueprints/auth.py:79
 msgid "token 无效或已过期"
 msgstr "Invalid or expired token."
 
-#: corneakeeper/blueprints/auth.py:91
+#: corneakeeper/blueprints/auth.py:90
 msgid "新邮件已发出，检查您的邮箱"
 msgstr "New email sent, check your inbox."
 
-#: corneakeeper/blueprints/auth.py:105
+#: corneakeeper/blueprints/auth.py:104
 msgid "密码重置邮件已发送，请查看您的邮箱"
 msgstr "Password reset email sent, check your inbox."
 
-#: corneakeeper/blueprints/auth.py:107
+#: corneakeeper/blueprints/auth.py:106
 msgid "无效的邮箱地址"
 msgstr "Invalid email."
 
-#: corneakeeper/blueprints/auth.py:124
+#: corneakeeper/blueprints/auth.py:123
 msgid "密码重置成功"
 msgstr "Password updated."
 
-#: corneakeeper/blueprints/auth.py:127
+#: corneakeeper/blueprints/auth.py:126
 msgid "链接无效或已过期"
 msgstr "Invalid or expired link."
 
@@ -271,6 +271,10 @@ msgstr "Author: "
 #: corneakeeper/templates/blog/post.html:29
 msgid "日期："
 msgstr "Date: "
+
+#: corneakeeper/templates/blog/post.html:36
+msgid "分享"
+msgstr "Share"
 
 #: corneakeeper/templates/blog/post.html:45
 msgid "取消收藏"

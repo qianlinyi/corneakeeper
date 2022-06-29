@@ -33,7 +33,7 @@
         <div class="col-sm-8">
             {{ post.body|safe }}
             <hr>
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".postLinkModal">分享
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".postLinkModal">{{ _('分享') }}
             </button>
 
             {% if current_user.is_authenticated %}
