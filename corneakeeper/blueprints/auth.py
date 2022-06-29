@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, Blueprint, request
+from flask import render_template, flash, redirect, url_for, Blueprint
 from flask_login import login_user, logout_user, login_required, current_user, login_fresh, confirm_login
 from flask_babel import _
 from corneakeeper.utils import redirect_back, generate_token, validate_token, Operations

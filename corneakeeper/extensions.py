@@ -9,7 +9,7 @@ from flask_wtf import CSRFProtect
 from flask_dropzone import Dropzone
 from flask_avatars import Avatars
 from flask_whooshee import Whooshee
-from flask_babel import Babel
+from flask_babel import Babel, lazy_gettext as _l
 
 login_manager = LoginManager()
 db = SQLAlchemy()
@@ -54,8 +54,7 @@ def get_locale():
 
 login_manager.anonymous_user = Guest
 login_manager.login_view = 'auth.login'
-# 需要添加其他方法获取 cookies
-login_manager.login_message = u'请先登录您的账号 \\ Please log in to access page!'
+login_manager.login_message = _l(u'请先登录您的账号')
 login_manager.login_message_category = 'warning'
 login_manager.refresh_view = 'auth.re_authenticate'
 login_manager.needs_refresh_message_category = 'warning'

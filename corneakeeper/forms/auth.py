@@ -18,9 +18,9 @@ class RegisterForm(FlaskForm):
     name = StringField(_l('昵称'), validators=[DataRequired(), Length(1, 30)])
     email = StringField(_l('邮箱'), validators=[DataRequired(), Length(1, 254), Email()])
     username = StringField(_l('用户名'), validators=[DataRequired(), Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
-                                                                                         message='The username should '
-                                                                                                 'contain only a-z, '
-                                                                                                 'A-Z and 0-9.')])
+                                                                                        message='The username should '
+                                                                                                'contain only a-z, '
+                                                                                                'A-Z and 0-9.')])
     password = PasswordField(_l('密码'), validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
     password2 = PasswordField(_l('确认密码'), validators=[DataRequired()])
