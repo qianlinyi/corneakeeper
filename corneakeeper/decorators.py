@@ -2,6 +2,8 @@ from functools import wraps
 
 from flask import Markup, flash, url_for, redirect, abort
 from flask_login import current_user
+from flask_babel import lazy_gettext as _l
+from flask_babel import _
 
 
 def confirm_required(func):
@@ -9,13 +11,9 @@ def confirm_required(func):
     def decorated_function(*args, **kwargs):
         if not current_user.confirmed:
             message = Markup(
-                '请先验证您的账户。没有收到邮件？<a class="alert-link" '
-                'href="%s">重新发送验证邮件</a><br>Please confirm your account first. '
-                'Not receive the email? <a class="alert-link" '
-                'href="%s">Resend Confirm Email</a>' % (
-                    url_for('auth.resend_confirm_email'),
-                    url_for('auth.resend_confirm_email')
-                ))
+                _(u'请先验证您的账户。没有收到邮件？') + '<a class="alert-link" href="{}">'.format(
+                    url_for('auth.resend_confirm_email')) + _('重新发送验证邮件') + '</a>'
+            )
             flash(message, 'warning')
             return redirect(url_for('blog.index'))
         return func(*args, **kwargs)

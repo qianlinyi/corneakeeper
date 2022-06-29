@@ -50,7 +50,7 @@
                           action="{{ url_for('blog.collect', post_id=post.id) }}">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button type="submit" class="btn btn-success btn-sm">
-                            {{ _('收藏') }}
+                            {{ _('收藏文章') }}
                         </button>
                     </form>
                 {% endif %}
@@ -58,7 +58,7 @@
                 <form class="inline" method="post" action="{{ url_for('blog.collect', post_id=post.id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <button type="submit" class="btn btn-success btn-sm">
-                        {{ _('收藏') }}
+                        {{ _('收藏文章') }}
                     </button>
                 </form>
             {% endif %}

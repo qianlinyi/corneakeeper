@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-29 16:55+0800\n"
+"POT-Creation-Date: 2022-06-29 19:03+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -17,6 +17,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
+
+#: corneakeeper/decorators.py:14
+msgid "请先验证您的账户。没有收到邮件？"
+msgstr "Please confirm your account first. Not receive the email? "
+
+#: corneakeeper/decorators.py:15
+msgid "重新发送验证邮件"
+msgstr "Resend Confirm Email"
 
 #: corneakeeper/blueprints/auth.py:32
 msgid "欢迎回来"
@@ -191,8 +199,6 @@ msgid "评论"
 msgstr "Comment"
 
 #: corneakeeper/templates/base.html:140 corneakeeper/templates/base_cn.html:140
-#: corneakeeper/templates/blog/post.html:53
-#: corneakeeper/templates/blog/post.html:61
 #: corneakeeper/templates/user/profile/base_cn.html:108
 msgid "收藏"
 msgstr "Collection"
@@ -279,6 +285,11 @@ msgstr "Share"
 #: corneakeeper/templates/blog/post.html:45
 msgid "取消收藏"
 msgstr "Uncollect"
+
+#: corneakeeper/templates/blog/post.html:53
+#: corneakeeper/templates/blog/post.html:61
+msgid "收藏文章"
+msgstr "Collect"
 
 #: corneakeeper/templates/blog/post.html:97
 msgid "禁止"
@@ -417,4 +428,7 @@ msgstr "Manual upload"
 #: corneakeeper/templates/user/profile/base_cn.html:134
 msgid "图片上传"
 msgstr "Photo upload"
+
+#~ msgid "%(1221)s 121 %(s)s"
+#~ msgstr ""
 
