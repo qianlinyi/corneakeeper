@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-29 19:56+0800\n"
+"POT-Creation-Date: 2022-06-29 20:02+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -134,13 +134,15 @@ msgstr "Email"
 msgid "确认密码"
 msgstr "Confirm password"
 
-#: corneakeeper/templates/base.html:45 corneakeeper/templates/base_cn.html:45
+#: corneakeeper/templates/auth/base.html:26 corneakeeper/templates/base.html:45
+#: corneakeeper/templates/base_cn.html:45
 #: corneakeeper/templates/blog/index.html:4
 #: corneakeeper/templates/user/profile/base_cn.html:28
 msgid "主页"
 msgstr "Home"
 
-#: corneakeeper/templates/base.html:54 corneakeeper/templates/base_cn.html:54
+#: corneakeeper/templates/auth/base.html:35 corneakeeper/templates/base.html:54
+#: corneakeeper/templates/base_cn.html:54
 #: corneakeeper/templates/blog/about.html:3
 #: corneakeeper/templates/blog/about.html:7
 #: corneakeeper/templates/user/profile/base_cn.html:37
@@ -215,18 +217,9 @@ msgstr "Profile"
 msgid "登出"
 msgstr "Logout"
 
-#: corneakeeper/templates/auth/login.html:9
 #: corneakeeper/templates/base.html:191 corneakeeper/templates/base_cn.html:191
 msgid "登录"
 msgstr "Login"
-
-#: corneakeeper/templates/auth/login.html:21
-msgid "注册新用户"
-msgstr "Register new account"
-
-#: corneakeeper/templates/auth/login.html:26
-msgid "忘记密码"
-msgstr "Forget password"
 
 #: corneakeeper/templates/auth/register.html:4
 msgid "注册"
@@ -443,4 +436,10 @@ msgstr "Photo upload"
 
 #~ msgid "%(1221)s 121 %(s)s"
 #~ msgstr ""
+
+#~ msgid "注册新用户"
+#~ msgstr "Register new account"
+
+#~ msgid "忘记密码"
+#~ msgstr "Forget password"
 
