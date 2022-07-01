@@ -1,11 +1,11 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}Manage Categories{% endblock %}
+{% block title %}{{ _('分类管理') }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>Categories
+        <h1>{{ _('分类') }}
             <small class="text-muted">{{ categories|length }}</small>
         </h1>
     </div>
@@ -13,10 +13,10 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>No.</th>
-                <th>Name</th>
-                <th>Posts</th>
-                <th>Actions</th>
+                <th>{{ _('编号') }}</th>
+                <th>{{ _('分类名') }}</th>
+                <th>{{ _('文章数') }}</th>
+                <th>{{ _('选项') }}</th>
             </tr>
             </thead>
             {% for category in categories %}
@@ -28,13 +28,19 @@
                     <td>
                         {% if category.id != 1 %}
                             <a class="btn btn-info btn-sm"
-                               href="{{ url_for('admin.edit_category', category_id=category.id) }}">Edit</a>
-
+                               href="{{ url_for('admin.edit_category', category_id=category.id) }}">{{ _('修改') }}</a>
                             <form class="inline" method="post"
                                   action="{{ url_for('admin.delete_category', category_id=category.id) }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                 <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Are you sure?');">Delete
+                                        onclick="
+                                                {% if request.cookies.get('locale') == 'zh' %}
+                                                    return confirm('确定删除？');
+                                                {% else %}
+                                                    return confirm('Are you sure?');
+                                                {% endif %}
+                                                ">
+                                    {{ _('删除') }}
                                 </button>
                             </form>
                         {% endif %}
@@ -42,9 +48,8 @@
                 </tr>
             {% endfor %}
         </table>
-        <p class="text-muted">Tips: Deleting a category does not delete the article under that category.
-            The articles under this category will be moved to the default category.</p>
+        <p class="text-muted">{{ _('提示：删除并不会影响该分类下的文章，该分类下的文章会在分类删除后会被移至默认分类') }}</p>
     {% else %}
-        <div class="tip"><h5>No categories.</h5></div>
+        <div class="tip"><h5>{{ _('无分类') }}</h5></div>
     {% endif %}
 {% endblock %}

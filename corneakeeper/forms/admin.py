@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, ValidationError
 from wtforms.validators import DataRequired, Length, Email, Optional, URL
 from flask_ckeditor import CKEditorField
+from flask_babel import lazy_gettext as _l
 from corneakeeper.models import Category
 
 
@@ -26,8 +27,8 @@ class PostForm(FlaskForm):
 
 
 class CategoryForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    submit = SubmitField()
+    name = StringField(_l('分类名'), validators=[DataRequired(), Length(1, 30)])
+    submit = SubmitField(_l('提交'))
 
     def validate_name(self, field):
         if Category.query.filter_by(name=field.data).first():
@@ -43,6 +44,6 @@ class CommentForm(FlaskForm):
 
 
 class LinkForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    url = StringField('URL', validators=[DataRequired(), URL(), Length(1, 255)])
-    submit = SubmitField()
+    name = StringField(_l('链接名'), validators=[DataRequired(), Length(1, 30)])
+    url = StringField(_l('链接地址'), validators=[DataRequired(), URL(), Length(1, 255)])
+    submit = SubmitField(_l('提交'))

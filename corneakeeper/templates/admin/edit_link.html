@@ -1,11 +1,11 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}Edit Category{% endblock %}
+{% block title %}{{ _('链接修改') }}{% endblock %}
 
 {% block content %}
     <div class="row page-header justify-content-center align-items-center">
-        <h1>Edit Category</h1>
+        <h1>{{ _('链接修改') }}</h1>
     </div>
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6">

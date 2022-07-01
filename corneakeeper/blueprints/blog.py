@@ -138,26 +138,17 @@ def reply_comment(comment_id):
                 author=comment.author) + '#comment-form')
 
 
-@blog_bp.route('/change-theme/<theme_name>')
-def change_theme(theme_name):
-    if theme_name not in current_app.config['MW_THEMES'].keys():
-        abort(404)
-    response = make_response(redirect_back())
-    response.set_cookie('theme', theme_name, max_age=30 * 24 * 60 * 60)
-    return response
-
-
 @blog_bp.route('/set-locale/<locale>')
 def set_locale(locale):
     if locale not in current_app.config['CK_LOCALES']:
         abort(404)
 
+    print('fuck***************************', locale)
     response = make_response(redirect_back())
+    response.set_cookie('locale', locale, max_age=60 * 60 * 24 * 30)
     if current_user.is_authenticated:
         current_user.locale = locale
         db.session.commit()
-    else:
-        response.set_cookie('locale', locale, max_age=60 * 60 * 24 * 30)
     return response
 
 

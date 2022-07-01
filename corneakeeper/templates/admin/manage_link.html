@@ -1,11 +1,11 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}Manage Links{% endblock %}
+{% block title %}{{ _('链接管理') }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>Links
+        <h1>{{ _('链接') }}
             <small class="text-muted">{{ links|length }}</small>
         </h1>
     </div>
@@ -13,10 +13,10 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>No.</th>
-                <th>Name</th>
-                <th>URL</th>
-                <th>Actions</th>
+                <th>{{ _('编号') }}</th>
+                <th>{{ _('链接名') }}</th>
+                <th>{{ _('链接地址') }}</th>
+                <th>{{ _('选项') }}</th>
             </tr>
             </thead>
             {% for link in links %}
@@ -25,11 +25,16 @@
                     <td>{{ link.name }}</td>
                     <td><a href="{{ link.url }}" target="_blank">{{ link.url }}</a></td>
                     <td>
-                        <a class="btn btn-info btn-sm" href="{{ url_for('.edit_link', link_id=link.id) }}">Edit</a>
+                        <a class="btn btn-info btn-sm" href="{{ url_for('.edit_link', link_id=link.id) }}">{{ _('修改') }}</a>
                         <form class="inline" method="post" action="{{ url_for('.delete_link', link_id=link.id) }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?');">Delete
+                                    onclick="{% if request.cookies.get('locale') == 'zh' %}
+                                        return confirm('确定删除？');
+                                    {% else %}
+                                        return confirm('Are you sure?');
+                                    {% endif %}
+                                            ">{{ _('删除') }}
                             </button>
                         </form>
                     </td>

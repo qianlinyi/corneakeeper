@@ -1,11 +1,11 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}新建链接{% endblock %}
+{% block title %}{{ _('新建链接') }}{% endblock %}
 
 {% block content %}
     <div class="row page-header justify-content-center align-items-center">
-        <h1>新建链接</h1>
+        <h1>{{ _('新建链接') }}</h1>
     </div>
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6">

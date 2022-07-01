@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-29 20:02+0800\n"
+"POT-Creation-Date: 2022-07-01 10:21+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -29,6 +29,38 @@ msgstr "Resend Confirm Email"
 #: corneakeeper/extensions.py:57
 msgid "请先登录您的账号"
 msgstr "Please log in to access page."
+
+#: corneakeeper/blueprints/admin.py:30
+msgid "分类创建成功"
+msgstr "Category created."
+
+#: corneakeeper/blueprints/admin.py:42
+msgid "你无法修改默认分类"
+msgstr "You can not edit the default category."
+
+#: corneakeeper/blueprints/admin.py:47
+msgid "分类修改成功"
+msgstr "Category updated."
+
+#: corneakeeper/blueprints/admin.py:59
+msgid "你不能删除默认分类"
+msgstr "You can not delete the default category."
+
+#: corneakeeper/blueprints/admin.py:62
+msgid "分类已删除"
+msgstr "Category deleted."
+
+#: corneakeeper/blueprints/admin.py:84
+msgid "链接创建成功"
+msgstr "Link created."
+
+#: corneakeeper/blueprints/admin.py:100
+msgid "链接已修改"
+msgstr "Link updated."
+
+#: corneakeeper/blueprints/admin.py:114
+msgid "链接已删除"
+msgstr "Link deleted."
 
 #: corneakeeper/blueprints/auth.py:32
 msgid "欢迎回来"
@@ -102,9 +134,29 @@ msgstr "Not collect yet."
 msgid "文章已取消收藏"
 msgstr "Post uncollected."
 
-#: corneakeeper/blueprints/blog.py:169
+#: corneakeeper/blueprints/blog.py:160
 msgid "请输入关键字"
 msgstr "Enter keyword about photo, user or tag."
+
+#: corneakeeper/forms/admin.py:30
+#: corneakeeper/templates/admin/manage_category.html:17
+msgid "分类名"
+msgstr "Category name"
+
+#: corneakeeper/forms/admin.py:31 corneakeeper/forms/admin.py:49
+#: corneakeeper/forms/auth.py:14 corneakeeper/forms/auth.py:27
+msgid "提交"
+msgstr "Submit"
+
+#: corneakeeper/forms/admin.py:47
+#: corneakeeper/templates/admin/manage_link.html:17
+msgid "链接名"
+msgstr "Link name"
+
+#: corneakeeper/forms/admin.py:48
+#: corneakeeper/templates/admin/manage_link.html:18
+msgid "链接地址"
+msgstr "URL"
 
 #: corneakeeper/forms/auth.py:11 corneakeeper/forms/auth.py:20
 msgid "用户名"
@@ -117,10 +169,6 @@ msgstr "Password"
 #: corneakeeper/forms/auth.py:13
 msgid "记住我"
 msgstr "Remember me"
-
-#: corneakeeper/forms/auth.py:14 corneakeeper/forms/auth.py:27
-msgid "提交"
-msgstr "Submit"
 
 #: corneakeeper/forms/auth.py:18
 msgid "昵称"
@@ -169,6 +217,7 @@ msgstr "Create"
 msgid "文章"
 msgstr "Post"
 
+#: corneakeeper/templates/admin/manage_category.html:8
 #: corneakeeper/templates/base.html:107 corneakeeper/templates/base.html:143
 #: corneakeeper/templates/base_cn.html:107
 #: corneakeeper/templates/base_cn.html:143
@@ -178,6 +227,7 @@ msgstr "Post"
 msgid "分类"
 msgstr "Category"
 
+#: corneakeeper/templates/admin/manage_link.html:8
 #: corneakeeper/templates/base.html:109 corneakeeper/templates/base.html:145
 #: corneakeeper/templates/base_cn.html:109
 #: corneakeeper/templates/base_cn.html:145
@@ -217,9 +267,85 @@ msgstr "Profile"
 msgid "登出"
 msgstr "Logout"
 
+#: corneakeeper/templates/auth/login.html:4
+#: corneakeeper/templates/auth/login.html:9
 #: corneakeeper/templates/base.html:191 corneakeeper/templates/base_cn.html:191
 msgid "登录"
 msgstr "Login"
+
+#: corneakeeper/templates/admin/edit_category.html:4
+#: corneakeeper/templates/admin/edit_category.html:8
+msgid "分类修改"
+msgstr "Edit category"
+
+#: corneakeeper/templates/admin/edit_link.html:4
+#: corneakeeper/templates/admin/edit_link.html:8
+msgid "链接修改"
+msgstr "Edit Link"
+
+#: corneakeeper/templates/admin/manage_category.html:4
+msgid "分类管理"
+msgstr "Manage category"
+
+#: corneakeeper/templates/admin/manage_category.html:16
+#: corneakeeper/templates/admin/manage_link.html:16
+msgid "编号"
+msgstr "No."
+
+#: corneakeeper/templates/admin/manage_category.html:18
+msgid "文章数"
+msgstr "Posts"
+
+#: corneakeeper/templates/admin/manage_category.html:19
+#: corneakeeper/templates/admin/manage_link.html:19
+msgid "选项"
+msgstr "Actions"
+
+#: corneakeeper/templates/admin/manage_category.html:31
+#: corneakeeper/templates/admin/manage_link.html:28
+#: corneakeeper/templates/blog/post.html:14
+msgid "修改"
+msgstr "Edit"
+
+#: corneakeeper/templates/admin/manage_category.html:43
+#: corneakeeper/templates/admin/manage_link.html:37
+#: corneakeeper/templates/blog/post.html:18
+#: corneakeeper/templates/blog/post.html:139
+msgid "删除"
+msgstr "Delete"
+
+#: corneakeeper/templates/admin/manage_category.html:51
+msgid "提示：删除并不会影响该分类下的文章，该分类下的文章会在分类删除后会被移至默认分类"
+msgstr ""
+"Tips: Deleting a category does not delete the article under that "
+"category. The articles under this category will be moved to the default "
+"category."
+
+#: corneakeeper/templates/admin/manage_category.html:53
+msgid "无分类"
+msgstr "No categories."
+
+#: corneakeeper/templates/admin/manage_link.html:4
+msgid "链接管理"
+msgstr "Manage Links"
+
+#: corneakeeper/templates/admin/new_category.html:4
+#: corneakeeper/templates/admin/new_category.html:8
+msgid "新建分类"
+msgstr "New Category"
+
+#: corneakeeper/templates/admin/new_link.html:4
+#: corneakeeper/templates/admin/new_link.html:8
+msgid "新建链接"
+msgstr "New Link"
+
+#: corneakeeper/templates/auth/login.html:21
+msgid "注册新用户"
+msgstr "Register new account"
+
+#: corneakeeper/templates/auth/login.html:26
+msgid "忘记密码"
+msgstr "Forget password"
 
 #: corneakeeper/templates/auth/register.html:4
 msgid "注册"
@@ -265,15 +391,6 @@ msgstr "Previous"
 #: corneakeeper/templates/blog/index.html:15
 msgid "下一页"
 msgstr "Next"
-
-#: corneakeeper/templates/blog/post.html:14
-msgid "修改"
-msgstr "Edit"
-
-#: corneakeeper/templates/blog/post.html:18
-#: corneakeeper/templates/blog/post.html:139
-msgid "删除"
-msgstr "Delete"
 
 #: corneakeeper/templates/blog/post.html:26
 msgid "作者："
@@ -433,13 +550,4 @@ msgstr "Manual upload"
 #: corneakeeper/templates/user/profile/base_cn.html:134
 msgid "图片上传"
 msgstr "Photo upload"
-
-#~ msgid "%(1221)s 121 %(s)s"
-#~ msgstr ""
-
-#~ msgid "注册新用户"
-#~ msgstr "Register new account"
-
-#~ msgid "忘记密码"
-#~ msgstr "Forget password"
 
