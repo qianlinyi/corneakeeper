@@ -1,16 +1,17 @@
 from flask_wtf import FlaskForm
 from flask_ckeditor import CKEditorField
+from flask_babel import lazy_gettext as _l
 from wtforms import StringField, SubmitField, TextAreaField, HiddenField, SelectField
 from wtforms.validators import DataRequired, Length, Email, Optional, URL, ValidationError
 from corneakeeper.models import Category
 
 
 class CommentForm(FlaskForm):
-    author = StringField('姓名', validators=[DataRequired(), Length(1, 30)])
-    email = StringField('邮箱', validators=[DataRequired(), Email(), Length(1, 254)])
-    site = StringField('网址', validators=[Optional(), URL(), Length(0, 255)])
-    body = TextAreaField('评论', validators=[DataRequired()])
-    submit = SubmitField('提交')
+    author = StringField(_l('姓名'), validators=[DataRequired(), Length(1, 30)])
+    email = StringField(_l('邮箱'), validators=[DataRequired(), Email(), Length(1, 254)])
+    site = StringField(_l('网址'), validators=[Optional(), URL(), Length(0, 255)])
+    body = TextAreaField(_l('评论'), validators=[DataRequired()])
+    submit = SubmitField(_l('提交'))
 
 
 class UserCommentForm(CommentForm):
@@ -20,10 +21,10 @@ class UserCommentForm(CommentForm):
 
 
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired(), Length(1, 60)])
-    category = SelectField('Category', coerce=int, default=1)
-    body = CKEditorField('Body', validators=[DataRequired()])
-    submit = SubmitField()
+    title = StringField(_l('标题'), validators=[DataRequired(), Length(1, 60)])
+    category = SelectField(_l('分类'), coerce=int, default=1)
+    body = CKEditorField(_l('内容'), validators=[DataRequired()])
+    submit = SubmitField(_l('提交'))
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)

@@ -1,11 +1,11 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/pagination.html' import render_pagination %}
 
-{% block title %}Manage Posts{% endblock %}
+{% block title %}{{ _('文章管理') }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>Posts
+        <h1>{{ _('文章') }}
             <small class="text-muted">{{ pagination.total }}</small>
         </h1>
     </div>
@@ -13,13 +13,13 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>No.</th>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Date</th>
-                <th>Comments</th>
-                <th>Words</th>
-                <th>Actions</th>
+                <th>{{ _('编号') }}</th>
+                <th>{{ _('标题') }}</th>
+                <th>{{ _('分类') }}</th>
+                <th>{{ _('日期') }}</th>
+                <th>{{ _('评论') }}</th>
+                <th>{{ _('字数') }}</th>
+                <th>{{ _('选项') }}</th>
             </tr>
             </thead>
             {% for post in posts %}
@@ -44,19 +44,24 @@
                     <td>{{ post.body|striptags|length }}</td>
                     <td>
                         <form class="inline" method="post"
-                              action="{{ url_for('user.set_comment',username=user.username,  post_id=post.id, next=request.full_path) }}">
+                              action="{{ url_for('user.set_comment', username=user.username, post_id=post.id, next=request.full_path) }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-warning btn-sm">
-                                {% if post.can_comment %}Disable{% else %}Enable{% endif %} Comment
+                                {% if post.can_comment %}{{ _('禁止') }}{% else %}{{ _('允许') }}{% endif %}{{ _('评论') }}
                             </button>
                         </form>
                         <a class="btn btn-info btn-sm"
-                           href="{{ url_for('user.edit_post',username=user.username,  post_id=post.id) }}">Edit</a>
+                           href="{{ url_for('user.edit_post', username=user.username, post_id=post.id) }}">{{ _('修改') }}</a>
                         <form class="inline" method="post"
-                              action="{{ url_for('user.delete_post',username=user.username,  post_id=post.id, next=request.full_path) }}">
+                              action="{{ url_for('user.delete_post', username=user.username, post_id=post.id, next=request.full_path) }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure?');">Delete
+                                    onclick="
+                                            {% if request.cookies.get('locale') == 'zh' %}
+                                                return confirm('确定删除？');
+                                            {% else %}
+                                                return confirm('Are you sure?');
+                                            {% endif %}">{{ _('删除') }}
                             </button>
                         </form>
                     </td>
@@ -65,6 +70,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination, align='center') }}</div>
     {% else %}
-        <div class="tip"><h5>No posts.</h5></div>
+        <div class="tip"><h5>{{ _('无文章') }}</h5></div>
     {% endif %}
 {% endblock %}

@@ -1,11 +1,11 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/pagination.html' import render_pagination %}
 
-{% block title %}收藏管理{% endblock %}
+{% block title %}{{ _('收藏管理') }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>收藏
+        <h1>{{ _('收藏') }}
             <small class="text-muted">{{ pagination.total }}</small>
         </h1>
     </div>
@@ -13,12 +13,12 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>编号</th>
-                <th>标题</th>
-                <th>分类</th>
-                <th>日期</th>
-                <th>评论</th>
-                <th>选项</th>
+                <th>{{ _('编号') }}</th>
+                <th>{{ _('标题') }}</th>
+                <th>{{ _('分类') }}</th>
+                <th>{{ _('日期') }}</th>
+                <th>{{ _('评论') }}</th>
+                <th>{{ _('选项') }}</th>
             </tr>
             </thead>
             {% for _ in posts %}
@@ -42,7 +42,7 @@
                               action="{{ url_for('blog.uncollect', post_id=post.id) }}">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <button type="submit" class="btn btn-success btn-sm">
-                                取消收藏
+                                {{ _('取消收藏') }}
                             </button>
                         </form>
                     </td>
@@ -51,6 +51,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination, align='center') }}</div>
     {% else %}
-        <div class="tip"><h5>无文章</h5></div>
+        <div class="tip"><h5>{{ _('无文章') }}</h5></div>
     {% endif %}
 {% endblock %}

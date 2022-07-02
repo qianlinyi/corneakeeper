@@ -1,29 +1,30 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/pagination.html' import render_pagination %}
 
-{% block title %}Manage Comments{% endblock %}
+{% block title %}{{ _('评论管理') }}{% endblock %}
 
 {% block content %}
     <div class="page-header">
-        <h1>Comments
+        <h1>{{ _('评论') }}
             <small class="text-muted">{{ pagination.total }}</small>
         </h1>
 
         <ul class="nav nav-pills">
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter', 'all') == 'all' %}active{% endif %}"
-                   href="{{ url_for('user.manage_comment', filter='all',username=user.username) }}">From others-All</a>
+                   href="{{ url_for('user.manage_comment', filter='all', username=user.username) }}">{{ _('他人 - 所有') }}</a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'unread' %}active{% endif %}"
-                   href="{{ url_for('user.manage_comment', filter='unread',username=user.username) }}">From
-                    others-Unread
+                   href="{{ url_for('user.manage_comment', filter='unread', username=user.username) }}">{{ _('他人 - 未读') }}
                     {% if unread_comments %}<span
                             class="badge badge-pill badge-success">{{ unread_comments }}</span>{% endif %}</a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link {% if request.args.get('filter') == 'myself' %}active{% endif %}"
-                   href="{{ url_for('user.manage_comment', filter='myself',username=user.username) }}">From myself</a>
+                   href="{{ url_for('user.manage_comment', filter='myself', username=user.username) }}">{{ _('自己') }}</a>
             </li>
         </ul>
     </div>
@@ -32,11 +33,11 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>No.</th>
-                <th>Author</th>
-                <th>Body</th>
-                <th>Title</th>
-                <th>Actions</th>
+                <th>{{ _('编号') }}</th>
+                <th>{{ _('作者') }}</th>
+                <th>{{ _('评论') }}</th>
+                <th>{{ _('文章') }}</th>
+                <th>{{ _('选项') }}</th>
             </tr>
             </thead>
             {% for comment in comments %}
@@ -50,9 +51,12 @@
                                     {{ comment.site }}
                                 </a><br>
                             {% endif %}
-                            <a href="mailto:{{ comment.email }}">{{ comment.email }}</a>
+                            <a href="mailto:{{ comment.email }}">{{ comment.email }}</a><br>
                         </td>
-                        <td>{{ comment.body }}<br>{{ moment(comment.timestamp).format('LL') }}</td>
+                        <td>
+                            {{ comment.body }}<br>
+                            {{ moment(comment.timestamp).format('LL') }}
+                        </td>
                         <td>
                             <a href="{{ url_for('blog.show_post', post_id=comment.post.id) }}">
                                 {% if comment.post.title|length > 25 %}
@@ -66,16 +70,22 @@
                             {% if request.args.get('filter') != 'myself' %}
                                 {% if not comment.reviewed %}
                                     <form class="inline" method="post"
-                                          action="{{ url_for('user.approve_comment',username=user.username, comment_id=comment.id, next=request.full_path) }}">
+                                          action="{{ url_for('user.approve_comment', username=user.username, comment_id=comment.id, next=request.full_path) }}">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                                        <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                                        <button type="submit" class="btn btn-success btn-sm">{{ _('批准') }}</button>
                                     </form>
                                 {% endif %}
                                 <form class="inline" method="post"
-                                      action="{{ url_for('user.delete_comment', username=user.username,comment_id=comment.id, next=request.full_path) }}">
+                                      action="{{ url_for('user.delete_comment', username=user.username, comment_id=comment.id, next=request.full_path) }}">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                     <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Are you sure?');">Delete
+                                            onclick="
+                                                    {% if request.cookies.get('locale') == 'zh' %}
+                                                        return confirm('确定删除？');
+                                                    {% else %}
+                                                        return confirm('Are you sure?');
+                                                    {% endif %}
+                                                    ">{{ _('删除') }}
                                     </button>
                                 </form>
                             {% else %}
@@ -83,7 +93,13 @@
                                       action="{{ url_for('user.delete_comment', username=user.username, comment_id=comment.id, next=request.full_path) }}">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                     <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('确定删除？');">删除
+                                            onclick="
+                                                    {% if request.cookies.get('locale') == 'zh' %}
+                                                        return confirm('确定删除？');
+                                                    {% else %}
+                                                        return confirm('Are you sure?');
+                                                    {% endif %}
+                                                    ">{{ _('删除') }}
                                     </button>
                                 </form>
                             {% endif %}
@@ -94,6 +110,6 @@
         </table>
         <div class="page-footer">{{ render_pagination(pagination,align='center') }}</div>
     {% else %}
-        <div class="tip"><h5>No comments.</h5></div>
+        <div class="tip"><h5>{{ _('无评论') }}</h5></div>
     {% endif %}
 {% endblock %}

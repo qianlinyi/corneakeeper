@@ -142,8 +142,6 @@ def reply_comment(comment_id):
 def set_locale(locale):
     if locale not in current_app.config['CK_LOCALES']:
         abort(404)
-
-    print('fuck***************************', locale)
     response = make_response(redirect_back())
     response.set_cookie('locale', locale, max_age=60 * 60 * 24 * 30)
     if current_user.is_authenticated:

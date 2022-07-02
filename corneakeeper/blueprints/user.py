@@ -4,6 +4,7 @@ from flask import render_template, redirect, url_for, flash, request, \
     current_app, Blueprint, abort
 from flask_login import current_user, fresh_login_required, login_required, \
     logout_user
+from flask_babel import _
 from pyecharts import options as opts
 from pyecharts.globals import ThemeType
 from pyecharts.charts import Line
@@ -714,10 +715,7 @@ def manage_post(username):
             Post.timestamp.desc()).paginate(
             page, per_page=current_app.config['BLOG_MANAGE_POST_PER_PAGE'])
     posts = pagination.items
-    return render_template('user/forum/manage_post_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        page=page,
-        pagination=pagination, posts=posts)
+    return render_template('user/forum/manage_post.html', user=user, page=page, pagination=pagination, posts=posts)
 
 
 # 发布文章
@@ -729,12 +727,6 @@ def new_post(username):
     if user != current_user:
         abort(403)
     form = PostForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.title.label.text = '标题'
-        form.category.label.text = '分类'
-        form.body.label.text = '中文'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         title = form.title.data
         body = form.body.data
@@ -742,13 +734,9 @@ def new_post(username):
         post = Post(title=title, body=body, category=category, user=user)
         db.session.add(post)
         db.session.commit()
-        if language == 'cn':
-            flash('发布成功', 'success')
-        else:
-            flash('Post created.', 'success')
+        flash(_('文章发布成功'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
-    return render_template('user/forum/new_post_{}.html'.format(language),
-                           form=form)
+    return render_template('user/forum/new_post.html', form=form)
 
 
 # 修改文章
@@ -760,27 +748,18 @@ def edit_post(username, post_id):
     if user != current_user:
         abort(403)
     form = PostForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.title.label.text = '标题'
-        form.category.label.text = '分类'
-        form.submit.label.text = '提交'
     post = Post.query.get_or_404(post_id)
     if form.validate_on_submit():
         post.title = form.title.data
         post.body = form.body.data
         post.category = Category.query.get(form.category.data)
         db.session.commit()
-        if language == 'cn':
-            flash('文章修改成功', 'success')
-        else:
-            flash('Post updated.', 'success')
+        flash(_('文章修改成功'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
     form.title.data = post.title
     form.body.data = post.body
     form.category.data = post.category_id
-    return render_template('user/forum/edit_post_{}.html'.format(language),
-                           form=form)
+    return render_template('user/forum/edit_post.html', form=form)
 
 
 # 删除文章
@@ -794,10 +773,7 @@ def delete_post(username, post_id):
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
-    if request.cookies.get('language', 'cn') == 'cn':
-        flash('文章删除成功', 'success')
-    else:
-        flash('Post deleted.', 'success')
+    flash(_('文章删除成功'), 'success')
     return redirect_back()
 
 
@@ -813,16 +789,10 @@ def set_comment(username, post_id):
     language = request.cookies.get('language', 'cn')
     if post.can_comment:
         post.can_comment = False
-        if language == 'cn':
-            flash('已禁止评论', 'success')
-        else:
-            flash('Comment disabled.', 'success')
+        flash(_('评论已禁止'), 'success')
     else:
         post.can_comment = True
-        if language == 'cn':
-            flash('已允许评论', 'success')
-        else:
-            flash('Comment disabled.', 'success')
+        flash(_('评论已开放'), 'success')
     db.session.commit()
     return redirect_back()
 
@@ -835,8 +805,7 @@ def manage_comment(username):
     user = User.query.filter_by(username=username).first_or_404()
     if user != current_user:
         abort(403)
-    filter_rule = request.args.get('filter',
-                                   'all')  # 'all', 'unreviewed', 'admin'
+    filter_rule = request.args.get('filter', 'all')  # 'all', 'unreviewed', 'admin'
     page = request.args.get('page', 1, type=int)
     per_page = current_app.config['BLOG_COMMENT_PER_PAGE']
     if user.is_admin:
@@ -867,9 +836,7 @@ def manage_comment(username):
     pagination = filtered_comments.order_by(Comment.timestamp.desc()).paginate(
         page, per_page=per_page)
     comments = pagination.items
-    return render_template('user/forum/manage_comment_{}.html'.format(
-        request.cookies.get('language', 'cn')),
-        comments=comments, pagination=pagination, user=user)
+    return render_template('user/forum/manage_comment.html', comments=comments, pagination=pagination, user=user)
 
 
 # 同意评论公开
@@ -883,10 +850,7 @@ def approve_comment(username, comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.reviewed = True
     db.session.commit()
-    if request.cookies.get('language', 'cn') == 'cn':
-        flash('评论已公开', 'success')
-    else:
-        flash('Comment published.', 'success')
+    flash(_('评论已公开'), 'success')
     return redirect_back()
 
 
@@ -901,10 +865,7 @@ def delete_comment(username, comment_id):
     comment = Comment.query.get_or_404(comment_id)
     db.session.delete(comment)
     db.session.commit()
-    if request.cookies.get('language', 'cn') == 'cn':
-        flash('评论已删除', 'success')
-    else:
-        flash('Comment deleted.', 'success')
+    flash(_('评论已删除'), 'success')
     return redirect_back()
 
 
@@ -920,10 +881,7 @@ def manage_collect(username):
         Post.timestamp.desc()).paginate(
         page, per_page=current_app.config['BLOG_MANAGE_POST_PER_PAGE'])
     posts = pagination.items
-    return render_template('user/forum/manage_collect_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        page=page,
-        pagination=pagination, posts=posts)
+    return render_template('user/forum/manage_collect.html', user=user, page=page, pagination=pagination, posts=posts)
 
 
 # 上传数据

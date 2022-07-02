@@ -1,11 +1,11 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}写文章{% endblock %}
+{% block title %}{{ _('写文章') }}{% endblock %}
 
 {% block content %}
     <div class="row page-header justify-content-center align-items-center">
-        <h1>写文章</h1>
+        <h1>{{ _('写文章') }}</h1>
     </div>
     <div class="mb-3">
         {{ render_form(form) }}
