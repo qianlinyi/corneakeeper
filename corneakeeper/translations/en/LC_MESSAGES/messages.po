@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-02 10:45+0800\n"
+"POT-Creation-Date: 2022-07-04 19:12+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -138,30 +138,94 @@ msgstr "Post uncollected."
 msgid "请输入关键字"
 msgstr "Enter keyword about photo, user or tag."
 
-#: corneakeeper/blueprints/user.py:737
+#: corneakeeper/blueprints/user.py:79
+msgid "Your account is locked."
+msgstr ""
+
+#: corneakeeper/blueprints/user.py:543
+msgid "角膜屈光力差值"
+msgstr "I-S"
+
+#: corneakeeper/blueprints/user.py:545
+msgid "角膜屈光力差值变化图"
+msgstr "I-S-Chart"
+
+#: corneakeeper/blueprints/user.py:562 corneakeeper/forms/user.py:33
+msgid "最大曲率"
+msgstr "k_max"
+
+#: corneakeeper/blueprints/user.py:563
+msgid "最大曲率变化图"
+msgstr "K-Chart"
+
+#: corneakeeper/blueprints/user.py:580 corneakeeper/forms/user.py:34
+msgid "最薄点厚度"
+msgstr "thickness_min"
+
+#: corneakeeper/blueprints/user.py:582
+msgid "最薄点厚度变化图"
+msgstr "Thickness-Chart"
+
+#: corneakeeper/blueprints/user.py:600 corneakeeper/forms/user.py:35
+msgid "最佳眼镜矫正视力"
+msgstr "BSCVA"
+
+#: corneakeeper/blueprints/user.py:601 corneakeeper/forms/user.py:36
+msgid "裸眼视力"
+msgstr "UCVA"
+
+#: corneakeeper/blueprints/user.py:603
+msgid "视力变化图"
+msgstr "VisualAcuity-Chart"
+
+#: corneakeeper/blueprints/user.py:620
+msgid "近视度数"
+msgstr "MyopiaDegree"
+
+#: corneakeeper/blueprints/user.py:622
+msgid "近视度数变化图"
+msgstr "Myopia-Chart"
+
+#: corneakeeper/blueprints/user.py:639
+msgid "散光度数"
+msgstr "AstigmatismDegree"
+
+#: corneakeeper/blueprints/user.py:641
+msgid "散光度数变化图"
+msgstr "Astigmatism-Chart"
+
+#: corneakeeper/blueprints/user.py:695
 msgid "文章发布成功"
 msgstr "Post published."
 
-#: corneakeeper/blueprints/user.py:757
+#: corneakeeper/blueprints/user.py:715
 msgid "文章修改成功"
 msgstr "Post updated."
 
-#: corneakeeper/blueprints/user.py:776
+#: corneakeeper/blueprints/user.py:734
 msgid "文章删除成功"
 msgstr "Post deleted."
 
-#: corneakeeper/blueprints/user.py:792
+#: corneakeeper/blueprints/user.py:750
 #: corneakeeper/templates/blog/post.html:166
 msgid "评论已禁止"
 msgstr "Comment disabled."
 
-#: corneakeeper/blueprints/user.py:795
+#: corneakeeper/blueprints/user.py:753
 msgid "评论已开放"
 msgstr "Comment enabled."
 
-#: corneakeeper/blueprints/user.py:853
+#: corneakeeper/blueprints/user.py:811
 msgid "评论已公开"
 msgstr "Comment published."
+
+#: corneakeeper/blueprints/user.py:826
+msgid "评论已删除"
+msgstr "Comment deleted."
+
+#: corneakeeper/blueprints/user.py:867
+msgid "数据上传成功"
+msgstr "Data created."
 
 #: corneakeeper/forms/admin.py:30
 #: corneakeeper/templates/admin/manage_category.html:17
@@ -171,6 +235,7 @@ msgstr "Category name"
 #: corneakeeper/forms/admin.py:31 corneakeeper/forms/admin.py:49
 #: corneakeeper/forms/auth.py:14 corneakeeper/forms/auth.py:27
 #: corneakeeper/forms/blog.py:14 corneakeeper/forms/blog.py:27
+#: corneakeeper/forms/user.py:37
 msgid "提交"
 msgstr "Submit"
 
@@ -219,15 +284,17 @@ msgstr "Site"
 #: corneakeeper/forms/blog.py:13 corneakeeper/templates/base.html:134
 #: corneakeeper/templates/base_cn.html:134
 #: corneakeeper/templates/blog/post.html:97
+#: corneakeeper/templates/user/forum/manage_collect.html:20
 #: corneakeeper/templates/user/forum/manage_comment.html:8
 #: corneakeeper/templates/user/forum/manage_comment.html:38
 #: corneakeeper/templates/user/forum/manage_post.html:20
 #: corneakeeper/templates/user/forum/manage_post.html:50
-#: corneakeeper/templates/user/profile/base_cn.html:102
+#: corneakeeper/templates/user/profile/base.html:102
 msgid "评论"
 msgstr "Comment"
 
 #: corneakeeper/forms/blog.py:24
+#: corneakeeper/templates/user/forum/manage_collect.html:17
 #: corneakeeper/templates/user/forum/manage_post.html:17
 msgid "标题"
 msgstr "Title"
@@ -238,9 +305,10 @@ msgstr "Title"
 #: corneakeeper/templates/base_cn.html:107
 #: corneakeeper/templates/base_cn.html:143
 #: corneakeeper/templates/blog/_sidebar.html:16
+#: corneakeeper/templates/user/forum/manage_collect.html:18
 #: corneakeeper/templates/user/forum/manage_post.html:18
-#: corneakeeper/templates/user/profile/base_cn.html:75
-#: corneakeeper/templates/user/profile/base_cn.html:111
+#: corneakeeper/templates/user/profile/base.html:75
+#: corneakeeper/templates/user/profile/base.html:111
 msgid "分类"
 msgstr "Category"
 
@@ -248,10 +316,18 @@ msgstr "Category"
 msgid "内容"
 msgstr "Body"
 
+#: corneakeeper/forms/user.py:29
+msgid "检测日期"
+msgstr "DateTime"
+
+#: corneakeeper/forms/user.py:30
+msgid "更新日期"
+msgstr "UpdateTime"
+
 #: corneakeeper/templates/auth/base.html:26 corneakeeper/templates/base.html:45
 #: corneakeeper/templates/base_cn.html:45
 #: corneakeeper/templates/blog/index.html:4
-#: corneakeeper/templates/user/profile/base_cn.html:28
+#: corneakeeper/templates/user/profile/base.html:28
 msgid "主页"
 msgstr "Home"
 
@@ -259,17 +335,17 @@ msgstr "Home"
 #: corneakeeper/templates/base_cn.html:54
 #: corneakeeper/templates/blog/about.html:3
 #: corneakeeper/templates/blog/about.html:7
-#: corneakeeper/templates/user/profile/base_cn.html:37
+#: corneakeeper/templates/user/profile/base.html:37
 msgid "关于"
 msgstr "About"
 
 #: corneakeeper/templates/base.html:76 corneakeeper/templates/base_cn.html:76
-#: corneakeeper/templates/user/profile/base_cn.html:42
+#: corneakeeper/templates/user/profile/base.html:42
 msgid "文章，用户，图片或标签"
 msgstr "Post, User, Photo or Tag"
 
 #: corneakeeper/templates/base.html:99 corneakeeper/templates/base_cn.html:99
-#: corneakeeper/templates/user/profile/base_cn.html:67
+#: corneakeeper/templates/user/profile/base.html:67
 msgid "创作"
 msgstr "Create"
 
@@ -281,7 +357,7 @@ msgstr "Create"
 #: corneakeeper/templates/emails/new_comment.txt:1
 #: corneakeeper/templates/user/forum/manage_comment.html:39
 #: corneakeeper/templates/user/forum/manage_post.html:8
-#: corneakeeper/templates/user/profile/base_cn.html:100
+#: corneakeeper/templates/user/profile/base.html:100
 msgid "文章"
 msgstr "Post"
 
@@ -291,23 +367,25 @@ msgstr "Post"
 #: corneakeeper/templates/base_cn.html:145
 #: corneakeeper/templates/blog/_sidebar.html:3
 #: corneakeeper/templates/blog/post.html:71
-#: corneakeeper/templates/user/profile/base_cn.html:77
-#: corneakeeper/templates/user/profile/base_cn.html:113
+#: corneakeeper/templates/user/profile/base.html:77
+#: corneakeeper/templates/user/profile/base.html:113
 msgid "链接"
 msgstr "Link"
 
 #: corneakeeper/templates/base.html:124 corneakeeper/templates/base_cn.html:124
-#: corneakeeper/templates/user/profile/base_cn.html:92
+#: corneakeeper/templates/user/profile/base.html:92
 msgid "管理"
 msgstr "Manage"
 
 #: corneakeeper/templates/base.html:126 corneakeeper/templates/base_cn.html:126
-#: corneakeeper/templates/user/profile/base_cn.html:94
+#: corneakeeper/templates/user/profile/base.html:94
 msgid "新"
 msgstr "New"
 
 #: corneakeeper/templates/base.html:140 corneakeeper/templates/base_cn.html:140
-#: corneakeeper/templates/user/profile/base_cn.html:108
+#: corneakeeper/templates/user/forum/manage_collect.html:8
+#: corneakeeper/templates/user/profile/_header.html:77
+#: corneakeeper/templates/user/profile/base.html:108
 msgid "收藏"
 msgstr "Collection"
 
@@ -341,6 +419,7 @@ msgstr "Manage category"
 
 #: corneakeeper/templates/admin/manage_category.html:16
 #: corneakeeper/templates/admin/manage_link.html:16
+#: corneakeeper/templates/user/forum/manage_collect.html:16
 #: corneakeeper/templates/user/forum/manage_comment.html:36
 #: corneakeeper/templates/user/forum/manage_post.html:16
 msgid "编号"
@@ -352,6 +431,7 @@ msgstr "Posts"
 
 #: corneakeeper/templates/admin/manage_category.html:19
 #: corneakeeper/templates/admin/manage_link.html:19
+#: corneakeeper/templates/user/forum/manage_collect.html:21
 #: corneakeeper/templates/user/forum/manage_comment.html:40
 #: corneakeeper/templates/user/forum/manage_post.html:22
 msgid "选项"
@@ -437,6 +517,7 @@ msgid "分类："
 msgstr "Category: "
 
 #: corneakeeper/templates/blog/_posts.html:20
+#: corneakeeper/templates/user/forum/manage_collect.html:54
 #: corneakeeper/templates/user/forum/manage_post.html:73
 msgid "无文章"
 msgstr "No posts yet."
@@ -466,6 +547,7 @@ msgid "分享"
 msgstr "Share"
 
 #: corneakeeper/templates/blog/post.html:45
+#: corneakeeper/templates/user/forum/manage_collect.html:45
 msgid "取消收藏"
 msgstr "Uncollect"
 
@@ -504,6 +586,7 @@ msgid "搜索："
 msgstr "Search: "
 
 #: corneakeeper/templates/blog/search.html:18
+#: corneakeeper/templates/user/profile/_header.html:76
 msgid "图片"
 msgstr "Photo"
 
@@ -604,6 +687,15 @@ msgstr "500 Error"
 msgid "修改文章"
 msgstr "Edit Post"
 
+#: corneakeeper/templates/user/forum/manage_collect.html:4
+msgid "收藏管理"
+msgstr "Manage Collections"
+
+#: corneakeeper/templates/user/forum/manage_collect.html:19
+#: corneakeeper/templates/user/forum/manage_post.html:19
+msgid "日期"
+msgstr "Date"
+
 #: corneakeeper/templates/user/forum/manage_comment.html:4
 msgid "评论管理"
 msgstr "Manage Comments"
@@ -632,10 +724,6 @@ msgstr "No comments."
 msgid "文章管理"
 msgstr "Manage Posts"
 
-#: corneakeeper/templates/user/forum/manage_post.html:19
-msgid "日期"
-msgstr "Date"
-
 #: corneakeeper/templates/user/forum/manage_post.html:21
 msgid "字数"
 msgstr "Words"
@@ -645,15 +733,142 @@ msgstr "Words"
 msgid "写文章"
 msgstr "New Post"
 
-#: corneakeeper/templates/user/profile/base_cn.html:127
+#: corneakeeper/templates/user/profile/_header.html:16
+msgid "个性签名："
+msgstr "bio: "
+
+#: corneakeeper/templates/user/profile/_header.html:44
+msgid "加入时间："
+msgstr "Joined: "
+
+#: corneakeeper/templates/user/profile/_header.html:65
+msgid "修改信息"
+msgstr "Edit Profile"
+
+#: corneakeeper/templates/user/profile/_header.html:74
+msgid "变化"
+msgstr "Change"
+
+#: corneakeeper/templates/user/profile/_header.html:75
+msgid "诊断"
+msgstr "Diagnosis"
+
+#: corneakeeper/templates/user/profile/_header.html:78
+msgid "关注"
+msgstr "Followings"
+
+#: corneakeeper/templates/user/profile/_header.html:79
+msgid "粉丝"
+msgstr "Followers"
+
+#: corneakeeper/templates/user/profile/base.html:127
+#: corneakeeper/templates/user/profile/manual_upload.html:5
+#: corneakeeper/templates/user/profile/manual_upload.html:10
 msgid "数据上传"
 msgstr "Upload"
 
-#: corneakeeper/templates/user/profile/base_cn.html:132
+#: corneakeeper/templates/user/profile/base.html:132
 msgid "手动上传"
 msgstr "Manual upload"
 
-#: corneakeeper/templates/user/profile/base_cn.html:134
+#: corneakeeper/templates/user/profile/base.html:134
+#: corneakeeper/templates/user/profile/photo_upload.html:3
+#: corneakeeper/templates/user/profile/photo_upload.html:13
 msgid "图片上传"
 msgstr "Photo upload"
+
+#: corneakeeper/templates/user/profile/charts.html:5
+msgid "的主页"
+msgstr "'s charts"
+
+#: corneakeeper/templates/user/profile/charts.html:21
+#: corneakeeper/templates/user/profile/diagnosis.html:34
+msgid "无数据"
+msgstr "No data."
+
+#: corneakeeper/templates/user/profile/charts.html:26
+msgid "该用户的变化设置为不可见"
+msgstr "This user's charts were private."
+
+#: corneakeeper/templates/user/profile/collections.html:5
+msgid "的收藏"
+msgstr "'s collections"
+
+#: corneakeeper/templates/user/profile/collections.html:18
+msgid "无收藏"
+msgstr "No collections"
+
+#: corneakeeper/templates/user/profile/collections.html:23
+msgid "该用户收藏设置为不可见"
+msgstr "This user's collections were private."
+
+#: corneakeeper/templates/user/profile/diagnosis.html:6
+msgid "的诊断"
+msgstr "'s diagnosis"
+
+#: corneakeeper/templates/user/profile/diagnosis.html:16
+msgid "分期定级"
+msgstr "Staging and Grading"
+
+#: corneakeeper/templates/user/profile/diagnosis.html:20
+msgid "医疗手段"
+msgstr "Medical Treatment"
+
+#: corneakeeper/templates/user/profile/diagnosis.html:24
+msgid "疾病进展"
+msgstr "Disease Progression"
+
+#: corneakeeper/templates/user/profile/diagnosis.html:25
+msgid "是"
+msgstr "Yes"
+
+#: corneakeeper/templates/user/profile/diagnosis.html:25
+msgid "否"
+msgstr "No"
+
+#: corneakeeper/templates/user/profile/diagnosis.html:30
+msgid "提示：结果仅供参考，具体以医生的诊断为准！"
+msgstr ""
+"Tip: the results are for reference only, and the specific diagnosis of "
+"the doctor shall prevail!"
+
+#: corneakeeper/templates/user/profile/diagnosis.html:40
+msgid "该用户的诊断设置为不可见"
+msgstr "This user's diagnosis was private."
+
+#: corneakeeper/templates/user/profile/followers.html:5
+msgid "的粉丝"
+msgstr "'s followers"
+
+#: corneakeeper/templates/user/profile/followers.html:21
+msgid "无粉丝"
+msgstr "No Followers"
+
+#: corneakeeper/templates/user/profile/followers.html:26
+msgid "该用户的粉丝设置为不可见"
+msgstr "This user's diagnosis was private."
+
+#: corneakeeper/templates/user/profile/following.html:5
+msgid "的关注"
+msgstr "'s followings"
+
+#: corneakeeper/templates/user/profile/following.html:20
+msgid "无关注"
+msgstr "No Followings"
+
+#: corneakeeper/templates/user/profile/following.html:25
+msgid "该用户关注设置为不可见"
+msgstr "This user's followings were private."
+
+#: corneakeeper/templates/user/profile/photo_upload.html:20
+msgid "完成"
+msgstr "Done"
+
+#: corneakeeper/templates/user/profile/photos.html:18
+msgid "无图片"
+msgstr "No photos."
+
+#: corneakeeper/templates/user/profile/photos.html:23
+msgid "该用户图片设置为不可见"
+msgstr "This user's photos were private."
 

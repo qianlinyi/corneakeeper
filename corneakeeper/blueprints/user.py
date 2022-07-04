@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, request, \
     current_app, Blueprint, abort
 from flask_login import current_user, fresh_login_required, login_required, \
     logout_user
-from flask_babel import _
+from flask_babel import gettext
 from pyecharts import options as opts
 from pyecharts.globals import ThemeType
 from pyecharts.charts import Line
@@ -76,7 +76,7 @@ def unfollow(username):
 def show_photos(username):
     user = User.query.filter_by(username=username).first_or_404()
     if user == current_user and user.locked:
-        flash('Your account is locked.', 'danger')
+        flash(gettext('Your account is locked.'), 'danger')
 
     if user == current_user and not user.active:
         logout_user()
@@ -86,9 +86,7 @@ def show_photos(username):
     pagination = Photo.query.with_parent(user).order_by(
         Photo.timestamp.desc()).paginate(page, per_page)
     photos = pagination.items
-    return render_template('user/profile/photos_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        pagination=pagination, photos=photos)
+    return render_template('user/profile/photos.html', user=user, pagination=pagination, photos=photos)
 
 
 @user_bp.route('/<username>/collections')
@@ -99,9 +97,7 @@ def show_collections(username):
     pagination = CollectPhoto.query.with_parent(user).order_by(
         CollectPhoto.timestamp.desc()).paginate(page, per_page)
     collects = pagination.items
-    return render_template('user/profile/collections_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        pagination=pagination, collects=collects)
+    return render_template('user/profile/collections.html', user=user, pagination=pagination, collects=collects)
 
 
 @user_bp.route('/<username>/followers')
@@ -111,9 +107,7 @@ def show_followers(username):
     per_page = current_app.config['CK_USER_PER_PAGE']
     pagination = user.followers.paginate(page, per_page)
     follows = pagination.items
-    return render_template('user/profile/followers_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        pagination=pagination, follows=follows)
+    return render_template('user/profile/followers.html', user=user, pagination=pagination, follows=follows)
 
 
 @user_bp.route('/<username>/following')
@@ -184,7 +178,7 @@ def diagnosis(username):
     user = User.query.filter_by(username=username).first_or_404()
     cornea = Cornea.query.filter(Cornea.user_id == current_user.id).order_by(
         'datetime').all()
-    language = request.cookies.get('language', 'cn')
+    language = request.cookies.get('language', 'locale')
     condition = {}
     if cornea:
         k_max, thickness_min, UCVA, BSCVA, k1, k2, IS, myopia, astigmatism = [], [], [], [], [], [], [], [], []
@@ -202,7 +196,7 @@ def diagnosis(username):
         progress = (max(k_max) > min(k_max) + 1) and (
                 min(thickness_min) * 100 < max(thickness_min) * 98) and (
                            max(myopia) - min(myopia) > 50)
-        if language == 'cn':
+        if language == 'zh':
             # China
             if max(BSCVA) >= 1.0:
                 if max(IS) > 1.4:
@@ -256,9 +250,7 @@ def diagnosis(username):
             treatment=treat(stage),
             progress=progress
         )
-    return render_template('user/profile/diagnosis_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        condition=condition)
+    return render_template('user/profile/diagnosis.html', user=user, condition=condition)
 
 
 @user_bp.route('/settings/profile', methods=['GET', 'POST'])
@@ -535,9 +527,7 @@ def notification_setting():
 def index(username):
     user = User.query.filter_by(username=username).first_or_404()
     cornea = Cornea.query.filter_by(user=user).all()
-    return render_template('user/profile/charts_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        cornea=cornea)
+    return render_template('user/profile/charts.html', user=user, cornea=cornea)
 
 
 @user_bp.route('<username>/I-S-Chart')
@@ -550,18 +540,12 @@ def generate_IS_chart(username):
         y.append(round(abs(_.k1 - _.k2), 1))
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    if request.cookies.get('language', 'cn') == 'cn':
-        line.add_yaxis('角膜屈光力差值', y)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='角膜屈光力差值变化图',
-                                      title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
-    else:
-        line.add_yaxis('I-S', y)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='I-S-Chart'),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
+    line.add_yaxis(gettext('角膜屈光力差值'), y)
+    line.set_global_opts(
+        title_opts=opts.TitleOpts(title=gettext('角膜屈光力差值变化图'),
+                                  title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
     return line.dump_options_with_quotes()
 
 
@@ -575,16 +559,11 @@ def generate_K_chart(username):
         y_k_max.append(_.k_max)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    if request.cookies.get('language', 'cn') == 'cn':
-        line.add_yaxis('最大曲率', y_k_max)
-        line.set_global_opts(title_opts=opts.TitleOpts(title='最大曲率变化图', title_textstyle_opts=opts.TextStyleOpts(
-            font_family='SimSun')),
-                             legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-                             xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
-    else:
-        line.add_yaxis('k-max', y_k_max)
-        line.set_global_opts(title_opts=opts.TitleOpts(title='K-Chart'),
-                             xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
+    line.add_yaxis(gettext('最大曲率'), y_k_max)
+    line.set_global_opts(title_opts=opts.TitleOpts(title=gettext('最大曲率变化图'), title_textstyle_opts=opts.TextStyleOpts(
+        font_family='SimSun')),
+                         legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+                         xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
     return line.dump_options_with_quotes()
 
 
@@ -598,16 +577,12 @@ def generate_thickness_chart(username):
         y.append(_.thickness_min)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    if request.cookies.get('language', 'cn') == 'cn':
-        line.add_yaxis('最薄点厚度', y)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='最薄点厚度变化图', title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
-    else:
-        line.add_yaxis('thickness', y)
-        line.set_global_opts(title_opts=opts.TitleOpts(title='Thickness-Chart'),
-                             xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
+    line.add_yaxis(gettext('最薄点厚度'), y)
+    line.set_global_opts(
+        title_opts=opts.TitleOpts(title=gettext('最薄点厚度变化图'),
+                                  title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
     return line.dump_options_with_quotes()
 
 
@@ -622,18 +597,13 @@ def generate_visualAcuity_chart(username):
         y_2.append(_.UCVA)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    if request.cookies.get('language', 'cn') == 'cn':
-        line.add_yaxis('最佳眼镜矫正视力', y_1)
-        line.add_yaxis('裸眼视力', y_2)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='视力变化图', title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
-    else:
-        line.add_yaxis('BSCVA', y_1)
-        line.add_yaxis('UCVA', y_2)
-        line.set_global_opts(title_opts=opts.TitleOpts(title='VisualAcuity-Chart'),
-                             xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
+    line.add_yaxis(gettext('最佳眼镜矫正视力'), y_1)
+    line.add_yaxis(gettext('裸眼视力'), y_2)
+    line.set_global_opts(
+        title_opts=opts.TitleOpts(title=gettext('视力变化图'),
+                                  title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
     return line.dump_options_with_quotes()
 
 
@@ -647,18 +617,12 @@ def generate_myopia_chart(username):
         y.append(_.myopia)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    if request.cookies.get('language', 'cn') == 'cn':
-        line.add_yaxis('近视度数', y)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='近视度数变化图',
-                                      title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
-    else:
-        line.add_yaxis('MyopiaDegree', y)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='Myopia-Chart'),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
+    line.add_yaxis(gettext('近视度数'), y)
+    line.set_global_opts(
+        title_opts=opts.TitleOpts(title=gettext('近视度数变化图'),
+                                  title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
     return line.dump_options_with_quotes()
 
 
@@ -672,18 +636,12 @@ def generate_astigmatism_chart(username):
         y.append(_.astigmatism)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    if request.cookies.get('language', 'cn') == 'cn':
-        line.add_yaxis('散光度数', y)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='散光度数变化图',
-                                      title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
-    else:
-        line.add_yaxis('AstigmatismDegree', y)
-        line.set_global_opts(
-            title_opts=opts.TitleOpts(title='Astigmatism-Chart'),
-            xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
+    line.add_yaxis(gettext('散光度数'), y)
+    line.set_global_opts(
+        title_opts=opts.TitleOpts(title=gettext('散光度数变化图'),
+                                  title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
+        xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
     return line.dump_options_with_quotes()
 
 
@@ -891,15 +849,6 @@ def manage_collect(username):
 @permission_required('UPLOAD')
 def manual_upload():
     form = ChangeDataForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.datetime.label.text = '检测日期'
-        form.updatetime.label.text = '更新日期'
-        form.k_max.label.text = '最大曲率'
-        form.thickness_min.label.text = '最薄点厚度'
-        form.BSCVA.label.text = '最佳眼镜矫正视力'
-        form.UCVA.label.text = '裸眼视力'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         datetime = form.datetime.data
         updatetime = form.updatetime.data
@@ -915,13 +864,9 @@ def manual_upload():
                         user=current_user._get_current_object())
         db.session.add(cornea)
         db.session.commit()
-        if language == 'cn':
-            flash('数据上传成功', 'success')
-        else:
-            flash('Data created.', 'success')
+        flash(_('数据上传成功'), 'success')
         return redirect(url_for('user.index', username=current_user.username))
-    return render_template(
-        'user/profile/manual_upload_{}.html'.format(language), form=form)
+    return render_template('user/profile/manual_upload.html', form=form)
 
 
 # 图片上传

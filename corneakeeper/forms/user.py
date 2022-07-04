@@ -1,6 +1,7 @@
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flask_babel import lazy_gettext as _l
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, HiddenField, \
     ValidationError, DateTimeField, FloatField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, Optional, Regexp, NumberRange
@@ -25,15 +26,15 @@ class EditProfileForm(FlaskForm):
 
 
 class ChangeDataForm(FlaskForm):
-    datetime = DateTimeField('DateTime', validators=[DataRequired()])
-    updatetime = DateTimeField('UpdateTime', validators=[DataRequired()])
+    datetime = DateTimeField(_l('检测日期'), validators=[DataRequired()])
+    updatetime = DateTimeField(_l('更新日期'), validators=[DataRequired()])
     k1 = FloatField('k1', validators=[DataRequired(), NumberRange(0, 100)])
     k2 = FloatField('k2', validators=[DataRequired(), NumberRange(0, 100)])
-    k_max = FloatField('k_max', validators=[DataRequired(), NumberRange(0, 100)])
-    thickness_min = IntegerField('thickness_min', validators=[DataRequired(), NumberRange(0, 700)])
-    BSCVA = FloatField('BSCVA', validators=[DataRequired(), NumberRange(0, 1.5)])
-    UCVA = FloatField('UCVA', validators=[Optional(), NumberRange(0, 1.5)])
-    submit = SubmitField()
+    k_max = FloatField(_l('最大曲率'), validators=[DataRequired(), NumberRange(0, 100)])
+    thickness_min = IntegerField(_l('最薄点厚度'), validators=[DataRequired(), NumberRange(0, 700)])
+    BSCVA = FloatField(_l('最佳眼镜矫正视力'), validators=[DataRequired(), NumberRange(0, 1.5)])
+    UCVA = FloatField(_l('裸眼视力'), validators=[Optional(), NumberRange(0, 1.5)])
+    submit = SubmitField(_l('提交'))
 
 
 class UploadAvatarForm(FlaskForm):

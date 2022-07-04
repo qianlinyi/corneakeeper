@@ -1,13 +1,13 @@
-{% extends 'base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 {% from 'macros.html' import photo_card %}
 
-{% block title %}Data Upload{% endblock %}
+{% block title %}{{ _('数据上传') }}{% endblock %}
 
 {% block content %}
     <div class="container h-100 mb-3">
         <div class="row h-100 page-header justify-content-center align-items-center">
-            <h1>Data Upload</h1>
+            <h1>{{ _('数据上传') }}</h1>
         </div>
         <div class="row h-100 justify-content-center align-items-center">
             {{ render_form(form, extra_classes='col-6') }}

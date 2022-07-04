@@ -1,11 +1,11 @@
-{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'user/profile/base.html' %}
 {% from 'bootstrap4/pagination.html' import render_pagination %}
 {% from 'macros.html' import user_card with context %}
 
-{% block title %}{{ user.name }} 的主页{% endblock %}
+{% block title %}{{ user.name }} {{ _('的主页') }}{% endblock %}
 
 {% block content %}
-    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    {% include 'user/profile/_header.html' %}
     {% if current_user == user or user.public_charts %}
         {% if cornea %}
             <div class="row">
@@ -18,12 +18,12 @@
             </div>
         {% else %}
             <div class="tip">
-                <h3>无数据</h3>
+                <h3>{{ _('无数据') }}</h3>
             </div>
         {% endif %}
     {% else %}
         <div class="tip">
-            <h3>该用户的变化设置为不可见</h3>
+            <h3>{{ _('该用户的变化设置为不可见') }}</h3>
         </div>
     {% endif %}
 {% endblock %}

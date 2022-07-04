@@ -1,11 +1,11 @@
-{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'user/profile/base.html' %}
 {% from 'bootstrap4/pagination.html' import render_pagination %}
 {% from 'macros.html' import photo_card %}
 
 {% block title %}{{ user.name }}{% endblock %}
 
 {% block content %}
-    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    {% include 'user/profile/_header.html' %}
     <div class="row">
         <div class="col-md-12">
             {% if current_user == user or user.public_photos %}
@@ -15,12 +15,12 @@
                     {% endfor %}
                 {% else %}
                     <div class="tip text-center">
-                        <h3>No photos.</h3>
+                        <h3>{{ _('无图片') }}</h3>
                     </div>
                 {% endif %}
             {% else %}
                 <div class="tip">
-                    <h3>This user's photos were private.</h3>
+                    <h3>{{ _('该用户图片设置为不可见') }}</h3>
                 </div>
             {% endif %}
         </div>

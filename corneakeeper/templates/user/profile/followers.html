@@ -1,28 +1,29 @@
-{% extends 'user/profile/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'user/profile/base.html' %}
 {% from 'bootstrap4/pagination.html' import render_pagination %}
 {% from 'macros.html' import user_card with context %}
 
-{% block title %}{{ user.name }} 的关注{% endblock %}
+{% block title %}{{ user.name }} {{ _('的粉丝') }}{% endblock %}
 
 {% block content %}
-    {% include 'user/profile/_header_{}.html'.format(request.cookies.get('language','cn')) %}
+    {% include 'user/profile/_header.html' %}
     <div class="row">
         <div class="col-md-12">
-            {% if user.public_followings or current_user == user %}
+            {% if user.public_followers or current_user == user %}
                 {% if follows|length %}
                     {% for follow in follows %}
-                        {% if follow.followed != user %}
-                            {{ user_card(user=follow.followed) }}
+                        {% if follow.follower != user %}
+                            {{ user_card(user=follow.follower) }}
                         {% endif %}
                     {% endfor %}
                 {% else %}
+
                     <div class="tip">
-                        <h3>无关注</h3>
+                        <h3>{{ _('无粉丝') }}</h3>
                     </div>
                 {% endif %}
             {% else %}
                 <div class="tip">
-                    <h3>该用户关注设置为不可见</h3>
+                    <h3>{{ _('该用户的粉丝设置为不可见') }}</h3>
                 </div>
             {% endif %}
         </div>
