@@ -131,19 +131,6 @@ def recognition(photo_id):
     image = get_file_content(path)
     result = client.basicGeneral(image)
     form = ChangeDataForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.datetime.label.text = '检测日期（请自行输入）'
-        form.updatetime.label.text = '更新日期'
-        form.k_max.label.text = '最大曲率'
-        form.thickness_min.label.text = '最薄点厚度'
-        form.BSCVA.label.text = '最佳眼镜矫正视力（请自行输入）'
-        form.UCVA.label.text = '裸眼视力（请自行输入）'
-        form.submit.label.text = '提交'
-    else:
-        form.datetime.label.text += '(Please enter by yourself)'
-        form.UCVA.label.text += '(Please enter by yourself)'
-        form.BSCVA.label.text += '(Please enter by yourself)'
     if form.validate_on_submit():
         datetime = form.datetime.data
         updatetime = form.updatetime.data
@@ -158,10 +145,8 @@ def recognition(photo_id):
                         thickness_min=thickness_min, BSCVA=BSCVA, UCVA=UCVA)
         db.session.add(cornea)
         db.session.commit()
-        if language == 'cn':
-            flash('数据上传成功', 'success')
-        else:
-            flash('Data created.', 'success')
+        flash(gettext('数据上传成功'), 'success')
+        flash('Data created.', 'success')
         return redirect(url_for('user.index', username=current_user.username))
     recognition = post_processing(result)
     form.updatetime.data = dt.datetime.now()
@@ -169,8 +154,7 @@ def recognition(photo_id):
     form.k2.data = recognition['k2']
     form.k_max.data = recognition['k_max']
     form.thickness_min.data = recognition['thickness_min']
-    return render_template('user/recognition_{}.html'.format(
-        request.cookies.get('language', 'cn')), form=form)
+    return render_template('user/profile/recognition.html', form=form)
 
 
 @user_bp.route('/<username>/diagnosis')  # 诊断函数
@@ -692,7 +676,7 @@ def new_post(username):
         post = Post(title=title, body=body, category=category, user=user)
         db.session.add(post)
         db.session.commit()
-        flash(_('文章发布成功'), 'success')
+        flash(gettext('文章发布成功'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
     return render_template('user/forum/new_post.html', form=form)
 
@@ -712,7 +696,7 @@ def edit_post(username, post_id):
         post.body = form.body.data
         post.category = Category.query.get(form.category.data)
         db.session.commit()
-        flash(_('文章修改成功'), 'success')
+        flash(gettext('文章修改成功'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
     form.title.data = post.title
     form.body.data = post.body
@@ -731,7 +715,7 @@ def delete_post(username, post_id):
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
-    flash(_('文章删除成功'), 'success')
+    flash(gettext('文章删除成功'), 'success')
     return redirect_back()
 
 
@@ -747,10 +731,10 @@ def set_comment(username, post_id):
     language = request.cookies.get('language', 'cn')
     if post.can_comment:
         post.can_comment = False
-        flash(_('评论已禁止'), 'success')
+        flash(gettext('评论已禁止'), 'success')
     else:
         post.can_comment = True
-        flash(_('评论已开放'), 'success')
+        flash(gettext('评论已开放'), 'success')
     db.session.commit()
     return redirect_back()
 
@@ -808,7 +792,7 @@ def approve_comment(username, comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.reviewed = True
     db.session.commit()
-    flash(_('评论已公开'), 'success')
+    flash(gettext('评论已公开'), 'success')
     return redirect_back()
 
 
@@ -823,7 +807,7 @@ def delete_comment(username, comment_id):
     comment = Comment.query.get_or_404(comment_id)
     db.session.delete(comment)
     db.session.commit()
-    flash(_('评论已删除'), 'success')
+    flash(gettext('评论已删除'), 'success')
     return redirect_back()
 
 
@@ -864,7 +848,7 @@ def manual_upload():
                         user=current_user._get_current_object())
         db.session.add(cornea)
         db.session.commit()
-        flash(_('数据上传成功'), 'success')
+        flash(gettext('数据上传成功'), 'success')
         return redirect(url_for('user.index', username=current_user.username))
     return render_template('user/profile/manual_upload.html', form=form)
 
@@ -891,8 +875,7 @@ def photo_upload():
         )
         db.session.add(photo)
         db.session.commit()
-    return render_template('user/profile/photo_upload_{}.html'.format(
-        request.cookies.get('language', 'cn')))
+    return render_template('user/profile/photo_upload.html')
 
 
 # 删除角膜数据

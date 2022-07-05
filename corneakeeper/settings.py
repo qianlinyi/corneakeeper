@@ -7,6 +7,7 @@
 import os
 
 from flask_whooshee import AbstractWhoosheer
+from flask_babel import lazy_gettext as _l
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -61,7 +62,7 @@ class BaseConfig(object):
     DROPZONE_MAX_FILES = 30
     MAX_CONTENT_LENGTH = 3 * 1024 * 1024
     DROPZONE_ALLOWED_FILE_TYPE = 'image'
-    DROPZONE_DEFAULT_MESSAGE = u'拖拽文件到这里或点击上传<br>Drop files here or click to upload.'
+    DROPZONE_DEFAULT_MESSAGE = _l('拖拽文件到这里或点击上传')
     DROPZONE_ENABLE_CSRF = True
     # 头像
     AVATARS_SAVE_PATH = os.path.join(CK_UPLOAD_PATH, 'avatars')  # 头像存储路径
