@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for, flash, request, \
     current_app, Blueprint, abort
 from flask_login import current_user, fresh_login_required, login_required, \
     logout_user
-from flask_babel import gettext
+from flask_babel import _
 from pyecharts import options as opts
 from pyecharts.globals import ThemeType
 from pyecharts.charts import Line
@@ -76,7 +76,7 @@ def unfollow(username):
 def show_photos(username):
     user = User.query.filter_by(username=username).first_or_404()
     if user == current_user and user.locked:
-        flash(gettext('Your account is locked.'), 'danger')
+        flash(_('Your account is locked.'), 'danger')
 
     if user == current_user and not user.active:
         logout_user()
@@ -145,7 +145,7 @@ def recognition(photo_id):
                         thickness_min=thickness_min, BSCVA=BSCVA, UCVA=UCVA)
         db.session.add(cornea)
         db.session.commit()
-        flash(gettext('数据上传成功'), 'success')
+        flash(_('数据上传成功'), 'success')
         flash('Data created.', 'success')
         return redirect(url_for('user.index', username=current_user.username))
     recognition = post_processing(result)
@@ -241,13 +241,6 @@ def diagnosis(username):
 @login_required
 def edit_profile():
     form = EditProfileForm()
-    if request.cookies.get('language', 'cn') == 'cn':
-        form.name.label.text = '昵称'
-        form.username.label.text = '用户名'
-        form.website.label.text = '网站'
-        form.location.label.text = '地点'
-        form.bio.label.text = '个性签名'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         current_user.name = form.name.data
         current_user.username = form.username.data
@@ -255,19 +248,14 @@ def edit_profile():
         current_user.website = form.website.data
         current_user.location = form.location.data
         db.session.commit()
-        if request.cookies.get('language', 'cn') == 'cn':
-            flash('个人信息更新成功', 'success')
-        else:
-            flash('Profile updated.', 'success')
+        flash(_('个人信息更新成功'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.name.data = current_user.name
     form.username.data = current_user.username
     form.bio.data = current_user.bio
     form.website.data = current_user.website
     form.location.data = current_user.location
-    return render_template('user/settings/edit_profile_{}.html'.format(
-        request.cookies.get('language', 'cn')),
-        form=form, user=current_user)
+    return render_template('user/settings/edit_profile.html', form=form, user=current_user)
 
 
 @user_bp.route('/settings/data/<datetime>', methods=['GET', 'POST'])
@@ -275,15 +263,6 @@ def edit_profile():
 def change_data(datetime):
     cornea = Cornea.query.filter(Cornea.datetime == datetime).one()
     form = ChangeDataForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.datetime.label.text = '检测日期'
-        form.updatetime.label.text = '更新日期'
-        form.k_max.label.text = '最大曲率'
-        form.thickness_min.label.text = '最薄点厚度'
-        form.BSCVA.label.text = '最佳眼镜矫正视力'
-        form.UCVA.label.text = '裸眼视力'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         cornea.datetime = form.datetime.data
         cornea.updatetime = form.updatetime.data
@@ -294,10 +273,7 @@ def change_data(datetime):
         cornea.BSCVA = form.BSCVA.data
         cornea.UCVA = form.UCVA.data
         db.session.commit()
-        if language == 'cn':
-            flash('数据更新成功', 'success')
-        else:
-            flash('Data updated.', 'success')
+        flash(_('数据更新成功'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.datetime.data = cornea.datetime
     form.updatetime.data = dt.datetime.now()
@@ -307,8 +283,7 @@ def change_data(datetime):
     form.thickness_min.data = cornea.thickness_min
     form.BSCVA.data = cornea.BSCVA
     form.UCVA.data = cornea.UCVA
-    return render_template('user/settings/change_data_{}.html'.format(language),
-                           form=form)
+    return render_template('user/settings/change_data.html', form=form)
 
 
 @user_bp.route('/settings/avatar')
@@ -317,15 +292,7 @@ def change_data(datetime):
 def change_avatar():
     upload_form = UploadAvatarForm()
     crop_form = CropAvatarForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        upload_form.image.label.text = '上传'
-        upload_form.submit.label.text = '提交'
-        crop_form.submit.label.text = '修剪并保存'
-    return render_template(
-        'user/settings/change_avatar_{}.html'.format(language),
-        upload_form=upload_form,
-        crop_form=crop_form)
+    return render_template('user/settings/change_avatar.html', upload_form=upload_form, crop_form=crop_form)
 
 
 @user_bp.route('/settings/avatar/upload', methods=['POST'])
@@ -367,10 +334,6 @@ def crop_avatar():
 @fresh_login_required
 def change_email_request():
     form = ChangeEmailForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.email.label.text = '新邮箱'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         token = generate_token(user=current_user,
                                operation=Operations.CHANGE_EMAIL,
@@ -379,8 +342,7 @@ def change_email_request():
                                 token=token)
         flash('Confirm email sent, check your inbox.', 'info')
         return redirect(url_for('.index', username=current_user.username))
-    return render_template(
-        'user/settings/change_email_{}.html'.format(language), form=form)
+    return render_template('user/settings/change_email.html', form=form)
 
 
 @user_bp.route('/change-email/<token>')
@@ -389,16 +351,10 @@ def change_email(token):
     language = request.cookies.get('language', 'cn')
     if validate_token(user=current_user, token=token,
                       operation=Operations.CHANGE_EMAIL):
-        if language == 'cn':
-            flash('邮箱更新成功', 'success')
-        else:
-            flash('Email updated.', 'success')
+        flash(_('邮箱更新成功'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     else:
-        if language == 'cn':
-            flash('无效 token 或 token 已过期', 'warning')
-        else:
-            flash('Invalid or expired token.', 'warning')
+        flash(_('无效 token 或 token 已过期'), 'warning')
         return redirect(url_for('.change_email_request'))
 
 
@@ -406,57 +362,33 @@ def change_email(token):
 @fresh_login_required
 def delete_account():
     form = DeleteAccountForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.username.label.text = '用户名'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         db.session.delete(current_user._get_current_object())
         db.session.commit()
-        if language == 'cn':
-            flash('注销账户成功！', 'success')
-        else:
-            flash('Your are free, goodbye!', 'success')
+        flash(_('注销账户成功！'), 'success')
         return redirect(url_for('blog.index'))
-    return render_template(
-        'user/settings/delete_account_{}.html'.format(language), form=form)
+    return render_template('user/settings/delete_account.html', form=form)
 
 
 @user_bp.route('/settings/change-password', methods=['GET', 'POST'])
 @fresh_login_required
 def change_password():
-    language = request.cookies.get('language', 'cn')
     form = ChangePasswordForm()
-    if language == 'cn':
-        form.old_password.label.text = '旧密码'
-        form.password.label.text = '新密码'
-        form.password2.label.text = '确认密码'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         if current_user.validate_password(form.old_password.data):
             current_user.set_password(form.password.data)
             db.session.commit()
-            flash('Password updated.', 'success')
+            flash(_('密码已修改'), 'success')
             return redirect(url_for('.index', username=current_user.username))
         else:
-            flash('Old password is incorrect.', 'warning')
-    return render_template(
-        'user/settings/change_password_{}.html'.format(language), form=form)
+            flash(_('密码错误'), 'warning')
+    return render_template('user/settings/change_password.html', form=form)
 
 
 @user_bp.route('/settings/privacy', methods=['GET', 'POST'])
 @login_required
 def privacy_setting():
     form = PrivacySettingForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.public_charts.label.text = '公开我的变化'
-        form.public_diagnosis.label.text = '公开我的诊断'
-        form.public_photos.label.text = '公开我的图片'
-        form.public_collections.label.text = '公开我的收藏'
-        form.public_followings.label.text = '公开我的关注'
-        form.public_followers.label.text = '公开我的粉丝'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         current_user.public_charts = form.public_charts.data
         current_user.public_diagnosis = form.public_diagnosis.data
@@ -465,10 +397,7 @@ def privacy_setting():
         current_user.public_followings = form.public_followings.data
         current_user.public_followers = form.public_followers.data
         db.session.commit()
-        if language == 'cn':
-            flash('隐私设置已更新', 'success')
-        else:
-            flash('Privacy settings updated.', 'success')
+        flash(_('隐私设置已更新'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.public_charts.data = current_user.public_charts
     form.public_diagnosis.data = current_user.public_diagnosis
@@ -476,35 +405,24 @@ def privacy_setting():
     form.public_photos.data = current_user.public_photos
     form.public_followings.data = current_user.public_followings
     form.public_followers.data = current_user.public_followers
-    return render_template(
-        'user/settings/edit_privacy_{}.html'.format(language), form=form)
+    return render_template('user/settings/edit_privacy.html', form=form)
 
 
 @user_bp.route('/settings/notification', methods=['GET', 'POST'])
 @login_required
 def notification_setting():
     form = NotificationSettingForm()
-    language = request.cookies.get('language', 'cn')
-    if language == 'cn':
-        form.receive_collect_notification.label.text = '新的关注提醒'
-        form.receive_follow_notification.label.text = '新的粉丝提醒'
-        form.receive_comment_notification.label.text = '新的评论提醒'
-        form.submit.label.text = '提交'
     if form.validate_on_submit():
         current_user.receive_collect_notification = form.receive_collect_notification.data
         current_user.receive_comment_notification = form.receive_comment_notification.data
         current_user.receive_follow_notification = form.receive_follow_notification.data
         db.session.commit()
-        if language == 'cn':
-            flash('通知设置已更新', 'success')
-        else:
-            flash('Notification settings updated.', 'success')
+        flash(_('通知设置已更新'), 'success')
         return redirect(url_for('.index', username=current_user.username))
     form.receive_collect_notification.data = current_user.receive_collect_notification
     form.receive_comment_notification.data = current_user.receive_comment_notification
     form.receive_follow_notification.data = current_user.receive_follow_notification
-    return render_template(
-        'user/settings/edit_notification_{}.html'.format(language), form=form)
+    return render_template('user/settings/edit_notification.html', form=form)
 
 
 @user_bp.route('/<username>')
@@ -519,14 +437,14 @@ def index(username):
 def generate_IS_chart(username):
     user = User.query.filter_by(username=username).first_or_404()
     x, y = [], []
-    for _ in Cornea.query.filter_by(user=user).order_by('datetime').all():
-        x.append(_.datetime.strftime('%Y-%m-%d'))
-        y.append(round(abs(_.k1 - _.k2), 1))
+    for cornea in Cornea.query.filter_by(user=user).order_by('datetime').all():
+        x.append(cornea.datetime.strftime('%Y-%m-%d'))
+        y.append(round(abs(cornea.k1 - cornea.k2), 1))
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    line.add_yaxis(gettext('角膜屈光力差值'), y)
+    line.add_yaxis(_('角膜屈光力差值'), y)
     line.set_global_opts(
-        title_opts=opts.TitleOpts(title=gettext('角膜屈光力差值变化图'),
+        title_opts=opts.TitleOpts(title=_('角膜屈光力差值变化图'),
                                   title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
@@ -538,13 +456,13 @@ def generate_IS_chart(username):
 def generate_K_chart(username):
     user = User.query.filter_by(username=username).first_or_404()
     x, y_k_max = [], []
-    for _ in Cornea.query.filter_by(user=user).order_by('datetime').all():
-        x.append(_.datetime.strftime('%Y-%m-%d'))  # 转字符串
-        y_k_max.append(_.k_max)
+    for cornea in Cornea.query.filter_by(user=user).order_by('datetime').all():
+        x.append(cornea.datetime.strftime('%Y-%m-%d'))  # 转字符串
+        y_k_max.append(cornea.k_max)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    line.add_yaxis(gettext('最大曲率'), y_k_max)
-    line.set_global_opts(title_opts=opts.TitleOpts(title=gettext('最大曲率变化图'), title_textstyle_opts=opts.TextStyleOpts(
+    line.add_yaxis(_('最大曲率'), y_k_max)
+    line.set_global_opts(title_opts=opts.TitleOpts(title=_('最大曲率变化图'), title_textstyle_opts=opts.TextStyleOpts(
         font_family='SimSun')),
                          legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
                          xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
@@ -556,14 +474,14 @@ def generate_K_chart(username):
 def generate_thickness_chart(username):
     user = User.query.filter_by(username=username).first_or_404()
     x, y = [], []
-    for _ in Cornea.query.filter_by(user=user).order_by('datetime').all():
-        x.append(_.datetime.strftime('%Y-%m-%d'))  # 转字符串
-        y.append(_.thickness_min)
+    for cornea in Cornea.query.filter_by(user=user).order_by('datetime').all():
+        x.append(cornea.datetime.strftime('%Y-%m-%d'))  # 转字符串
+        y.append(cornea.thickness_min)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    line.add_yaxis(gettext('最薄点厚度'), y)
+    line.add_yaxis(_('最薄点厚度'), y)
     line.set_global_opts(
-        title_opts=opts.TitleOpts(title=gettext('最薄点厚度变化图'),
+        title_opts=opts.TitleOpts(title=_('最薄点厚度变化图'),
                                   title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
@@ -575,16 +493,16 @@ def generate_thickness_chart(username):
 def generate_visualAcuity_chart(username):
     user = User.query.filter_by(username=username).first_or_404()
     x, y_1, y_2 = [], [], []
-    for _ in Cornea.query.filter_by(user=user).order_by('datetime').all():
-        x.append(_.datetime.strftime('%Y-%m-%d'))  # 转字符串
-        y_1.append(_.BSCVA)  # 转字符串
-        y_2.append(_.UCVA)
+    for cornea in Cornea.query.filter_by(user=user).order_by('datetime').all():
+        x.append(cornea.datetime.strftime('%Y-%m-%d'))  # 转字符串
+        y_1.append(cornea.BSCVA)  # 转字符串
+        y_2.append(cornea.UCVA)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    line.add_yaxis(gettext('最佳眼镜矫正视力'), y_1)
-    line.add_yaxis(gettext('裸眼视力'), y_2)
+    line.add_yaxis(_('最佳眼镜矫正视力'), y_1)
+    line.add_yaxis(_('裸眼视力'), y_2)
     line.set_global_opts(
-        title_opts=opts.TitleOpts(title=gettext('视力变化图'),
+        title_opts=opts.TitleOpts(title=_('视力变化图'),
                                   title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
@@ -601,9 +519,9 @@ def generate_myopia_chart(username):
         y.append(_.myopia)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    line.add_yaxis(gettext('近视度数'), y)
+    line.add_yaxis(_('近视度数'), y)
     line.set_global_opts(
-        title_opts=opts.TitleOpts(title=gettext('近视度数变化图'),
+        title_opts=opts.TitleOpts(title=_('近视度数变化图'),
                                   title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
@@ -620,9 +538,9 @@ def generate_astigmatism_chart(username):
         y.append(_.astigmatism)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
-    line.add_yaxis(gettext('散光度数'), y)
+    line.add_yaxis(_('散光度数'), y)
     line.set_global_opts(
-        title_opts=opts.TitleOpts(title=gettext('散光度数变化图'),
+        title_opts=opts.TitleOpts(title=_('散光度数变化图'),
                                   title_textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         legend_opts=opts.LegendOpts(textstyle_opts=opts.TextStyleOpts(font_family='SimSun')),
         xaxis_opts=opts.AxisOpts(axislabel_opts={'rotate': 30 if len(x) > 3 else 0}))
@@ -634,8 +552,7 @@ def generate_astigmatism_chart(username):
 def history():
     cornea = Cornea.query.filter(Cornea.user_id == current_user.id).order_by(
         Cornea.datetime.desc()).all()
-    return render_template('user/settings/history_{}.html'.format(
-        request.cookies.get('language', 'cn')), cornea=cornea)
+    return render_template('user/settings/history.html', cornea=cornea)
 
 
 # 论坛管理
@@ -676,7 +593,7 @@ def new_post(username):
         post = Post(title=title, body=body, category=category, user=user)
         db.session.add(post)
         db.session.commit()
-        flash(gettext('文章发布成功'), 'success')
+        flash(_('文章发布成功'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
     return render_template('user/forum/new_post.html', form=form)
 
@@ -696,7 +613,7 @@ def edit_post(username, post_id):
         post.body = form.body.data
         post.category = Category.query.get(form.category.data)
         db.session.commit()
-        flash(gettext('文章修改成功'), 'success')
+        flash(_('文章修改成功'), 'success')
         return redirect(url_for('blog.show_post', post_id=post.id))
     form.title.data = post.title
     form.body.data = post.body
@@ -715,7 +632,7 @@ def delete_post(username, post_id):
     post = Post.query.get_or_404(post_id)
     db.session.delete(post)
     db.session.commit()
-    flash(gettext('文章删除成功'), 'success')
+    flash(_('文章删除成功'), 'success')
     return redirect_back()
 
 
@@ -731,10 +648,10 @@ def set_comment(username, post_id):
     language = request.cookies.get('language', 'cn')
     if post.can_comment:
         post.can_comment = False
-        flash(gettext('评论已禁止'), 'success')
+        flash(_('评论已禁止'), 'success')
     else:
         post.can_comment = True
-        flash(gettext('评论已开放'), 'success')
+        flash(_('评论已开放'), 'success')
     db.session.commit()
     return redirect_back()
 
@@ -792,7 +709,7 @@ def approve_comment(username, comment_id):
     comment = Comment.query.get_or_404(comment_id)
     comment.reviewed = True
     db.session.commit()
-    flash(gettext('评论已公开'), 'success')
+    flash(_('评论已公开'), 'success')
     return redirect_back()
 
 
@@ -807,7 +724,7 @@ def delete_comment(username, comment_id):
     comment = Comment.query.get_or_404(comment_id)
     db.session.delete(comment)
     db.session.commit()
-    flash(gettext('评论已删除'), 'success')
+    flash(_('评论已删除'), 'success')
     return redirect_back()
 
 
@@ -848,7 +765,7 @@ def manual_upload():
                         user=current_user._get_current_object())
         db.session.add(cornea)
         db.session.commit()
-        flash(gettext('数据上传成功'), 'success')
+        flash(_('数据上传成功'), 'success')
         return redirect(url_for('user.index', username=current_user.username))
     return render_template('user/profile/manual_upload.html', form=form)
 

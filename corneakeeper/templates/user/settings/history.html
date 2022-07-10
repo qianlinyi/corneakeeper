@@ -1,6 +1,6 @@
-{% extends 'user/settings/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'user/settings/base.html' %}
 
-{% block title %}历史数据{% endblock %}
+{% block title %}{{ _('历史数据') }}{% endblock %}
 
 {% block setting_content %}
     <div class="card-body">
@@ -8,9 +8,9 @@
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>检测日期</th>
-                    <th>更新日期</th>
-                    <th>选项</th>
+                    <th>{{ _('检测日期') }}</th>
+                    <th>{{ _('更新日期') }}</th>
+                    <th>{{ _('选项') }}</th>
                 </tr>
                 </thead>
                 {% for fuck in cornea %}
@@ -23,12 +23,18 @@
                         </td>
                         <td>
                             <a class="btn btn-info btn-sm"
-                               href="{{ url_for('user.change_data',datetime=fuck.datetime) }}">修改</a>
+                               href="{{ url_for('user.change_data',datetime=fuck.datetime) }}">{{ _('修改') }}</a>
                             <form class="inline" method="post"
                                   action="{{ url_for('user.delete_corneadata', datetime=fuck.datetime, next=request.full_path) }}">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                 <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('确定删除？');">删除
+                                        onclick="
+                                                {% if request.cookies.get('locale') == 'zh' %}
+                                                    return confirm('确定删除？');
+                                                {% else %}
+                                                    return confirm('Are you sure?');
+                                                {% endif %}
+                                                ">{{ _('删除') }}
                                 </button>
                             </form>
                         </td>
@@ -36,8 +42,7 @@
                 {% endfor %}
             </table>
         {% else %}
-            <div class="tip"><h5>无历史信息</h5></div>
+            <div class="tip"><h5>{{ _('无历史信息') }}</h5></div>
         {% endif %}
-        <!--        </div>-->
     </div>
 {% endblock %}

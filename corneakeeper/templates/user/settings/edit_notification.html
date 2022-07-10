@@ -1,11 +1,11 @@
-{% extends 'user/settings/base_{}.html'.format(request.cookies.get('language','cn')) %}}
+{% extends 'user/settings/base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}Notification Settings{% endblock %}
+{% block title %}{{ _('设置通知') }}{% endblock %}
 
 {% block setting_content %}
     <div class="card w-100 bg-light">
-        <h3 class="card-header">Notification Settings</h3>
+        <h3 class="card-header">{{ _('设置通知') }}</h3>
         <div class="card-body">
             {{ render_form(form) }}
         </div>

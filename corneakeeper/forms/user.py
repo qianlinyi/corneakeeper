@@ -10,19 +10,19 @@ from corneakeeper.models import User
 
 
 class EditProfileForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(1, 30)])
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
+    name = StringField(_l('昵称'), validators=[DataRequired(), Length(1, 30)])
+    username = StringField(_l('用户名'), validators=[DataRequired(), Length(1, 20), Regexp('^[a-zA-Z0-9]*$',
                                                                                          message='The username should '
                                                                                                  'contain only a-z, '
                                                                                                  'A-Z and 0-9.')])
-    website = StringField('Website', validators=[Optional(), Length(0, 255)])
-    location = StringField('City', validators=[Optional(), Length(0, 50)])
-    bio = TextAreaField('Bio', validators=[Optional(), Length(0, 120)])
-    submit = SubmitField()
+    website = StringField(_l('网站'), validators=[Optional(), Length(0, 255)])
+    location = StringField(_l('地点'), validators=[Optional(), Length(0, 50)])
+    bio = TextAreaField(_l('个性签名'), validators=[Optional(), Length(0, 120)])
+    submit = SubmitField(_l('提交'))
 
     def validate_username(self, field):
         if field.data != current_user.username and User.query.filter_by(username=field.data).first():
-            raise ValidationError('The username is already in use.')
+            raise ValidationError(_l('用户名已被占用'))
 
 
 class ChangeDataForm(FlaskForm):
@@ -38,11 +38,11 @@ class ChangeDataForm(FlaskForm):
 
 
 class UploadAvatarForm(FlaskForm):
-    image = FileField('Upload', validators=[
+    image = FileField(_l('上传'), validators=[
         FileRequired(),
-        FileAllowed(['jpg', 'png'], 'The file format should be .jpg or .png.')
+        FileAllowed(['jpg', 'png'], _l('文件后缀名为.jpg或者.png'))
     ])
-    submit = SubmitField()
+    submit = SubmitField(_l('提交'))
 
 
 class CropAvatarForm(FlaskForm):
@@ -50,47 +50,47 @@ class CropAvatarForm(FlaskForm):
     y = HiddenField()
     w = HiddenField()
     h = HiddenField()
-    submit = SubmitField('Crop and Update')
+    submit = SubmitField(_l('裁剪并保存'))
 
 
 class ChangeEmailForm(FlaskForm):
-    email = StringField('New Email', validators=[DataRequired(), Length(1, 254), Email()])
-    submit = SubmitField()
+    email = StringField(_l('新邮件'), validators=[DataRequired(), Length(1, 254), Email()])
+    submit = SubmitField(_l('提交'))
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data.lower()).first():
-            raise ValidationError('The email is already in use.')
+            raise ValidationError(_l('邮箱已被占用'))
 
 
 class ChangePasswordForm(FlaskForm):
-    old_password = PasswordField('Old Password', validators=[DataRequired()])
-    password = PasswordField('New Password', validators=[
+    old_password = PasswordField(_l('旧密码'), validators=[DataRequired()])
+    password = PasswordField(_l('新密码'), validators=[
         DataRequired(), Length(8, 128), EqualTo('password2')])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
-    submit = SubmitField()
+    password2 = PasswordField(_l('验证密码'), validators=[DataRequired()])
+    submit = SubmitField(_l('提交'))
 
 
 class NotificationSettingForm(FlaskForm):
-    receive_comment_notification = BooleanField('New comment')
-    receive_follow_notification = BooleanField('New follower')
-    receive_collect_notification = BooleanField('New collector')
-    submit = SubmitField()
+    receive_comment_notification = BooleanField(_l('新评论'))
+    receive_follow_notification = BooleanField(_l('新粉丝'))
+    receive_collect_notification = BooleanField(_l('新收藏'))
+    submit = SubmitField(_l('提交'))
 
 
 class PrivacySettingForm(FlaskForm):
-    public_charts = BooleanField('Publc my charts')
-    public_diagnosis = BooleanField('Public my diagnosis')
-    public_photos = BooleanField('Public my photos')
-    public_collections = BooleanField('Public my collection')
-    public_followings = BooleanField('Public my followings')
-    public_followers = BooleanField('Public my followers')
-    submit = SubmitField()
+    public_charts = BooleanField(_l('公开我的变化'))
+    public_diagnosis = BooleanField(_l('公开我的诊断'))
+    public_photos = BooleanField(_l('公开我的图片'))
+    public_collections = BooleanField(_l('公开我的收藏'))
+    public_followings = BooleanField(_l('公开我的关注'))
+    public_followers = BooleanField(_l('公开我的粉丝'))
+    submit = SubmitField(_l('提交'))
 
 
 class DeleteAccountForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(), Length(1, 20)])
-    submit = SubmitField()
+    username = StringField(_l('用户名'), validators=[DataRequired(), Length(1, 20)])
+    submit = SubmitField(_l('提交'))
 
     def validate_username(self, field):
         if field.data != current_user.username:
-            raise ValidationError('Wrong username.')
+            raise ValidationError(_l('用户名错误'))

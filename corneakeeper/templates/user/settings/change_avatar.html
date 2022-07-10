@@ -1,7 +1,7 @@
-{% extends 'user/settings/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'user/settings/base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}修改头像{% endblock %}
+{% block title %}{{ _('修改头像') }}{% endblock %}
 
 {% block head %}
     {{ super() }}
@@ -10,11 +10,11 @@
 
 {% block setting_content %}
     <div class="card w-100 bg-light">
-        <h3 class="card-header">修改头像</h3>
+        <h3 class="card-header">{{ _('修改头像') }}</h3>
         <div class="card-body">
             {{ render_form(upload_form, action=url_for('.upload_avatar')) }}
             <small class="text-muted">
-                您的图片必须小于 3 MB，且只能为 png 或 jpg 格式
+                {{ _('您的图片必须小于 3 MB，且只能为 png 或 jpg 格式') }}
             </small>
         </div>
         <div class="card-body">

@@ -1,11 +1,11 @@
-{% extends 'user/settings/base_{}.html'.format(request.cookies.get('language','cn')) %}
+{% extends 'user/settings/base.html' %}
 {% from 'bootstrap4/form.html' import render_form %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}{{ _('修改个人信息') }}{% endblock %}
 
 {% block setting_content %}
     <div class="card w-100 bg-light">
-        <h3 class="card-header">Edit Profile</h3>
+        <h3 class="card-header">{{ _('修改个人信息') }}</h3>
         <div class="card-body">
             {{ render_form(form) }}
         </div>

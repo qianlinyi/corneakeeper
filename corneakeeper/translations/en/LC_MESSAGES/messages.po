@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-05 18:40+0800\n"
+"POT-Creation-Date: 2022-07-10 19:09+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -146,88 +146,124 @@ msgstr "Enter keyword about photo, user or tag."
 msgid "Your account is locked."
 msgstr ""
 
-#: corneakeeper/blueprints/user.py:148 corneakeeper/blueprints/user.py:852
+#: corneakeeper/blueprints/user.py:148 corneakeeper/blueprints/user.py:768
 msgid "数据上传成功"
 msgstr "Data created."
 
-#: corneakeeper/blueprints/user.py:528
+#: corneakeeper/blueprints/user.py:251
+msgid "个人信息更新成功"
+msgstr "Profile updated."
+
+#: corneakeeper/blueprints/user.py:276
+msgid "数据更新成功"
+msgstr "Corneal data updated."
+
+#: corneakeeper/blueprints/user.py:354
+msgid "邮箱更新成功"
+msgstr "Email updated."
+
+#: corneakeeper/blueprints/user.py:357
+msgid "无效 token 或 token 已过期"
+msgstr "Invalid or expired token."
+
+#: corneakeeper/blueprints/user.py:368
+msgid "注销账户成功！"
+msgstr "Your are free, goodbye!"
+
+#: corneakeeper/blueprints/user.py:381
+msgid "密码已修改"
+msgstr "Password updated."
+
+#: corneakeeper/blueprints/user.py:384
+msgid "密码错误"
+msgstr "Old password is incorrect."
+
+#: corneakeeper/blueprints/user.py:400
+msgid "隐私设置已更新"
+msgstr "Privacy settings updated."
+
+#: corneakeeper/blueprints/user.py:420
+msgid "通知设置已更新"
+msgstr "Notification settings updated."
+
+#: corneakeeper/blueprints/user.py:445
 msgid "角膜屈光力差值"
 msgstr "I-S"
 
-#: corneakeeper/blueprints/user.py:530
+#: corneakeeper/blueprints/user.py:447
 msgid "角膜屈光力差值变化图"
 msgstr "I-S-Chart"
 
-#: corneakeeper/blueprints/user.py:547 corneakeeper/forms/user.py:33
+#: corneakeeper/blueprints/user.py:464 corneakeeper/forms/user.py:33
 msgid "最大曲率"
 msgstr "k_max"
 
-#: corneakeeper/blueprints/user.py:548
+#: corneakeeper/blueprints/user.py:465
 msgid "最大曲率变化图"
 msgstr "K-Chart"
 
-#: corneakeeper/blueprints/user.py:565 corneakeeper/forms/user.py:34
+#: corneakeeper/blueprints/user.py:482 corneakeeper/forms/user.py:34
 msgid "最薄点厚度"
 msgstr "thickness_min"
 
-#: corneakeeper/blueprints/user.py:567
+#: corneakeeper/blueprints/user.py:484
 msgid "最薄点厚度变化图"
 msgstr "Thickness-Chart"
 
-#: corneakeeper/blueprints/user.py:585 corneakeeper/forms/user.py:35
+#: corneakeeper/blueprints/user.py:502 corneakeeper/forms/user.py:35
 msgid "最佳眼镜矫正视力"
 msgstr "BSCVA"
 
-#: corneakeeper/blueprints/user.py:586 corneakeeper/forms/user.py:36
+#: corneakeeper/blueprints/user.py:503 corneakeeper/forms/user.py:36
 msgid "裸眼视力"
 msgstr "UCVA"
 
-#: corneakeeper/blueprints/user.py:588
+#: corneakeeper/blueprints/user.py:505
 msgid "视力变化图"
 msgstr "VisualAcuity-Chart"
 
-#: corneakeeper/blueprints/user.py:605
+#: corneakeeper/blueprints/user.py:522
 msgid "近视度数"
 msgstr "MyopiaDegree"
 
-#: corneakeeper/blueprints/user.py:607
+#: corneakeeper/blueprints/user.py:524
 msgid "近视度数变化图"
 msgstr "Myopia-Chart"
 
-#: corneakeeper/blueprints/user.py:624
+#: corneakeeper/blueprints/user.py:541
 msgid "散光度数"
 msgstr "AstigmatismDegree"
 
-#: corneakeeper/blueprints/user.py:626
+#: corneakeeper/blueprints/user.py:543
 msgid "散光度数变化图"
 msgstr "Astigmatism-Chart"
 
-#: corneakeeper/blueprints/user.py:680
+#: corneakeeper/blueprints/user.py:596
 msgid "文章发布成功"
 msgstr "Post published."
 
-#: corneakeeper/blueprints/user.py:700
+#: corneakeeper/blueprints/user.py:616
 msgid "文章修改成功"
 msgstr "Post updated."
 
-#: corneakeeper/blueprints/user.py:719
+#: corneakeeper/blueprints/user.py:635
 msgid "文章删除成功"
 msgstr "Post deleted."
 
-#: corneakeeper/blueprints/user.py:735
+#: corneakeeper/blueprints/user.py:651
 #: corneakeeper/templates/blog/post.html:166
 msgid "评论已禁止"
 msgstr "Comment disabled."
 
-#: corneakeeper/blueprints/user.py:738
+#: corneakeeper/blueprints/user.py:654
 msgid "评论已开放"
 msgstr "Comment enabled."
 
-#: corneakeeper/blueprints/user.py:796
+#: corneakeeper/blueprints/user.py:712
 msgid "评论已公开"
 msgstr "Comment published."
 
-#: corneakeeper/blueprints/user.py:811
+#: corneakeeper/blueprints/user.py:727
 msgid "评论已删除"
 msgstr "Comment deleted."
 
@@ -239,7 +275,10 @@ msgstr "Category name"
 #: corneakeeper/forms/admin.py:31 corneakeeper/forms/admin.py:49
 #: corneakeeper/forms/auth.py:14 corneakeeper/forms/auth.py:27
 #: corneakeeper/forms/blog.py:14 corneakeeper/forms/blog.py:27
-#: corneakeeper/forms/user.py:37
+#: corneakeeper/forms/user.py:21 corneakeeper/forms/user.py:37
+#: corneakeeper/forms/user.py:45 corneakeeper/forms/user.py:58
+#: corneakeeper/forms/user.py:70 corneakeeper/forms/user.py:77
+#: corneakeeper/forms/user.py:87 corneakeeper/forms/user.py:92
 msgid "提交"
 msgstr "Submit"
 
@@ -254,6 +293,7 @@ msgid "链接地址"
 msgstr "URL"
 
 #: corneakeeper/forms/auth.py:11 corneakeeper/forms/auth.py:20
+#: corneakeeper/forms/user.py:14 corneakeeper/forms/user.py:91
 msgid "用户名"
 msgstr "Username"
 
@@ -265,7 +305,7 @@ msgstr "Password"
 msgid "记住我"
 msgstr "Remember me"
 
-#: corneakeeper/forms/auth.py:18
+#: corneakeeper/forms/auth.py:18 corneakeeper/forms/user.py:13
 msgid "昵称"
 msgstr "Nickname"
 
@@ -320,13 +360,103 @@ msgstr "Category"
 msgid "内容"
 msgstr "Body"
 
+#: corneakeeper/forms/user.py:18
+msgid "网站"
+msgstr "Website"
+
+#: corneakeeper/forms/user.py:19
+msgid "地点"
+msgstr "Site"
+
+#: corneakeeper/forms/user.py:20
+msgid "个性签名"
+msgstr "Bio"
+
+#: corneakeeper/forms/user.py:25
+msgid "用户名已被占用"
+msgstr "Username is already in use."
+
 #: corneakeeper/forms/user.py:29
+#: corneakeeper/templates/user/settings/history.html:11
 msgid "检测日期"
 msgstr "DateTime"
 
 #: corneakeeper/forms/user.py:30
+#: corneakeeper/templates/user/settings/history.html:12
 msgid "更新日期"
 msgstr "UpdateTime"
+
+#: corneakeeper/forms/user.py:41
+msgid "上传"
+msgstr "Upload"
+
+#: corneakeeper/forms/user.py:43
+msgid "文件后缀名为.jpg或者.png"
+msgstr "The file format should be .jpg or .png."
+
+#: corneakeeper/forms/user.py:53
+msgid "裁剪并保存"
+msgstr "Crop and Update"
+
+#: corneakeeper/forms/user.py:57
+msgid "新邮件"
+msgstr "New Email"
+
+#: corneakeeper/forms/user.py:62
+msgid "邮箱已被占用"
+msgstr "The email is already in use."
+
+#: corneakeeper/forms/user.py:66
+msgid "旧密码"
+msgstr "Old Password"
+
+#: corneakeeper/forms/user.py:67
+msgid "新密码"
+msgstr "New Password"
+
+#: corneakeeper/forms/user.py:69
+msgid "验证密码"
+msgstr "Confirm Password"
+
+#: corneakeeper/forms/user.py:74
+msgid "新评论"
+msgstr "New Comment"
+
+#: corneakeeper/forms/user.py:75
+msgid "新粉丝"
+msgstr "New Follower"
+
+#: corneakeeper/forms/user.py:76
+msgid "新收藏"
+msgstr "New Collection"
+
+#: corneakeeper/forms/user.py:81
+msgid "公开我的变化"
+msgstr "Public my charts"
+
+#: corneakeeper/forms/user.py:82
+msgid "公开我的诊断"
+msgstr "Public my diagnosis"
+
+#: corneakeeper/forms/user.py:83
+msgid "公开我的图片"
+msgstr "Public my photos"
+
+#: corneakeeper/forms/user.py:84
+msgid "公开我的收藏"
+msgstr "Public my collections"
+
+#: corneakeeper/forms/user.py:85
+msgid "公开我的关注"
+msgstr "Public my followings"
+
+#: corneakeeper/forms/user.py:86
+msgid "公开我的粉丝"
+msgstr "Public my followers"
+
+#: corneakeeper/forms/user.py:96
+msgid "用户名错误"
+msgstr "'Wrong username."
 
 #: corneakeeper/templates/auth/base.html:26 corneakeeper/templates/base.html:45
 #: corneakeeper/templates/base_cn.html:45
@@ -438,6 +568,7 @@ msgstr "Posts"
 #: corneakeeper/templates/user/forum/manage_collect.html:21
 #: corneakeeper/templates/user/forum/manage_comment.html:40
 #: corneakeeper/templates/user/forum/manage_post.html:22
+#: corneakeeper/templates/user/settings/history.html:13
 msgid "选项"
 msgstr "Actions"
 
@@ -445,6 +576,7 @@ msgstr "Actions"
 #: corneakeeper/templates/admin/manage_link.html:28
 #: corneakeeper/templates/blog/post.html:14
 #: corneakeeper/templates/user/forum/manage_post.html:54
+#: corneakeeper/templates/user/settings/history.html:26
 msgid "修改"
 msgstr "Edit"
 
@@ -455,6 +587,7 @@ msgstr "Edit"
 #: corneakeeper/templates/user/forum/manage_comment.html:88
 #: corneakeeper/templates/user/forum/manage_comment.html:102
 #: corneakeeper/templates/user/forum/manage_post.html:64
+#: corneakeeper/templates/user/settings/history.html:37
 msgid "删除"
 msgstr "Delete"
 
@@ -876,8 +1009,83 @@ msgstr "No photos."
 msgid "该用户图片设置为不可见"
 msgstr "This user's photos were private."
 
-#: corneakeeper/templates/user/profile/recognition_cn.html:5
-#: corneakeeper/templates/user/profile/recognition_cn.html:10
+#: corneakeeper/templates/user/profile/recognition.html:5
+#: corneakeeper/templates/user/profile/recognition.html:10
 msgid "识别结果"
 msgstr "Recognition Result"
+
+#: corneakeeper/templates/user/settings/base.html:7
+msgid "设置"
+msgstr "Settings"
+
+#: corneakeeper/templates/user/settings/base.html:12
+#: corneakeeper/templates/user/settings/edit_profile.html:4
+#: corneakeeper/templates/user/settings/edit_profile.html:8
+msgid "修改个人信息"
+msgstr "Edit Profile"
+
+#: corneakeeper/templates/user/settings/base.html:13
+msgid "修改历史数据"
+msgstr "Edit Corneal Data"
+
+#: corneakeeper/templates/user/settings/base.html:14
+#: corneakeeper/templates/user/settings/change_avatar.html:4
+#: corneakeeper/templates/user/settings/change_avatar.html:13
+msgid "修改头像"
+msgstr "Change Avatar"
+
+#: corneakeeper/templates/user/settings/base.html:15
+#: corneakeeper/templates/user/settings/change_password.html:4
+#: corneakeeper/templates/user/settings/change_password.html:8
+msgid "修改密码"
+msgstr "Change Password"
+
+#: corneakeeper/templates/user/settings/base.html:16
+#: corneakeeper/templates/user/settings/change_email.html:4
+#: corneakeeper/templates/user/settings/change_email.html:8
+msgid "修改邮箱"
+msgstr "Change Email"
+
+#: corneakeeper/templates/user/settings/base.html:17
+msgid "通知"
+msgstr "Notification"
+
+#: corneakeeper/templates/user/settings/base.html:18
+msgid "隐私"
+msgstr "Privacy"
+
+#: corneakeeper/templates/user/settings/base.html:19
+#: corneakeeper/templates/user/settings/delete_account.html:4
+#: corneakeeper/templates/user/settings/delete_account.html:8
+msgid "注销账户"
+msgstr "Delete Account"
+
+#: corneakeeper/templates/user/settings/change_avatar.html:17
+msgid "您的图片必须小于 3 MB，且只能为 png 或 jpg 格式"
+msgstr ""
+"Your file's size must be less than 3 MB, the allowed formats are png and "
+"jpg."
+
+#: corneakeeper/templates/user/settings/change_data.html:4
+#: corneakeeper/templates/user/settings/change_data.html:8
+msgid "数据修改"
+msgstr "Data updated."
+
+#: corneakeeper/templates/user/settings/edit_notification.html:4
+#: corneakeeper/templates/user/settings/edit_notification.html:8
+msgid "设置通知"
+msgstr "Notification Settings"
+
+#: corneakeeper/templates/user/settings/edit_privacy.html:4
+#: corneakeeper/templates/user/settings/edit_privacy.html:8
+msgid "隐私设置"
+msgstr "Privacy Settings"
+
+#: corneakeeper/templates/user/settings/history.html:3
+msgid "历史数据"
+msgstr "Corneal Data History"
+
+#: corneakeeper/templates/user/settings/history.html:45
+msgid "无历史信息"
+msgstr "No corneal data."
 
