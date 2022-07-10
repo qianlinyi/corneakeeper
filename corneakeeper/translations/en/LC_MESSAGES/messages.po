@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-10 19:09+0800\n"
+"POT-Creation-Date: 2022-07-10 19:20+0800\n"
 "PO-Revision-Date: 2022-06-18 16:39+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -142,130 +142,142 @@ msgstr "Post uncollected."
 msgid "请输入关键字"
 msgstr "Enter keyword about photo, user or tag."
 
-#: corneakeeper/blueprints/user.py:79
+#: corneakeeper/blueprints/user.py:60
+msgid "尚未关注过该用户"
+msgstr "Not follow yet."
+
+#: corneakeeper/blueprints/user.py:64
+msgid "取关成功"
+msgstr "User unfollowed."
+
+#: corneakeeper/blueprints/user.py:72
 msgid "Your account is locked."
 msgstr ""
 
-#: corneakeeper/blueprints/user.py:148 corneakeeper/blueprints/user.py:768
+#: corneakeeper/blueprints/user.py:139 corneakeeper/blueprints/user.py:757
 msgid "数据上传成功"
 msgstr "Data created."
 
-#: corneakeeper/blueprints/user.py:251
+#: corneakeeper/blueprints/user.py:242
 msgid "个人信息更新成功"
 msgstr "Profile updated."
 
-#: corneakeeper/blueprints/user.py:276
+#: corneakeeper/blueprints/user.py:267
 msgid "数据更新成功"
 msgstr "Corneal data updated."
 
-#: corneakeeper/blueprints/user.py:354
+#: corneakeeper/blueprints/user.py:344
 msgid "邮箱更新成功"
 msgstr "Email updated."
 
-#: corneakeeper/blueprints/user.py:357
+#: corneakeeper/blueprints/user.py:347
 msgid "无效 token 或 token 已过期"
 msgstr "Invalid or expired token."
 
-#: corneakeeper/blueprints/user.py:368
+#: corneakeeper/blueprints/user.py:358
 msgid "注销账户成功！"
 msgstr "Your are free, goodbye!"
 
-#: corneakeeper/blueprints/user.py:381
+#: corneakeeper/blueprints/user.py:371
 msgid "密码已修改"
 msgstr "Password updated."
 
-#: corneakeeper/blueprints/user.py:384
+#: corneakeeper/blueprints/user.py:374
 msgid "密码错误"
 msgstr "Old password is incorrect."
 
-#: corneakeeper/blueprints/user.py:400
+#: corneakeeper/blueprints/user.py:390
 msgid "隐私设置已更新"
 msgstr "Privacy settings updated."
 
-#: corneakeeper/blueprints/user.py:420
+#: corneakeeper/blueprints/user.py:410
 msgid "通知设置已更新"
 msgstr "Notification settings updated."
 
-#: corneakeeper/blueprints/user.py:445
+#: corneakeeper/blueprints/user.py:435
 msgid "角膜屈光力差值"
 msgstr "I-S"
 
-#: corneakeeper/blueprints/user.py:447
+#: corneakeeper/blueprints/user.py:437
 msgid "角膜屈光力差值变化图"
 msgstr "I-S-Chart"
 
-#: corneakeeper/blueprints/user.py:464 corneakeeper/forms/user.py:33
+#: corneakeeper/blueprints/user.py:454 corneakeeper/forms/user.py:33
 msgid "最大曲率"
 msgstr "k_max"
 
-#: corneakeeper/blueprints/user.py:465
+#: corneakeeper/blueprints/user.py:455
 msgid "最大曲率变化图"
 msgstr "K-Chart"
 
-#: corneakeeper/blueprints/user.py:482 corneakeeper/forms/user.py:34
+#: corneakeeper/blueprints/user.py:472 corneakeeper/forms/user.py:34
 msgid "最薄点厚度"
 msgstr "thickness_min"
 
-#: corneakeeper/blueprints/user.py:484
+#: corneakeeper/blueprints/user.py:474
 msgid "最薄点厚度变化图"
 msgstr "Thickness-Chart"
 
-#: corneakeeper/blueprints/user.py:502 corneakeeper/forms/user.py:35
+#: corneakeeper/blueprints/user.py:492 corneakeeper/forms/user.py:35
 msgid "最佳眼镜矫正视力"
 msgstr "BSCVA"
 
-#: corneakeeper/blueprints/user.py:503 corneakeeper/forms/user.py:36
+#: corneakeeper/blueprints/user.py:493 corneakeeper/forms/user.py:36
 msgid "裸眼视力"
 msgstr "UCVA"
 
-#: corneakeeper/blueprints/user.py:505
+#: corneakeeper/blueprints/user.py:495
 msgid "视力变化图"
 msgstr "VisualAcuity-Chart"
 
-#: corneakeeper/blueprints/user.py:522
+#: corneakeeper/blueprints/user.py:512
 msgid "近视度数"
 msgstr "MyopiaDegree"
 
-#: corneakeeper/blueprints/user.py:524
+#: corneakeeper/blueprints/user.py:514
 msgid "近视度数变化图"
 msgstr "Myopia-Chart"
 
-#: corneakeeper/blueprints/user.py:541
+#: corneakeeper/blueprints/user.py:531
 msgid "散光度数"
 msgstr "AstigmatismDegree"
 
-#: corneakeeper/blueprints/user.py:543
+#: corneakeeper/blueprints/user.py:533
 msgid "散光度数变化图"
 msgstr "Astigmatism-Chart"
 
-#: corneakeeper/blueprints/user.py:596
+#: corneakeeper/blueprints/user.py:586
 msgid "文章发布成功"
 msgstr "Post published."
 
-#: corneakeeper/blueprints/user.py:616
+#: corneakeeper/blueprints/user.py:606
 msgid "文章修改成功"
 msgstr "Post updated."
 
-#: corneakeeper/blueprints/user.py:635
+#: corneakeeper/blueprints/user.py:625
 msgid "文章删除成功"
 msgstr "Post deleted."
 
-#: corneakeeper/blueprints/user.py:651
+#: corneakeeper/blueprints/user.py:640
 #: corneakeeper/templates/blog/post.html:166
 msgid "评论已禁止"
 msgstr "Comment disabled."
 
-#: corneakeeper/blueprints/user.py:654
+#: corneakeeper/blueprints/user.py:643
 msgid "评论已开放"
 msgstr "Comment enabled."
 
-#: corneakeeper/blueprints/user.py:712
+#: corneakeeper/blueprints/user.py:701
 msgid "评论已公开"
 msgstr "Comment published."
 
-#: corneakeeper/blueprints/user.py:727
+#: corneakeeper/blueprints/user.py:716
 msgid "评论已删除"
 msgstr "Comment deleted."
+
+#: corneakeeper/blueprints/user.py:795
+msgid "数据删除成功"
+msgstr "Cornea Data deleted."
 
 #: corneakeeper/forms/admin.py:30
 #: corneakeeper/templates/admin/manage_category.html:17

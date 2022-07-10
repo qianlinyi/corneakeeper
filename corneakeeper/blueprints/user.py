@@ -56,19 +56,12 @@ def follow(username):
 @login_required
 def unfollow(username):
     user = User.query.filter_by(username=username).first_or_404()
-    language = request.cookies.get('language', 'cn')
     if not current_user.is_following(user):
-        if language == 'cn':
-            flash('尚未关注过该用户', 'info')
-        else:
-            flash('Not follow yet.', 'info')
+        flash(_('尚未关注过该用户'), 'info')
         return redirect(url_for('.index', username=username))
 
     current_user.unfollow(user)
-    if language == 'cn':
-        flash('User unfollowed.', 'info')
-    else:
-        flash('取关成功', 'success')
+    flash(_('取关成功'), 'info')
     return redirect_back()
 
 
@@ -117,9 +110,7 @@ def show_following(username):
     per_page = current_app.config['CK_USER_PER_PAGE']
     pagination = user.following.paginate(page, per_page)
     follows = pagination.items
-    return render_template('user/profile/following_{}.html'.format(
-        request.cookies.get('language', 'cn')), user=user,
-        pagination=pagination, follows=follows)
+    return render_template('user/profile/following.html', user=user, pagination=pagination, follows=follows)
 
 
 @user_bp.route('/<int:photo_id>/recognition', methods=['GET', 'POST'])
@@ -348,7 +339,6 @@ def change_email_request():
 @user_bp.route('/change-email/<token>')
 @login_required
 def change_email(token):
-    language = request.cookies.get('language', 'cn')
     if validate_token(user=current_user, token=token,
                       operation=Operations.CHANGE_EMAIL):
         flash(_('邮箱更新成功'), 'success')
@@ -533,9 +523,9 @@ def generate_myopia_chart(username):
 def generate_astigmatism_chart(username):
     user = User.query.filter_by(username=username).first_or_404()
     x, y = [], []
-    for _ in Cornea.query.filter_by(user=user).order_by('datetime').all():
-        x.append(_.datetime.strftime('%Y-%m-%d'))
-        y.append(_.astigmatism)
+    for cornea in Cornea.query.filter_by(user=user).order_by('datetime').all():
+        x.append(cornea.datetime.strftime('%Y-%m-%d'))
+        y.append(cornea.astigmatism)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
     line.add_yaxis(_('散光度数'), y)
@@ -645,7 +635,6 @@ def set_comment(username, post_id):
     if user != current_user:
         abort(403)
     post = Post.query.get_or_404(post_id)
-    language = request.cookies.get('language', 'cn')
     if post.can_comment:
         post.can_comment = False
         flash(_('评论已禁止'), 'success')
@@ -803,8 +792,5 @@ def delete_corneadata(datetime):
     cornea = Cornea.query.filter(and_(Cornea.datetime == datetime, Cornea.user_id == current_user.id)).first()
     db.session.delete(cornea)
     db.session.commit()
-    if request.cookies.get('language', 'cn') == 'cn':
-        flash('数据删除成功', 'success')
-    else:
-        flash('Cornea Data deleted.', 'success')
+    flash(_('数据删除成功'), 'success')
     return redirect_back()
