@@ -504,9 +504,9 @@ def generate_visualAcuity_chart(username):
 def generate_myopia_chart(username):
     user = User.query.filter_by(username=username).first_or_404()
     x, y = [], []
-    for _ in Cornea.query.filter_by(user=user).order_by('datetime').all():
-        x.append(_.datetime.strftime('%Y-%m-%d'))
-        y.append(_.myopia)
+    for cornea in Cornea.query.filter_by(user=user).order_by('datetime').all():
+        x.append(cornea.datetime.strftime('%Y-%m-%d'))
+        y.append(cornea.myopia)
     line = Line(init_opts=opts.InitOpts(theme=ThemeType.LIGHT))
     line.add_xaxis(x)
     line.add_yaxis(_('近视度数'), y)
