@@ -2,7 +2,7 @@ baidu_aip==4.16.1
 Bootstrap_Flask==2.0.2
 click==8.0.3
 Faker==12.1.0
-Flask==2.0.2
+Flask==2.2.5
 Flask_Avatars==0.2.2
 Flask_Babel==2.0.0
 flask_bootstrap==3.3.7.1
